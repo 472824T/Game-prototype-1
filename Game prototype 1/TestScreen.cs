@@ -45,7 +45,7 @@ namespace Game_prototype_1
         }
         class Titanium : Resource
         {
-            public Titanium() : base("titanium", 100,0,0,0) { }
+            public Titanium() : base("titanium", Config.TitaniumBaseAmount, Config.TitaniumNumOfStand1s, Config.TitaniumNumOfStand2s, Config.TitaniumNumOfStand3s) { } // calling the super class or the parent class with the five attruibutes eg string and five ints
 
          
             public override int Standards(int stand = 1)
@@ -53,25 +53,25 @@ namespace Game_prototype_1
                 switch (stand)
                 {
                     case 1:
-                    { 
-                        return 2;
+                    {
+                            return Config.StandTitanium1;
                     }
                        
                     case 2:
                     { 
-                        return 4;
+                        return Config.StandTitanium2; 
                     }
 
                     case 3:
                     {
-                        return 8;
+                        return Config.StandTitanium3;
                     }
                 } 
                 return 0; 
             }
             class EnergyBricks : Resource
             {
-                public EnergyBricks() : base("EnergyBricks", 200,0,0,0) { }
+                public EnergyBricks() : base("EnergyBricks", Config.EnergyBricksBaseAmount, Config.EnergyBricksNumOfStand1s, Config.EnergyBricksNumOfStand2s, Config.EnergyBricksNumOfStand3s) { }
 
                 // will show the Standard of the producer 
                 public override int Standards(int stand = 1)
@@ -132,7 +132,12 @@ namespace Game_prototype_1
                     {
                         case "Titanium":
                             {
-                                FactoryStandListMaker(TileButtons)//test
+                                switch (resource.GetAmount())
+                                {
+                                    case 1: // build a way to send the amount of titanium into the class and move the code around using the config file
+                                        { }
+                                break;
+                                }
                             }
                             break;
 
@@ -143,24 +148,23 @@ namespace Game_prototype_1
 
                 
         }
-        // will handle all resoucre plusees
-
+        // will handle all resource pluses
+       
        
         List<Button> TileButtons = new List<Button>();
        
-        List<string> ListedActions = new List<string> { "Factory", "Demolish", "Upgrade", };
+        
         List<bool> Factory = new List<bool>();
         void GenOfTilePicBoxs(int WantedNum = 0)
         {
 
-            int TileX = 400;
-            int TileY = 500;
-
+            int X = 0;
+           
             for (int i = 0; i < WantedNum; i++)
             {
                 TileButtons.Add(new Button());
                 TileButtons[i].Name = i.ToString();
-                TileButtons[i].Location = new System.Drawing.Point(TileX, TileY);
+                TileButtons[i].Location = new System.Drawing.Point(Config.TileX+X, Config.TileY);
                 TileButtons[i].Size = new System.Drawing.Size(200, 200);
                 TileButtons[i].TabIndex = 1;
                 TileButtons[i].BackColor = Color.Yellow;
@@ -169,7 +173,7 @@ namespace Game_prototype_1
                 TileButtons[i].Click += new EventHandler(MyClickEvent);
 
                 this.Controls.Add(TileButtons[i]);
-                TileX += 200;
+                X += 200;
                 Factory.Add(false);
 
             }
@@ -225,7 +229,7 @@ namespace Game_prototype_1
 
 
 
-            foreach (string I in ListedActions)
+            foreach (string I in Config.ListedActions)
             {
                 ListOfBuildAction.Items.Add(I);
             }
@@ -252,7 +256,7 @@ namespace Game_prototype_1
         {
             if (ListOfBuildAction.SelectedIndex > -1)
             {
-                switch (ListedActions[ListOfBuildAction.SelectedIndex])
+                switch (Config.ListedActions[ListOfBuildAction.SelectedIndex])
                 {
                     case "Factory":
                         TileButtons[IndexOfButton].BackColor = Color.Green;
