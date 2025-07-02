@@ -16,5 +16,10 @@ namespace Game_prototype_1
         {
             InitializeComponent();
         }
+
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

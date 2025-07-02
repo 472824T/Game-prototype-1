@@ -134,10 +134,11 @@ namespace Game_prototype_1
                             {
                                 switch (resource.GetAmount())
                                 {
-                                    case 1: // build a way to send the amount of titanium into the class and move the code around using the config file
+                                    case 1: // build a way to send the amount of titanium into the class 
                                         { }
                                 break;
                                 }
+                                
                             }
                             break;
 
