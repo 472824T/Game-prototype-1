@@ -62,6 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameResourceManager.cs" />
+    <Compile Include="GameResourceFactory.cs" />
+    <Compile Include="GameResource.cs" />
     <Compile Include="config.cs" />
     <Compile Include="TestScreen.cs">
       <SubType>Form</SubType>
