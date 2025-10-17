@@ -16,7 +16,9 @@ namespace Game_prototype_1
             GameResourceManager resourceManager;
             List<Button> TileButtons = new List<Button>();
             List<bool> Factory = new List<bool>();
-            void GenOfTilePicBoxs(int WantedNum = 0)
+        List<string> FactoryTypes = new List<string>();
+         List<int> FactoryLevels = new List<int>();
+        void GenOfTilePicBoxs(int WantedNum = 0)
             {
                 int X = 0;
                 for (int i = 0; i < WantedNum; i++)
@@ -67,6 +69,11 @@ namespace Game_prototype_1
                     LabelFoodCount.Show();
                     LabelResearchCount.Show();
                     LabelTextTitanium.Show();
+                    LabelTextEnergyBricks.Show();
+                    LabelTextFood.Show();
+                    LabelTextWater.Show();
+                    LabelTextResearchPoints.Show();
+
                     ListedBoxLoader();
                     resourceManager = new GameResourceManager(
                         LabelTitaniumCount,
@@ -109,13 +116,56 @@ namespace Game_prototype_1
                             TileButtons[IndexOfButton].BackColor = Color.Yellow;
                             Factory[IndexOfButton] = false;
                             break;
-                        case "Upgrade":
-                            if (Convert.ToInt32(TileButtons[IndexOfButton].Text[8]) + 1 < 4)
-                                TileButtons[IndexOfButton].Text = "Standard" + (Convert.ToInt32(TileButtons[IndexOfButton].Text[8]) + 1).ToString();
+                    case "Upgrade":
+                        if (FactoryTypes[IndexOfButton] != null && FactoryLevels[IndexOfButton] > 0)
+                        {
+                            int currentLevel = FactoryLevels[IndexOfButton];
+                            if (currentLevel < 3)
+                            {
+                                int cost = 0;
+                                switch (FactoryTypes[IndexOfButton])
+                                {
+                                    case "Titanium Mine":
+                                        cost = Config.TitaniumMineUpgradeCosts[currentLevel];
+                                        break;
+                                    case "Water Pump":
+                                        cost = Config.WaterPumpUpgradeCosts[currentLevel];
+                                        break;
+                                    case "Energy Brick Generator":
+                                        cost = Config.EnergyBrickGeneratorUpgradeCosts[currentLevel];
+                                        break;
+                                    case "Farm":
+                                        cost = Config.FarmUpgradeCosts[currentLevel];
+                                        break;
+                                    case "Research Lab":
+                                        cost = Config.ResearchLabUpgradeCosts[currentLevel];
+                                        break;
+                                }
+                                int currentTitanium = resourceManager.GetResourceAmount("Titanium");
+                                if (currentTitanium >= cost)
+                                {
+                                    resourceManager.DeductResource("Titanium", cost);
+                                    FactoryLevels[IndexOfButton] = currentLevel + 1;
+                                    TileButtons[IndexOfButton].Text =
+                                        FactoryTypes[IndexOfButton] + " L" + FactoryLevels[IndexOfButton];
+                                    resourceManager.UpgradeFactory(IndexOfButton);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Not enough Titanium to upgrade! Need " + cost + ".");
+                                }
+                            }
                             else
-                                MessageBox.Show("Factories only go up to level three!");
-                            break;
-                    }
+                            {
+                                MessageBox.Show(FactoryTypes[IndexOfButton] + " is already max level!");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No factory here to upgrade!");
+                        }
+                        break;
+                }
                 }
                 else
                 {

@@ -68,5 +68,28 @@ namespace Game_prototype_1
         {
             factories.Add(fact);
         }
+        public int GetResourceAmount(string name)
+        {
+            switch (name)
+            {
+                case "Titanium": return TitaniumValue;
+                case "Water": return WaterValue;
+                case "EnergyBricks": return EnergyBricksValue;
+                case "Food": return FoodValue;
+                case "Research": return ResearchValue;
+                default: return 0;
+            }
+        }
+        public void DeductResource(string name, int amount)
+        {
+            switch (name)
+            {
+                case "Titanium": TitaniumValue -= amount; break;
+                case "Water": WaterValue -= amount; break;
+                case "EnergyBricks": EnergyBricksValue -= amount; break;
+                case "Food": FoodValue -= amount; break;
+                case "Research": ResearchValue -= amount; break;
+            }
+        }
     }
 }

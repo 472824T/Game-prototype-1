@@ -36,4 +36,5 @@ namespace Game_prototype_1
     {
         public ResearchResource(int value) : base("Research", value) { }
     }
+
 }
