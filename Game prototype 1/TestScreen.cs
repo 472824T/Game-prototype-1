@@ -173,25 +173,25 @@ namespace Game_prototype_1
                     b.BackColor = Color.Yellow;
                     b.Text = "Empty";
 
-                    /*
+                    
                     switch (FactoryTypes[idx])
                     {
                         case "Titanium Mine":
-                            resourceManager.RemoveFactory(TitaniumFactory(1));
+                            resourceManager.RemoveFactory(new TitaniumFactory(1));
                             break;
                         case "Water Pump":
-                            resourceManager.RemoveFactory();
+                            resourceManager.RemoveFactory(new WaterFactory(1));
                             break;
                         case "Energy Brick Generator":
-                            resourceManager.RemoveFactory();
+                            resourceManager.RemoveFactory(new EnergyBricksFactory(1));
                             break;
                         case "Farm":
-                            resourceManager.RemoveFactory();
+                            resourceManager.RemoveFactory(new FarmFactory(1));
                             break;
                         case "Research Lab":
-                            resourceManager.RemoveFactory();
-                            break;
-                    }*/
+                            resourceManager.RemoveFactory(new ResearchFactory(1));
+                            break;  
+                    }
                 }
                 else if (action == "Upgrade")
                 {
@@ -225,7 +225,7 @@ namespace Game_prototype_1
                     resourceManager.DeductResource("Titanium", cost);
                     FactoryLevels[idx] = currentLevel + 1;
                     b.Text = FactoryTypes[idx] + " L" + FactoryLevels[idx];
-                    resourceManager.UpgradeFactory(idx); // NOTE: factories list inside resourceManager is per-build order; ensure alignment in more complex setups
+                    resourceManager.UpgradeFactory(idx); 
                 }
             }
             else
@@ -236,7 +236,7 @@ namespace Game_prototype_1
 
         private void ListOfBuildAction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // nothing needed; action read when clicking tiles
+            
         }
 
         private void FactoryTypeList_SelectedIndexChanged(object sender, EventArgs e)
@@ -271,19 +271,23 @@ namespace Game_prototype_1
 
             private void New_Game_button_Click(object sender, EventArgs e)
         {   PrototypeErrorMessage.Hide();
-            // Hide this menu (or close it if you prefer)
+      
             this.Hide();
 
-            // Open the MainMenu form
+      
             using (MainMenu mainMenu = new MainMenu())
             {
                 mainMenu.ShowDialog();
             }
 
-            // Once MainMenu closes, show this form again (optional)
+ 
             this.Show();
         }
 
+        private void TestScreen_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

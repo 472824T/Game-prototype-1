@@ -57,20 +57,18 @@
             // 
             // WCSelectionButton
             // 
-            this.WCSelectionButton.Location = new System.Drawing.Point(4104, 19);
-            this.WCSelectionButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.WCSelectionButton.Location = new System.Drawing.Point(2308, 12);
             this.WCSelectionButton.Name = "WCSelectionButton";
-            this.WCSelectionButton.Size = new System.Drawing.Size(611, 498);
+            this.WCSelectionButton.Size = new System.Drawing.Size(344, 321);
             this.WCSelectionButton.TabIndex = 1;
             this.WCSelectionButton.Text = "WarCLavean";
             this.WCSelectionButton.UseVisualStyleBackColor = true;
             // 
             // TLButton
             // 
-            this.TLButton.Location = new System.Drawing.Point(4104, 1490);
-            this.TLButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.TLButton.Location = new System.Drawing.Point(2308, 961);
             this.TLButton.Name = "TLButton";
-            this.TLButton.Size = new System.Drawing.Size(611, 498);
+            this.TLButton.Size = new System.Drawing.Size(344, 321);
             this.TLButton.TabIndex = 2;
             this.TLButton.Text = "T_L";
             this.TLButton.UseVisualStyleBackColor = true;
@@ -78,10 +76,9 @@
             // New_Game_button
             // 
             this.New_Game_button.AutoSize = true;
-            this.New_Game_button.Location = new System.Drawing.Point(1885, 811);
-            this.New_Game_button.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.New_Game_button.Location = new System.Drawing.Point(1060, 523);
             this.New_Game_button.Name = "New_Game_button";
-            this.New_Game_button.Size = new System.Drawing.Size(861, 110);
+            this.New_Game_button.Size = new System.Drawing.Size(484, 71);
             this.New_Game_button.TabIndex = 4;
             this.New_Game_button.Text = "New Game ";
             this.New_Game_button.UseVisualStyleBackColor = true;
@@ -90,10 +87,9 @@
             // LoadGameButton
             // 
             this.LoadGameButton.AutoSize = true;
-            this.LoadGameButton.Location = new System.Drawing.Point(1885, 990);
-            this.LoadGameButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.LoadGameButton.Location = new System.Drawing.Point(1060, 639);
             this.LoadGameButton.Name = "LoadGameButton";
-            this.LoadGameButton.Size = new System.Drawing.Size(861, 110);
+            this.LoadGameButton.Size = new System.Drawing.Size(484, 71);
             this.LoadGameButton.TabIndex = 5;
             this.LoadGameButton.Text = "Load Game";
             this.LoadGameButton.UseVisualStyleBackColor = true;
@@ -101,20 +97,18 @@
             // OptionsButton
             // 
             this.OptionsButton.AutoSize = true;
-            this.OptionsButton.Location = new System.Drawing.Point(1885, 1176);
-            this.OptionsButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.OptionsButton.Location = new System.Drawing.Point(1060, 759);
             this.OptionsButton.Name = "OptionsButton";
-            this.OptionsButton.Size = new System.Drawing.Size(861, 110);
+            this.OptionsButton.Size = new System.Drawing.Size(484, 71);
             this.OptionsButton.TabIndex = 6;
             this.OptionsButton.Text = "Options";
             this.OptionsButton.UseVisualStyleBackColor = true;
             // 
             // ContinueButton
             // 
-            this.ContinueButton.Location = new System.Drawing.Point(1885, 627);
-            this.ContinueButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ContinueButton.Location = new System.Drawing.Point(1060, 405);
             this.ContinueButton.Name = "ContinueButton";
-            this.ContinueButton.Size = new System.Drawing.Size(861, 110);
+            this.ContinueButton.Size = new System.Drawing.Size(484, 71);
             this.ContinueButton.TabIndex = 7;
             this.ContinueButton.Text = "Continue";
             this.ContinueButton.UseVisualStyleBackColor = true;
@@ -124,30 +118,27 @@
             // 
             this.Title_label.AutoSize = true;
             this.Title_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Title_label.Location = new System.Drawing.Point(1728, 267);
-            this.Title_label.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.Title_label.Location = new System.Drawing.Point(972, 172);
             this.Title_label.Name = "Title_label";
-            this.Title_label.Size = new System.Drawing.Size(1121, 98);
+            this.Title_label.Size = new System.Drawing.Size(682, 59);
             this.Title_label.TabIndex = 8;
             this.Title_label.Text = "Welcome to the game user ";
             this.Title_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SunPicBox
             // 
-            this.SunPicBox.Location = new System.Drawing.Point(3352, 1176);
-            this.SunPicBox.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.SunPicBox.Location = new System.Drawing.Point(1886, 759);
             this.SunPicBox.Name = "SunPicBox";
-            this.SunPicBox.Size = new System.Drawing.Size(771, 601);
+            this.SunPicBox.Size = new System.Drawing.Size(434, 388);
             this.SunPicBox.TabIndex = 9;
             this.SunPicBox.TabStop = false;
             this.SunPicBox.Visible = false;
             // 
             // Warclave
             // 
-            this.Warclave.Location = new System.Drawing.Point(3323, 243);
-            this.Warclave.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Warclave.Location = new System.Drawing.Point(1869, 157);
             this.Warclave.Name = "Warclave";
-            this.Warclave.Size = new System.Drawing.Size(771, 601);
+            this.Warclave.Size = new System.Drawing.Size(434, 388);
             this.Warclave.TabIndex = 13;
             this.Warclave.TabStop = false;
             this.Warclave.Visible = false;
@@ -156,10 +147,9 @@
             // 
             this.PrototypeErrorMessage.AutoSize = true;
             this.PrototypeErrorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.PrototypeErrorMessage.Location = new System.Drawing.Point(1848, 472);
-            this.PrototypeErrorMessage.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.PrototypeErrorMessage.Location = new System.Drawing.Point(1040, 305);
             this.PrototypeErrorMessage.Name = "PrototypeErrorMessage";
-            this.PrototypeErrorMessage.Size = new System.Drawing.Size(924, 46);
+            this.PrototypeErrorMessage.Size = new System.Drawing.Size(554, 29);
             this.PrototypeErrorMessage.TabIndex = 14;
             this.PrototypeErrorMessage.Text = "Please click the new game button to start the game";
             this.PrototypeErrorMessage.Visible = false;
@@ -167,20 +157,18 @@
             // ListOfBuildAction
             // 
             this.ListOfBuildAction.FormattingEnabled = true;
-            this.ListOfBuildAction.Location = new System.Drawing.Point(2883, 365);
-            this.ListOfBuildAction.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.ListOfBuildAction.Location = new System.Drawing.Point(1622, 235);
             this.ListOfBuildAction.Name = "ListOfBuildAction";
-            this.ListOfBuildAction.Size = new System.Drawing.Size(380, 704);
+            this.ListOfBuildAction.Size = new System.Drawing.Size(216, 441);
             this.ListOfBuildAction.TabIndex = 15;
             this.ListOfBuildAction.Visible = false;
             // 
             // LabelTitaniumCount
             // 
             this.LabelTitaniumCount.AutoSize = true;
-            this.LabelTitaniumCount.Location = new System.Drawing.Point(1816, 21);
-            this.LabelTitaniumCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTitaniumCount.Location = new System.Drawing.Point(1022, 14);
             this.LabelTitaniumCount.Name = "LabelTitaniumCount";
-            this.LabelTitaniumCount.Size = new System.Drawing.Size(30, 32);
+            this.LabelTitaniumCount.Size = new System.Drawing.Size(18, 20);
             this.LabelTitaniumCount.TabIndex = 16;
             this.LabelTitaniumCount.Text = "0";
             this.LabelTitaniumCount.Visible = false;
@@ -189,10 +177,9 @@
             // 
             this.LabelTextTitanium.AutoSize = true;
             this.LabelTextTitanium.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextTitanium.Location = new System.Drawing.Point(1603, 7);
-            this.LabelTextTitanium.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTextTitanium.Location = new System.Drawing.Point(902, 5);
             this.LabelTextTitanium.Name = "LabelTextTitanium";
-            this.LabelTextTitanium.Size = new System.Drawing.Size(180, 46);
+            this.LabelTextTitanium.Size = new System.Drawing.Size(114, 29);
             this.LabelTextTitanium.TabIndex = 17;
             this.LabelTextTitanium.Text = "Titanium";
             this.LabelTextTitanium.Visible = false;
@@ -206,10 +193,9 @@
             // 
             this.LabelTextEnergyBricks.AutoSize = true;
             this.LabelTextEnergyBricks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextEnergyBricks.Location = new System.Drawing.Point(1603, 143);
-            this.LabelTextEnergyBricks.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTextEnergyBricks.Location = new System.Drawing.Point(902, 92);
             this.LabelTextEnergyBricks.Name = "LabelTextEnergyBricks";
-            this.LabelTextEnergyBricks.Size = new System.Drawing.Size(268, 46);
+            this.LabelTextEnergyBricks.Size = new System.Drawing.Size(167, 29);
             this.LabelTextEnergyBricks.TabIndex = 18;
             this.LabelTextEnergyBricks.Text = "EnergyBricks";
             this.LabelTextEnergyBricks.Visible = false;
@@ -218,10 +204,9 @@
             // 
             this.LabelTextFood.AutoSize = true;
             this.LabelTextFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextFood.Location = new System.Drawing.Point(1603, 98);
-            this.LabelTextFood.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTextFood.Location = new System.Drawing.Point(902, 63);
             this.LabelTextFood.Name = "LabelTextFood";
-            this.LabelTextFood.Size = new System.Drawing.Size(116, 46);
+            this.LabelTextFood.Size = new System.Drawing.Size(74, 29);
             this.LabelTextFood.TabIndex = 19;
             this.LabelTextFood.Text = "Food";
             this.LabelTextFood.Visible = false;
@@ -230,10 +215,9 @@
             // 
             this.LabelTextWater.AutoSize = true;
             this.LabelTextWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextWater.Location = new System.Drawing.Point(1603, 52);
-            this.LabelTextWater.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTextWater.Location = new System.Drawing.Point(902, 34);
             this.LabelTextWater.Name = "LabelTextWater";
-            this.LabelTextWater.Size = new System.Drawing.Size(131, 46);
+            this.LabelTextWater.Size = new System.Drawing.Size(81, 29);
             this.LabelTextWater.TabIndex = 20;
             this.LabelTextWater.Text = "Water";
             this.LabelTextWater.Visible = false;
@@ -241,10 +225,9 @@
             // LabelWaterCount
             // 
             this.LabelWaterCount.AutoSize = true;
-            this.LabelWaterCount.Location = new System.Drawing.Point(1816, 67);
-            this.LabelWaterCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelWaterCount.Location = new System.Drawing.Point(1022, 43);
             this.LabelWaterCount.Name = "LabelWaterCount";
-            this.LabelWaterCount.Size = new System.Drawing.Size(30, 32);
+            this.LabelWaterCount.Size = new System.Drawing.Size(18, 20);
             this.LabelWaterCount.TabIndex = 21;
             this.LabelWaterCount.Text = "0";
             this.LabelWaterCount.Visible = false;
@@ -252,10 +235,9 @@
             // LabelFoodCount
             // 
             this.LabelFoodCount.AutoSize = true;
-            this.LabelFoodCount.Location = new System.Drawing.Point(1816, 110);
-            this.LabelFoodCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelFoodCount.Location = new System.Drawing.Point(1022, 71);
             this.LabelFoodCount.Name = "LabelFoodCount";
-            this.LabelFoodCount.Size = new System.Drawing.Size(30, 32);
+            this.LabelFoodCount.Size = new System.Drawing.Size(18, 20);
             this.LabelFoodCount.TabIndex = 22;
             this.LabelFoodCount.Text = "0";
             this.LabelFoodCount.Visible = false;
@@ -263,10 +245,9 @@
             // LabelEnergyBricksCount
             // 
             this.LabelEnergyBricksCount.AutoSize = true;
-            this.LabelEnergyBricksCount.Location = new System.Drawing.Point(1912, 157);
-            this.LabelEnergyBricksCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelEnergyBricksCount.Location = new System.Drawing.Point(1076, 101);
             this.LabelEnergyBricksCount.Name = "LabelEnergyBricksCount";
-            this.LabelEnergyBricksCount.Size = new System.Drawing.Size(30, 32);
+            this.LabelEnergyBricksCount.Size = new System.Drawing.Size(18, 20);
             this.LabelEnergyBricksCount.TabIndex = 23;
             this.LabelEnergyBricksCount.Text = "0";
             this.LabelEnergyBricksCount.Visible = false;
@@ -275,10 +256,9 @@
             // 
             this.LabelTextResearchPoints.AutoSize = true;
             this.LabelTextResearchPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextResearchPoints.Location = new System.Drawing.Point(1603, 198);
-            this.LabelTextResearchPoints.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelTextResearchPoints.Location = new System.Drawing.Point(902, 128);
             this.LabelTextResearchPoints.Name = "LabelTextResearchPoints";
-            this.LabelTextResearchPoints.Size = new System.Drawing.Size(317, 46);
+            this.LabelTextResearchPoints.Size = new System.Drawing.Size(197, 29);
             this.LabelTextResearchPoints.TabIndex = 24;
             this.LabelTextResearchPoints.Text = "ResearchPoints";
             this.LabelTextResearchPoints.Visible = false;
@@ -286,19 +266,18 @@
             // LabelResearchCount
             // 
             this.LabelResearchCount.AutoSize = true;
-            this.LabelResearchCount.Location = new System.Drawing.Point(1965, 212);
-            this.LabelResearchCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.LabelResearchCount.Location = new System.Drawing.Point(1105, 137);
             this.LabelResearchCount.Name = "LabelResearchCount";
-            this.LabelResearchCount.Size = new System.Drawing.Size(30, 32);
+            this.LabelResearchCount.Size = new System.Drawing.Size(18, 20);
             this.LabelResearchCount.TabIndex = 25;
             this.LabelResearchCount.Text = "0";
             this.LabelResearchCount.Visible = false;
             // 
             // TestScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2997, 1408);
+            this.ClientSize = new System.Drawing.Size(1686, 908);
             this.Controls.Add(this.LabelResearchCount);
             this.Controls.Add(this.LabelTextResearchPoints);
             this.Controls.Add(this.LabelEnergyBricksCount);
@@ -320,9 +299,9 @@
             this.Controls.Add(this.New_Game_button);
             this.Controls.Add(this.TLButton);
             this.Controls.Add(this.WCSelectionButton);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "TestScreen";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.TestScreen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.SunPicBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Warclave)).EndInit();
             this.ResumeLayout(false);
