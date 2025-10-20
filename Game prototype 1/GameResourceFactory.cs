@@ -6,74 +6,63 @@ using System.Threading.Tasks;
 
 namespace Game_prototype_1
 {
-    public class GameResourceFactory
+    public abstract class GameResourceFactory
     {
-        public string FactoryType { get; set; }
-        protected int Level { get; set; }
-        public GameResourceFactory(string type, int level = 1)
+        public string FactoryType { get; protected set; }
+        public int Level { get; private set; }
+
+        protected GameResourceFactory(string type, int level = 1)
         {
             FactoryType = type;
             Level = level;
         }
-        public virtual GameResource Tick()
+
+        public virtual void Upgrade()
         {
-            return new GameResource("None", 0);
+            if (Level < 3) Level++;
         }
-    }
-    public class TitaniumResourceFactory : GameResourceFactory
-    {
-        public TitaniumResourceFactory(int level = 1) : base("Titanium", level) { }
-        public override GameResource Tick()
+
+        protected int Scale(int baseValue)
         {
-            int amount;
             switch (Level)
             {
-                case 1: 
-                    amount = Config.StandTitanium1; 
-                    break;
-                case 2: 
-                    amount = Config.StandTitanium2; 
-                    break;
-                case 3: 
-                    amount = Config.StandTitanium3;
-                    break;
-                default: 
-                    amount = 0;
-                    break;
+                case 1: return baseValue;
+                case 2: return baseValue * Config.Level2Multiplier;
+                case 3: return baseValue * Config.Level3Multiplier;
+                default: return baseValue;
             }
-            return new TitaniumResource(amount);
         }
+
+        public abstract GameResource Tick();
     }
-    public class WaterResourceFactory : GameResourceFactory
+
+    public class TitaniumFactory : GameResourceFactory
     {
-        public WaterResourceFactory(int level = 1) : base("Water", level) { }
-        public override GameResource Tick()
-        {
-            return new WaterResource(2 * Level);
-        }
+        public TitaniumFactory(int level = 1) : base("Titanium Mine", level) { }
+        public override GameResource Tick() { return new TitaniumResource(Scale(Config.TitaniumBaseProduction)); }
     }
-    public class EnergyBricksResourceFactory : GameResourceFactory
+
+    public class WaterFactory : GameResourceFactory
     {
-        public EnergyBricksResourceFactory(int level = 1) : base("EnergyBricks", level) { }
-        public override GameResource Tick()
-        {
-            return new EnergyBricksResource(3 * Level);
-        }
+        public WaterFactory(int level = 1) : base("Water Pump", level) { }
+        public override GameResource Tick() { return new WaterResource(Scale(Config.WaterBaseProduction)); }
     }
-    public class FoodResourceFactory : GameResourceFactory
+
+    public class EnergyBricksFactory : GameResourceFactory
     {
-        public FoodResourceFactory(int level = 1) : base("Food", level) { }
-        public override GameResource Tick()
-        {
-            return new FoodResource(4 * Level);
-        }
+        public EnergyBricksFactory(int level = 1) : base("Energy Brick Generator", level) { }
+        public override GameResource Tick() { return new EnergyBricksResource(Scale(Config.EnergyBricksBaseProduction)); }
     }
-    public class ResearchResourceFactory : GameResourceFactory
+
+    public class FarmFactory : GameResourceFactory
     {
-        public ResearchResourceFactory(int level = 1) : base("Research", level) { }
-        public override GameResource Tick()
-        {
-            return new ResearchResource(1 * Level);
-        }
+        public FarmFactory(int level = 1) : base("Farm", level) { }
+        public override GameResource Tick() { return new FoodResource(Scale(Config.FoodBaseProduction)); }
+    }
+
+    public class ResearchFactory : GameResourceFactory
+    {
+        public ResearchFactory(int level = 1) : base("Research Lab", level) { }
+        public override GameResource Tick() { return new ResearchResource(Scale(Config.ResearchBaseProduction)); }
     }
 }

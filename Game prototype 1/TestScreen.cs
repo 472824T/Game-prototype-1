@@ -1,205 +1,290 @@
-﻿using System;
+﻿using Game_prototype_1.Game_prototype_1;
+using System;
 using System.Collections.Generic;
+
+
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+
 
 namespace Game_prototype_1
 {
     public partial class TestScreen : Form
     {
-      
-            GameResourceManager resourceManager;
-            List<Button> TileButtons = new List<Button>();
-            List<bool> Factory = new List<bool>();
-        List<string> FactoryTypes = new List<string>();
-         List<int> FactoryLevels = new List<int>();
-        void GenOfTilePicBoxs(int WantedNum = 0)
-            {
-                int X = 0;
-                for (int i = 0; i < WantedNum; i++)
-                {
-                    TileButtons.Add(new Button());
-                    TileButtons[i].Name = i.ToString();
-                    TileButtons[i].Location = new Point(Config.TileX + X, Config.TileY);
-                    TileButtons[i].Size = new Size(200, 200);
-                    TileButtons[i].TabIndex = 1;
-                    TileButtons[i].BackColor = Color.Yellow;
-                    TileButtons[i].Text = "Standard1";
-                    TileButtons[i].Enabled = true;
-                    TileButtons[i].Click += new EventHandler(MyClickEvent);
-                    this.Controls.Add(TileButtons[i]);
-                    X += 200;
-                    Factory.Add(false);
-                }
-            }
-            void newgame(bool x = false)
-            {
-                if (x)
-                {
-                    TCSelectionButton.Show();
-                    WCSelectionButton.Show();
-                    TLButton.Show();
-                    TTSelectionButton.Show();
-                    Title_label.Hide();
-                    ContinueButton.Hide();
-                    New_Game_button.Hide();
-                    LoadGameButton.Hide();
-                    OptionsButton.Hide();
-                }
-                else
-                {
-                    TCSelectionButton.Hide();
-                    WCSelectionButton.Hide();
-                    TLButton.Hide();
-                    TTSelectionButton.Hide();
-                    Title_label.Hide();
-                    ContinueButton.Hide();
-                    New_Game_button.Hide();
-                    LoadGameButton.Hide();
-                    OptionsButton.Hide();
-                    ListOfBuildAction.Show();
-                    LabelTitaniumCount.Show();
-                    LabelWaterCount.Show();
-                    LabelEnergyBricksCount.Show();
-                    LabelFoodCount.Show();
-                    LabelResearchCount.Show();
-                    LabelTextTitanium.Show();
-                    LabelTextEnergyBricks.Show();
-                    LabelTextFood.Show();
-                    LabelTextWater.Show();
-                    LabelTextResearchPoints.Show();
+  
+        private Panel playPanel;
+        private List<Button> TileButtons = new List<Button>();
+        private List<bool> Factory = new List<bool>();
+        private List<string> FactoryTypes = new List<string>();
+        private List<int> FactoryLevels = new List<int>();
 
-                    ListedBoxLoader();
-                    resourceManager = new GameResourceManager(
-                        LabelTitaniumCount,
-                        LabelWaterCount,
-                        LabelEnergyBricksCount,
-                        LabelFoodCount,
-                        LabelResearchCount
-                    );
-                }
-            }
-            public TestScreen()
+        // Factory selection and actions
+
+        private ListBox FactoryTypeList;
+        private string SelectedFactoryType = null;
+
+   
+
+        private GameResourceManager resourceManager;
+
+
+        private const int TileSize = 100;
+        private int GridCols = 5;
+
+        public TestScreen()
+        {
+            InitializeComponent();
+            BuildUI();
+            resourceManager = new GameResourceManager(LabelTitaniumCount, LabelWaterCount, LabelEnergyBricksCount, LabelFoodCount, LabelResearchCount);
+        }
+
+        private void BuildUI()
+        {
+            Text = "Game - Prototype";
+            ClientSize = new Size(1200, 800);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+
+           
+            Panel left = new Panel { Location = new Point(10, 10), Size = new Size(260, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
+            Controls.Add(left);
+            int cy = 10;
+            left.Controls.Add(
+                new Label { Text = "Actions:", Location = new Point(10, cy) 
+                }); cy += 20;
+            ListOfBuildAction = new CheckedListBox { Location = new Point(10, cy), Size = new Size(220, 80) }; ListOfBuildAction.Items.AddRange(Config.ListedActions.ToArray()); ListOfBuildAction.SelectedIndexChanged += ListOfBuildAction_SelectedIndexChanged; left.Controls.Add(ListOfBuildAction); cy += 90;
+
+            left.Controls.Add(new Label { Text = "Factory Types:", Location = new Point(10, cy) }); cy += 20;
+            FactoryTypeList = new ListBox { Location = new Point(10, cy), Size = new Size(220, 120) };
+            FactoryTypeList.Items.AddRange(new object[] { "Titanium Mine", "Water Pump", "Energy Brick Generator", "Farm", "Research Lab" });
+            FactoryTypeList.SelectedIndexChanged += FactoryTypeList_SelectedIndexChanged;
+            FactoryTypeList.Visible = true; left.Controls.Add(FactoryTypeList); cy += 140;
+
+            left.Controls.Add(new Label { Text = "Resources:", Location = new Point(10, cy), Font = new Font("Segoe UI", 9, FontStyle.Bold) }); cy += 22;
+            LabelTitaniumCount = new Label { Text = "0", Location = new Point(10, cy), AutoSize = true }; left.Controls.Add(new Label { Text = "Titanium:", Location = new Point(10, cy) }); LabelTitaniumCount.Location = new Point(120, cy); left.Controls.Add(LabelTitaniumCount); cy += 22;
+            LabelWaterCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; left.Controls.Add(new Label { Text = "Water:", Location = new Point(10, cy) }); LabelWaterCount.Location = new Point(120, cy); left.Controls.Add(LabelWaterCount); cy += 22;
+            LabelEnergyBricksCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; left.Controls.Add(new Label { Text = "Energy:", Location = new Point(10, cy) }); LabelEnergyBricksCount.Location = new Point(120, cy); left.Controls.Add(LabelEnergyBricksCount); cy += 22;
+            LabelFoodCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; left.Controls.Add(new Label { Text = "Food:", Location = new Point(10, cy) }); LabelFoodCount.Location = new Point(120, cy); left.Controls.Add(LabelFoodCount); cy += 22;
+            LabelResearchCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; left.Controls.Add(new Label { Text = "Research:", Location = new Point(10, cy) }); LabelResearchCount.Location = new Point(120, cy); left.Controls.Add(LabelResearchCount); cy += 30;
+
+            playPanel = new Panel { Location = new Point(280, 10), Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
+            Controls.Add(playPanel);
+
+            
+            CreateTiles(5, 1); 
+            GenOfTilePicBoxs(5);
+
+            // production timer
+            ProductionTimer = new Timer { Interval = 1000 };
+            ProductionTimer.Tick += ProductionTimer_Tick;
+            ProductionTimer.Start();
+        }
+
+        private void CreateTiles(int cols, int rows)
+        {
+            TileButtons.Clear(); Factory.Clear(); FactoryTypes.Clear(); FactoryLevels.Clear();
+
+            Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(cols * TileSize, rows * TileSize) };
+            playPanel.Controls.Clear();
+            playPanel.Controls.Add(canvas);
+
+            for (int r = 0; r < rows; r++)
             {
-                InitializeComponent();
-            }
-            void ListedBoxLoader()
-            {
-                foreach (string I in Config.ListedActions)
-                    ListOfBuildAction.Items.Add(I);
-            }
-            private void ContinueButton_Click(object sender, EventArgs e)
-            {
-                PrototypeErrorMessage.Show();
-            }
-            private void New_Game_button_Click(object sender, EventArgs e)
-            {
-                PrototypeErrorMessage.Hide();
-                newgame();
-                GenOfTilePicBoxs(5);
-            }
-            void TileChecker(int IndexOfButton)
-            {
-                if (ListOfBuildAction.SelectedIndex > -1)
+                for (int c = 0; c < cols; c++)
                 {
-                    switch (Config.ListedActions[ListOfBuildAction.SelectedIndex])
-                    {
-                        case "Factory":
-                            TileButtons[IndexOfButton].BackColor = Color.Green;
-                            break;
-                        case "Demolish":
-                            TileButtons[IndexOfButton].BackColor = Color.Yellow;
-                            Factory[IndexOfButton] = false;
-                            break;
-                    case "Upgrade":
-                        if (FactoryTypes[IndexOfButton] != null && FactoryLevels[IndexOfButton] > 0)
-                        {
-                            int currentLevel = FactoryLevels[IndexOfButton];
-                            if (currentLevel < 3)
-                            {
-                                int cost = 0;
-                                switch (FactoryTypes[IndexOfButton])
-                                {
-                                    case "Titanium Mine":
-                                        cost = Config.TitaniumMineUpgradeCosts[currentLevel];
-                                        break;
-                                    case "Water Pump":
-                                        cost = Config.WaterPumpUpgradeCosts[currentLevel];
-                                        break;
-                                    case "Energy Brick Generator":
-                                        cost = Config.EnergyBrickGeneratorUpgradeCosts[currentLevel];
-                                        break;
-                                    case "Farm":
-                                        cost = Config.FarmUpgradeCosts[currentLevel];
-                                        break;
-                                    case "Research Lab":
-                                        cost = Config.ResearchLabUpgradeCosts[currentLevel];
-                                        break;
-                                }
-                                int currentTitanium = resourceManager.GetResourceAmount("Titanium");
-                                if (currentTitanium >= cost)
-                                {
-                                    resourceManager.DeductResource("Titanium", cost);
-                                    FactoryLevels[IndexOfButton] = currentLevel + 1;
-                                    TileButtons[IndexOfButton].Text =
-                                        FactoryTypes[IndexOfButton] + " L" + FactoryLevels[IndexOfButton];
-                                    resourceManager.UpgradeFactory(IndexOfButton);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Not enough Titanium to upgrade! Need " + cost + ".");
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show(FactoryTypes[IndexOfButton] + " is already max level!");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("No factory here to upgrade!");
-                        }
-                        break;
+                    Button b = new Button { Location = new Point(c * TileSize, r * TileSize), Size = new Size(TileSize - 2, TileSize - 2), BackColor = Color.Yellow, Text = "Empty", ForeColor = Color.Black, Tag = (c).ToString() };
+                    b.Click += TileButton_Click;
+                    canvas.Controls.Add(b);
+                    TileButtons.Add(b);
+                    Factory.Add(false);
+                    FactoryTypes.Add(null);
+                    FactoryLevels.Add(0);
                 }
-                }
-                else
-                {
-                    MessageBox.Show("Please select what you would like to build (Factory for now).");
-                }
-            }
-            int ButtonFinder(string NameOfButton)
-            {
-                for (int i = 0; i < TileButtons.Count; i++)
-                    if (TileButtons[i].Name == NameOfButton)
-                        return i;
-                return -1;
-            }
-            void FactoryChecker(int IndexOfButton)
-            {
-                if (TileButtons[IndexOfButton].BackColor == Color.Green)
-                {
-                    Factory[IndexOfButton] = true;
-                    resourceManager.AddFactory(new TitaniumResourceFactory(1));
-                    resourceManager.AddFactory(new WaterResourceFactory(1));
-                    resourceManager.AddFactory(new EnergyBricksResourceFactory(1));
-                    resourceManager.AddFactory(new FoodResourceFactory(1));
-                    resourceManager.AddFactory(new ResearchResourceFactory(1));
-                }
-            }
-            private void MyClickEvent(object sender, EventArgs e)
-            {
-                int index = ButtonFinder(((Button)sender).Name);
-                TileChecker(index);
-                FactoryChecker(index);
-            }
-            private void ProductionTimer_Tick(object sender, EventArgs e)
-            {
-                resourceManager.Tick();
             }
         }
+
+        private void GenOfTilePicBoxs(int WantedNum = 0)
+        {
+         
+            CreateTiles(WantedNum, 1);
+        }
+
+        private void TileButton_Click(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            if (b == null) return;
+            int idx = TileButtons.IndexOf(b);
+            if (idx < 0) return;
+
+            if (ListOfBuildAction.SelectedIndex > -1)
+            {
+                string action = Config.ListedActions[ListOfBuildAction.SelectedIndex];
+                if (action == "Factory")
+                {
+                    if (SelectedFactoryType == null)
+                    {
+                        MessageBox.Show("Select a factory type first from the list.");
+                        return;
+                    }
+
+                    // build
+                    Factory[idx] = true;
+                    FactoryTypes[idx] = SelectedFactoryType;
+                    FactoryLevels[idx] = 1;
+                    b.BackColor = GetFactoryColor(SelectedFactoryType);
+                    b.Text = SelectedFactoryType + " L1";
+
+           
+                    switch (SelectedFactoryType)
+                    {
+                        case "Titanium Mine": 
+                            resourceManager.AddFactory(new TitaniumFactory(1)); 
+                            break;
+                        case "Water Pump": 
+                            resourceManager.AddFactory(new WaterFactory(1)); 
+                            break;
+                        case "Energy Brick Generator": 
+                            resourceManager.AddFactory(new EnergyBricksFactory(1)); 
+                            break;
+                        case "Farm": 
+                            resourceManager.AddFactory(new FarmFactory(1)); 
+                            break;
+                        case "Research Lab": 
+                            resourceManager.AddFactory(new ResearchFactory(1)); 
+                            break;
+                    }
+
+            
+                    SelectedFactoryType = null;
+                    FactoryTypeList.ClearSelected();
+                }
+                else if (action == "Demolish")
+                {
+                    Factory[idx] = false;
+                    FactoryTypes[idx] = null;
+                    FactoryLevels[idx] = 0;
+                    b.BackColor = Color.Yellow;
+                    b.Text = "Empty";
+
+                    /*
+                    switch (FactoryTypes[idx])
+                    {
+                        case "Titanium Mine":
+                            resourceManager.RemoveFactory(TitaniumFactory(1));
+                            break;
+                        case "Water Pump":
+                            resourceManager.RemoveFactory();
+                            break;
+                        case "Energy Brick Generator":
+                            resourceManager.RemoveFactory();
+                            break;
+                        case "Farm":
+                            resourceManager.RemoveFactory();
+                            break;
+                        case "Research Lab":
+                            resourceManager.RemoveFactory();
+                            break;
+                    }*/
+                }
+                else if (action == "Upgrade")
+                {
+                    if (FactoryTypes[idx] == null) { MessageBox.Show("No factory here to upgrade!"); return; }
+                    int currentLevel = FactoryLevels[idx];
+                    if (currentLevel >= 3) { MessageBox.Show("Already max level"); return; }
+
+                    int cost = 0;
+                    switch (FactoryTypes[idx])
+                    {
+                        case "Titanium Mine": 
+                            cost = Config.TitaniumMineUpgradeCosts[currentLevel]; 
+                            break;
+                        case "Water Pump":
+                            cost = Config.WaterPumpUpgradeCosts[currentLevel]; 
+                            break;
+                        case "Energy Brick Generator": 
+                            cost = Config.EnergyBrickGeneratorUpgradeCosts[currentLevel]; 
+                            break;
+                        case "Farm": 
+                            cost = Config.FarmUpgradeCosts[currentLevel]; 
+                            break;
+                        case "Research Lab": 
+                            cost = Config.ResearchLabUpgradeCosts[currentLevel]; 
+                            break;
+                    }
+
+                    int have = resourceManager.GetResourceAmount("Titanium");
+                    if (have < cost) { MessageBox.Show("Not enough Titanium. Need " + cost); return; }
+
+                    resourceManager.DeductResource("Titanium", cost);
+                    FactoryLevels[idx] = currentLevel + 1;
+                    b.Text = FactoryTypes[idx] + " L" + FactoryLevels[idx];
+                    resourceManager.UpgradeFactory(idx); // NOTE: factories list inside resourceManager is per-build order; ensure alignment in more complex setups
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select an action first (Factory / Demolish / Upgrade).");
+            }
+        }
+
+        private void ListOfBuildAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // nothing needed; action read when clicking tiles
+        }
+
+        private void FactoryTypeList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (FactoryTypeList.SelectedIndex >= 0) SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
+        }
+
+        private Color GetFactoryColor(string factoryType)
+        {
+            switch (factoryType)
+            {
+                case "Titanium Mine": return Color.DarkGray;
+                case "Water Pump": return Color.LightBlue;
+                case "Energy Brick Generator": return Color.Orange;
+                case "Farm": return Color.Green;
+                case "Research Lab": return Color.MediumPurple;
+                default: return Color.White;
+            }
+        }
+
+        private void ProductionTimer_Tick(object sender, EventArgs e)
+        {
+            resourceManager.Tick();
+        }
+        private void ContinueButton_Click(object sender, EventArgs e)
+        {
+            PrototypeErrorMessage.Show();
+        }
+     
+            
+
+
+            private void New_Game_button_Click(object sender, EventArgs e)
+        {   PrototypeErrorMessage.Hide();
+            // Hide this menu (or close it if you prefer)
+            this.Hide();
+
+            // Open the MainMenu form
+            using (MainMenu mainMenu = new MainMenu())
+            {
+                mainMenu.ShowDialog();
+            }
+
+            // Once MainMenu closes, show this form again (optional)
+            this.Show();
+        }
+
     }
+}
+
+
