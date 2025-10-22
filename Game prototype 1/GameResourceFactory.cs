@@ -26,10 +26,14 @@ namespace Game_prototype_1
         {
             switch (Level)
             {
-                case 1: return baseValue;
-                case 2: return baseValue * Config.Level2Multiplier;
-                case 3: return baseValue * Config.Level3Multiplier;
-                default: return baseValue;
+                case 1: 
+                    return baseValue;
+                case 2: 
+                    return baseValue * Config.Level2Multiplier;
+                case 3: 
+                    return baseValue * Config.Level3Multiplier;
+                default: 
+                    return baseValue;
             }
         }
 

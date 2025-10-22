@@ -11,11 +11,11 @@ namespace Game_prototype_1
 
     namespace Game_prototype_1
     {
-        public class GameResourceManager
+         public class GameResourceManager
         {
             private List<GameResourceFactory> factories;
 
-            private int TitaniumValue;
+            private  int TitaniumValue;
             private int WaterValue;
             private int EnergyBricksValue;
             private int FoodValue;
@@ -30,8 +30,16 @@ namespace Game_prototype_1
             public GameResourceManager(Label titaniumLabel, Label waterLabel, Label energyLabel, Label foodLabel, Label researchLabel)
             {
                 factories = new List<GameResourceFactory>();
-                TitaniumValue = 0; WaterValue = 0; EnergyBricksValue = 0; FoodValue = 0; ResearchValue = 0;
-                TitaniumLabel = titaniumLabel; WaterLabel = waterLabel; EnergyBricksLabel = energyLabel; FoodLabel = foodLabel; ResearchLabel = researchLabel;
+                TitaniumValue = 0; 
+                WaterValue = 0; 
+                EnergyBricksValue = 0; 
+                FoodValue = 0; 
+                ResearchValue = 0;
+                TitaniumLabel = titaniumLabel; 
+                WaterLabel = waterLabel; 
+                EnergyBricksLabel = energyLabel; 
+                FoodLabel = foodLabel; 
+                ResearchLabel = researchLabel;
                 UpdateLabels();
             }
 
@@ -42,11 +50,21 @@ namespace Game_prototype_1
                     GameResource res = fact.Tick();
                     switch (res.Name)
                     {
-                        case "Titanium": TitaniumValue += res.Value; break;
-                        case "Water": WaterValue += res.Value; break;
-                        case "EnergyBricks": EnergyBricksValue += res.Value; break;
-                        case "Food": FoodValue += res.Value; break;
-                        case "Research": ResearchValue += res.Value; break;
+                        case "Titanium": 
+                            TitaniumValue += res.Value; 
+                            break;
+                        case "Water": 
+                            WaterValue += res.Value; 
+                            break;
+                        case "EnergyBricks": 
+                            EnergyBricksValue += res.Value; 
+                            break;
+                        case "Food": 
+                            FoodValue += res.Value; 
+                            break;
+                        case "Research": 
+                            ResearchValue += res.Value; 
+                            break;
                     }
                 }
                 UpdateLabels();
@@ -78,12 +96,18 @@ namespace Game_prototype_1
             {
                 switch (name)
                 {
-                    case "Titanium": return TitaniumValue;
-                    case "Water": return WaterValue;
-                    case "EnergyBricks": return EnergyBricksValue;
-                    case "Food": return FoodValue;
-                    case "Research": return ResearchValue;
-                    default: return 0;
+                    case "Titanium": 
+                        return TitaniumValue;
+                    case "Water": 
+                        return WaterValue;
+                    case "EnergyBricks":
+                        return EnergyBricksValue;
+                    case "Food": 
+                        return FoodValue;
+                    case "Research": 
+                        return ResearchValue;
+                    default: 
+                        return 0;
                 }
             }
 
@@ -91,18 +115,32 @@ namespace Game_prototype_1
             {
                 switch (name)
                 {
-                    case "Titanium": TitaniumValue -= amount; break;
-                    case "Water": WaterValue -= amount; break;
-                    case "EnergyBricks": EnergyBricksValue -= amount; break;
-                    case "Food": FoodValue -= amount; break;
-                    case "Research": ResearchValue -= amount; break;
+                    case "Titanium": 
+                        TitaniumValue -= amount; 
+                        break;
+                    case "Water":
+                        WaterValue -= amount; 
+                        break;
+                    case "EnergyBricks": 
+                        EnergyBricksValue -= amount; 
+                        break;
+                    case "Food": 
+                        FoodValue -= amount; 
+                        break;
+                    case "Research": 
+                        ResearchValue -= amount; 
+                        break;
                 }
                 UpdateLabels();
             }
 
             public void ResetAll()
             {
-                TitaniumValue = 0; WaterValue = 0; EnergyBricksValue = 0; FoodValue = 0; ResearchValue = 0;
+                TitaniumValue = 0; 
+                WaterValue = 0; 
+                EnergyBricksValue = 0; 
+                FoodValue = 0; 
+                ResearchValue = 0;
                 UpdateLabels();
             }
         }

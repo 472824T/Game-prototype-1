@@ -65,10 +65,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameManager.cs" />
     <Compile Include="GameResourceManager.cs" />
     <Compile Include="GameResourceFactory.cs" />
     <Compile Include="GameResource.cs" />
     <Compile Include="config.cs" />
+    <Compile Include="Research.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Research.Designer.cs">
+      <DependentUpon>Research.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +92,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Research.resx">
+      <DependentUpon>Research.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestScreen.resx">
       <DependentUpon>TestScreen.cs</DependentUpon>
