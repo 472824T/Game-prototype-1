@@ -23,7 +23,7 @@ namespace Game_prototype_1
             private Button btnGenerate;
             private Button btnStartGame;
 
-            private const int TileSize = 100;
+            
             private int cols = 5;
             private int rows = 4;
             private float noiseScale = 10f;
@@ -59,13 +59,23 @@ namespace Game_prototype_1
                 Controls.Add(controls);
 
                 int cy = 10;
-                controls.Controls.Add(new Label { Text = "Columns:", Location = new Point(10, cy) }); cy += 20;
-                nudCols = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = cols }; controls.Controls.Add(nudCols); cy += 30;
-                controls.Controls.Add(new Label { Text = "Rows:", Location = new Point(10, cy) }); cy += 20;
-                nudRows = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = rows }; controls.Controls.Add(nudRows); cy += 30;
-                controls.Controls.Add(new Label { Text = "Noise Scale (1–100):", Location = new Point(10, cy) }); cy += 20;
-                nudScale = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 100, Value = (decimal)noiseScale }; controls.Controls.Add(nudScale); cy += 30;
-                controls.Controls.Add(new Label { Text = "Seed:", Location = new Point(10, cy) }); cy += 20;
+                controls.Controls.Add(new Label { Text = "Columns:", Location = new Point(10, cy) }); 
+                cy += 20;
+                nudCols = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = cols }; 
+                controls.Controls.Add(nudCols); 
+                cy += 30;
+                controls.Controls.Add(new Label { Text = "Rows:", Location = new Point(10, cy) }); 
+                cy += 20;
+                nudRows = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = rows }; 
+                controls.Controls.Add(nudRows); 
+                cy += 30;
+                controls.Controls.Add(new Label { Text = "Noise Scale (1–100):", Location = new Point(10, cy) });
+                cy += 20;
+                nudScale = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 100, Value = (decimal)noiseScale }; 
+                controls.Controls.Add(nudScale); 
+                cy += 30;
+                controls.Controls.Add(new Label { Text = "Seed:", Location = new Point(10, cy) }); 
+                cy += 20;
                 txtSeed = new TextBox { Location = new Point(10, cy), Width = 200, Text = seed.ToString() }; controls.Controls.Add(txtSeed); cy += 35;
                 btnGenerate = new Button { Text = "Generate", Location = new Point(10, cy), Width = 220 }; btnGenerate.Click += BtnGenerate_Click; controls.Controls.Add(btnGenerate); cy += 40;
                 Button btnSave = new Button { Text = "Save Map", Location = new Point(10, cy), Width = 220 }; btnSave.Click += BtnSave_Click; controls.Controls.Add(btnSave); cy += 40;
@@ -98,7 +108,8 @@ namespace Game_prototype_1
             private void GenerateGrid()
             {
                 gridPanel.Controls.Clear(); tileButtons.Clear();
-                int width = cols * TileSize; int height = rows * TileSize;
+                int width = cols * Config.TileSize;
+                int height = rows * Config.TileSize;
                 Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(width, height) }; gridPanel.Controls.Add(canvas);
 
                 for (int r = 0; r < rows; r++)
@@ -107,7 +118,7 @@ namespace Game_prototype_1
                     {
                         float nx = c / noiseScale; float ny = r / noiseScale; float n = perlin.Noise(nx, ny);
                         TileType t = TileFromNoise(n);
-                        Button tile = new Button { Location = new Point(c * TileSize, r * TileSize), Size = new Size(TileSize - 2, TileSize - 2), BackColor = TileColor(t), ForeColor = Color.White, Text = t.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = new TileInfo { Col = c, Row = r, Type = t, Level = 1 } };
+                        Button tile = new Button { Location = new Point(c * Config.TileSize, r * Config.TileSize), Size = new Size(Config.TileSize - 2, Config.TileSize - 2), BackColor = TileColor(t), ForeColor = Color.White, Text = t.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = new TileInfo { Col = c, Row = r, Type = t, Level = 1 } };
                         tile.Click += Tile_Click; canvas.Controls.Add(tile); tileButtons.Add(tile);
                     }
                 }
@@ -117,16 +128,16 @@ namespace Game_prototype_1
 
             private TileType TileFromNoise(float n)
             {
-                if (n < -0.35f) return TileType.Water;
-                if (n < -0.05f) return TileType.Plains;
+                if (n < -0.35f) return TileType.Ocean;
+                if (n < -0.05f) return TileType.GrassLands;
                 if (n < 0.25f) return TileType.Forest;
-                if (n < 0.55f) return TileType.Hills;
-                return TileType.Mountain;
+                if (n < 0.55f) return TileType.Desert;
+                return TileType.Mountains;
             }
 
             private TileType NextTileType(TileType t) { TileType[] vals = (TileType[])Enum.GetValues(typeof(TileType)); int idx = Array.IndexOf(vals, t); return vals[(idx + 1) % vals.Length]; }
 
-            private Color TileColor(TileType t) { switch (t) { case TileType.Water: return Color.FromArgb(68, 138, 255); case TileType.Plains: return Color.FromArgb(120, 200, 80); case TileType.Forest: return Color.FromArgb(34, 139, 34); case TileType.Hills: return Color.FromArgb(194, 178, 128); case TileType.Mountain: return Color.FromArgb(120, 120, 120); default: return Color.White; } }
+            private Color TileColor(TileType t) { switch (t) { case TileType.Ocean: return Color.FromArgb(68, 138, 255); case TileType.GrassLands: return Color.FromArgb(120, 200, 80); case TileType.Forest: return Color.FromArgb(34, 139, 34); case TileType.Desert: return Color.FromArgb(194, 178, 128); case TileType.Mountains: return Color.FromArgb(120, 120, 120); default: return Color.White; } }
 
             private void BtnSave_Click(object sender, EventArgs e)
             {
@@ -146,42 +157,70 @@ namespace Game_prototype_1
                 using (OpenFileDialog ofd = new OpenFileDialog { Filter = "JSON Map (*.json)|*.json" })
                 {
                     if (ofd.ShowDialog() != DialogResult.OK) return;
-                    try
-                    {
-                        MapSaveData map = JsonConvert.DeserializeObject<MapSaveData>(File.ReadAllText(ofd.FileName));
-                        if (map != null) { cols = map.Columns; rows = map.Rows; seed = map.Seed; noiseScale = map.NoiseScale; nudCols.Value = cols; nudRows.Value = rows; nudScale.Value = (decimal)noiseScale; txtSeed.Text = seed.ToString(); GenerateFromSaved(map); MessageBox.Show("Map loaded successfully!"); }
+                        try
+                        {
+                            MapSaveData map = JsonConvert.DeserializeObject<MapSaveData>(File.ReadAllText(ofd.FileName));
+                            if (map != null) 
+                            { 
+                                cols = map.Columns; 
+                                rows = map.Rows; 
+                                seed = map.Seed; 
+                                noiseScale = map.NoiseScale; 
+                                nudCols.Value = cols; 
+                                nudRows.Value = rows; 
+                                nudScale.Value = (decimal)noiseScale; 
+                                txtSeed.Text = seed.ToString(); 
+                                GenerateFromSaved(map); 
+                                MessageBox.Show("Map loaded successfully!"); }
+                            }
+                        catch (Exception ex) { MessageBox.Show("Failed to load map: " + ex.Message); 
                     }
-                    catch (Exception ex) { MessageBox.Show("Failed to load map: " + ex.Message); }
                 }
             }
 
             private void GenerateFromSaved(MapSaveData map)
             {
                 gridPanel.Controls.Clear(); tileButtons.Clear();
-                Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(map.Columns * TileSize, map.Rows * TileSize) };
+                Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(map.Columns * Config.TileSize, map.Rows * Config.TileSize) };
                 gridPanel.Controls.Add(canvas);
                 foreach (TileInfo info in map.Tiles)
                 {
-                    Button tile = new Button { Location = new Point(info.Col * TileSize, info.Row * TileSize), Size = new Size(TileSize - 2, TileSize - 2), BackColor = TileColor(info.Type), ForeColor = Color.White, Text = info.Type.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = info };
-                    tile.Click += Tile_Click; canvas.Controls.Add(tile); tileButtons.Add(tile);
+                    Button tile = new Button { Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize), Size = new Size(Config.TileSize - 2, Config.TileSize - 2), BackColor = TileColor(info.Type), ForeColor = Color.White, Text = info.Type.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = info };
+                    tile.Click += Tile_Click; 
+                    canvas.Controls.Add(tile); 
+                    tileButtons.Add(tile);
                 }
             }
 
-            private enum TileType { Water, Plains, Forest, Hills, Mountain }
+            private enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
 
-            private class TileInfo { public int Col { get; set; } public int Row { get; set; } public TileType Type { get; set; } public int Level { get; set; } }
+            private class TileInfo { public int Col { get; set; } public int Row { get; set; } 
+            public TileType Type { get; set; } 
+            public int Level { get; set; } }
 
-            private class MapSaveData { public int Columns { get; set; } public int Rows { get; set; } public int Seed { get; set; } public float NoiseScale { get; set; } public List<TileInfo> Tiles { get; set; } }
+            private class MapSaveData 
+        { public int Columns { get; set; } public int Rows { get; set; } public int Seed { get; set; } public float NoiseScale { get; set; } public List<TileInfo> Tiles { get; set; } }
 
             private class PerlinNoise
             {
                 private readonly int[] perm;
-                public PerlinNoise(int seed) { perm = new int[512]; int[] p = new int[256]; Random rnd = new Random(seed); for (int i = 0; i < 256; i++) p[i] = i; for (int i = 255; i > 0; i--) { int j = rnd.Next(i + 1); int tmp = p[i]; p[i] = p[j]; p[j] = tmp; } for (int i = 0; i < 512; i++) perm[i] = p[i & 255]; }
+                public PerlinNoise(int seed) { perm = new int[512]; int[] p = new int[256]; Random rnd = new Random(seed); 
+                for (int i = 0; i < 256; i++) 
+                    p[i] = i; 
+                for (int i = 255; i > 0; i--) 
+                { 
+                    int j = rnd.Next(i + 1); 
+                    int tmp = p[i]; 
+                    p[i] = p[j]; p[j] = tmp; } 
+                for (int i = 0; i < 512; i++) perm[i] = p[i & 255]; }
                 public float Noise(float x, float y) { int X = FastFloor(x) & 255; int Y = FastFloor(y) & 255; float xf = x - (float)Math.Floor(x); float yf = y - (float)Math.Floor(y); float u = Fade(xf); float v = Fade(yf); int aa = perm[X + perm[Y]]; int ab = perm[X + perm[Y + 1]]; int ba = perm[X + 1 + perm[Y]]; int bb = perm[X + 1 + perm[Y + 1]]; float x1 = Lerp(Grad(aa, xf, yf), Grad(ba, xf - 1, yf), u); float x2 = Lerp(Grad(ab, xf, yf - 1), Grad(bb, xf - 1, yf - 1), u); return Lerp(x1, x2, v); }
                 private static int FastFloor(float x) => x > 0 ? (int)x : (int)x - 1;
                 private static float Fade(float t) => t * t * t * (t * (t * 6 - 15) + 10);
                 private static float Lerp(float a, float b, float t) => a + t * (b - a);
-                private static float Grad(int hash, float x, float y) { int h = hash & 7; float u = h < 4 ? x : y; float v = h < 4 ? y : x; return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v); }
+                private static float Grad(int hash, float x, float y) { int h = hash & 7; 
+                float u = h < 4 ? x : y; 
+                float v = h < 4 ? y : x; 
+                return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v); }
             }
         private void MainMenu_Load(object sender, EventArgs e)
         {

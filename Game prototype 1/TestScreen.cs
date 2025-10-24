@@ -1,4 +1,5 @@
 ﻿using Game_prototype_1.Game_prototype_1;
+using Graphing;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+
 
 
 namespace Game_prototype_1
@@ -32,7 +34,7 @@ namespace Game_prototype_1
 
    
 
-        public GameResourceManager resourceManager;
+        
 
 
         private const int TileSize = 100;
@@ -42,7 +44,7 @@ namespace Game_prototype_1
         {
             InitializeComponent();
             BuildUI();
-            resourceManager = new GameResourceManager(LabelTitaniumCount, LabelWaterCount, LabelEnergyBricksCount, LabelFoodCount, LabelResearchCount);
+            
         }
 
         private void BuildUI()
@@ -168,19 +170,19 @@ namespace Game_prototype_1
                     switch (SelectedFactoryType)
                     {
                         case "Titanium Mine": 
-                            resourceManager.AddFactory(new TitaniumFactory(1)); 
+                            GameResourceManager.AddFactory(new TitaniumFactory(1)); 
                             break;
-                        case "Water Pump": 
-                            resourceManager.AddFactory(new WaterFactory(1)); 
+                        case "Water Pump":
+                            GameResourceManager.AddFactory(new WaterFactory(1)); 
                             break;
-                        case "Energy Brick Generator": 
-                            resourceManager.AddFactory(new EnergyBricksFactory(1)); 
+                        case "Energy Brick Generator":
+                            GameResourceManager.AddFactory(new EnergyBricksFactory(1)); 
                             break;
                         case "Farm": 
-                            resourceManager.AddFactory(new FarmFactory(1)); 
+                            GameResourceManager.AddFactory(new FarmFactory(1)); 
                             break;
                         case "Research Lab": 
-                            resourceManager.AddFactory(new ResearchFactory(1)); 
+                            GameResourceManager.AddFactory(new ResearchFactory(1)); 
                             break;
                     }
 
@@ -200,19 +202,19 @@ namespace Game_prototype_1
                     switch (FactoryTypes[idx])
                     {
                         case "Titanium Mine":
-                            resourceManager.RemoveFactory(new TitaniumFactory(1));
+                            GameResourceManager.RemoveFactory(new TitaniumFactory(1));
                             break;
                         case "Water Pump":
-                            resourceManager.RemoveFactory(new WaterFactory(1));
+                            GameResourceManager.RemoveFactory(new WaterFactory(1));
                             break;
                         case "Energy Brick Generator":
-                            resourceManager.RemoveFactory(new EnergyBricksFactory(1));
+                            GameResourceManager.RemoveFactory(new EnergyBricksFactory(1));
                             break;
                         case "Farm":
-                            resourceManager.RemoveFactory(new FarmFactory(1));
+                            GameResourceManager.RemoveFactory(new FarmFactory(1));
                             break;
                         case "Research Lab":
-                            resourceManager.RemoveFactory(new ResearchFactory(1));
+                            GameResourceManager.RemoveFactory(new ResearchFactory(1));
                             break;  
                     }
                 }
@@ -242,13 +244,13 @@ namespace Game_prototype_1
                             break;
                     }
 
-                    int have = resourceManager.GetResourceAmount("Titanium");
+                    int have = GameResourceManager.GetResourceAmount("Titanium");
                     if (have < cost) { MessageBox.Show("Not enough Titanium. Need " + cost); return; }
 
-                    resourceManager.DeductResource("Titanium", cost);
+                    GameResourceManager.DeductResource("Titanium", cost);
                     FactoryLevels[idx] = currentLevel + 1;
                     b.Text = FactoryTypes[idx] + " L" + FactoryLevels[idx];
-                    resourceManager.UpgradeFactory(idx); 
+                    GameResourceManager.UpgradeFactory(idx); 
                 }
             }
             else
@@ -282,7 +284,7 @@ namespace Game_prototype_1
 
         private void ProductionTimer_Tick(object sender, EventArgs e)
         {
-            resourceManager.Tick();
+            GameResourceManager.Tick();
         }
         private void ContinueButton_Click(object sender, EventArgs e)
         {
@@ -309,6 +311,15 @@ namespace Game_prototype_1
 
         private void TestScreen_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void LoadGameButton_Click(object sender, EventArgs e)
+        {
+            using (Research research = new Research())
+            {
+                research.ShowDialog();
+            }
 
         }
     }

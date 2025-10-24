@@ -32,7 +32,11 @@ namespace Game_prototype_1
             // ---- Production multipliers ----
             public const int Level2Multiplier = 2;
             public const int Level3Multiplier = 3;
-        }
+            // ===== Images for the Research page
+            public const string Arrow = "M:\\Visual Studio 2022\\Graphing\\Graphing\\Arrow.png";
+            //------ Values for Perlin noise
+            public const int TileSize = 100;
     }
+}
 
 

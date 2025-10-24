@@ -33,7 +33,7 @@ namespace Graphing
                 List<PictureBox> PicboxArrows = new List<PictureBox> { ArrrowPicBox1, ArrrowPicBox2, ArrrowPicBox3, ArrrowPicBox4, ArrrowPicBox5 };
                 foreach (PictureBox p in PicboxArrows)
                 {
-                    p.Load(Arrow);
+                    p.Load(Config.Arrow);
                 }
 
             }
@@ -88,7 +88,6 @@ namespace Graphing
                        
                     }
 
-
                 }
                 if (b.BackColor != Color.Green)
                 {
@@ -104,7 +103,7 @@ namespace Graphing
 
 
         // To go in config 
-        string Arrow = "M:\\Visual Studio 2022\\Graphing\\Graphing\\Arrow.png";
+        
 
        
         public class Graph
@@ -138,16 +137,16 @@ namespace Graphing
 
         public void WhenPressed (Button t, int i = 50)
         {
-            if (GetResourceAmount("Titanium") >= i && t.BackColor != Color.Green)
+            if (GameResourceManager.GetResourceAmount("Titanium") >= i && t.BackColor != Color.Green)
             {
                 t.BackColor = Color.Green;
-                titanuim -= i;
+                GameResourceManager.DeductResource("Titanium", i);
                 t.Enabled = false;
                 TechLoading();
 
 
             }
-            else if (titanuim < i && t.BackColor != Color.Green)
+            else if (GameResourceManager.GetResourceAmount("Titanium") < i && t.BackColor != Color.Green)
             {
                 t.BackColor = Color.Yellow;
                 MessageBox.Show("U currently don't have enough resources to get this tech");
