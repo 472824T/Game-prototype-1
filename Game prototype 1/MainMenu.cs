@@ -76,15 +76,27 @@ namespace Game_prototype_1
                 cy += 30;
                 controls.Controls.Add(new Label { Text = "Seed:", Location = new Point(10, cy) }); 
                 cy += 20;
-                txtSeed = new TextBox { Location = new Point(10, cy), Width = 200, Text = seed.ToString() }; controls.Controls.Add(txtSeed); cy += 35;
-                btnGenerate = new Button { Text = "Generate", Location = new Point(10, cy), Width = 220 }; btnGenerate.Click += BtnGenerate_Click; controls.Controls.Add(btnGenerate); cy += 40;
-                Button btnSave = new Button { Text = "Save Map", Location = new Point(10, cy), Width = 220 }; btnSave.Click += BtnSave_Click; controls.Controls.Add(btnSave); cy += 40;
-                Button btnLoad = new Button { Text = "Load Map", Location = new Point(10, cy), Width = 220 }; btnLoad.Click += BtnLoad_Click; controls.Controls.Add(btnLoad); cy += 40;
+                txtSeed = new TextBox { Location = new Point(10, cy), Width = 200, Text = seed.ToString() }; 
+                controls.Controls.Add(txtSeed); 
+                cy += 35;
+                btnGenerate = new Button { Text = "Generate", Location = new Point(10, cy), Width = 220 }; 
+                btnGenerate.Click += BtnGenerate_Click; 
+                controls.Controls.Add(btnGenerate); 
+                cy += 40;
+                Button btnSave = new Button { Text = "Save Map", Location = new Point(10, cy), Width = 220 }; 
+                btnSave.Click += BtnSave_Click; 
+                controls.Controls.Add(btnSave); 
+                cy += 40;
+                Button btnLoad = new Button { Text = "Load Map", Location = new Point(10, cy), Width = 220 }; 
+                btnLoad.Click += BtnLoad_Click; 
+                controls.Controls.Add(btnLoad); 
+                cy += 40;
 
                 btnStartGame = new Button { Text = "Start Game", Location = new Point(10, cy), Width = 220 }; btnStartGame.Click += BtnStartGame_Click; controls.Controls.Add(btnStartGame); cy += 44;
 
                 Label legendTitle = new Label { Text = "Legend", Location = new Point(10, cy), Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold) }; controls.Controls.Add(legendTitle); cy += 24;
-                foreach (TileType t in Enum.GetValues(typeof(TileType))) { Label l = new Label { Text = t.ToString(), Location = new Point(10, cy), AutoSize = true }; Panel p = new Panel { BackColor = TileColor(t), Location = new Point(150, cy + 3), Size = new Size(25, 20) }; controls.Controls.Add(l); controls.Controls.Add(p); cy += 25; }
+                foreach (TileType t in Enum.GetValues(typeof(TileType))) {
+                Label l = new Label { Text = t.ToString(), Location = new Point(10, cy), AutoSize = true }; Panel p = new Panel { BackColor = TileColor(t), Location = new Point(150, cy + 3), Size = new Size(25, 20) }; controls.Controls.Add(l); controls.Controls.Add(p); cy += 25; }
 
                 gridPanel = new Panel { Location = new Point(280, 10), Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
                 Controls.Add(gridPanel);
@@ -102,7 +114,8 @@ namespace Game_prototype_1
             {
                 cols = (int)nudCols.Value; rows = (int)nudRows.Value; noiseScale = (float)nudScale.Value;
                 seed = int.TryParse(txtSeed.Text, out int p) ? p : Environment.TickCount;
-                SetupPerlin(); GenerateGrid();
+                SetupPerlin(); 
+                GenerateGrid();
             }
 
             private void GenerateGrid()
@@ -110,21 +123,37 @@ namespace Game_prototype_1
                 gridPanel.Controls.Clear(); tileButtons.Clear();
                 int width = cols * Config.TileSize;
                 int height = rows * Config.TileSize;
-                Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(width, height) }; gridPanel.Controls.Add(canvas);
+                Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(width, height) }; 
+                gridPanel.Controls.Add(canvas);
 
                 for (int r = 0; r < rows; r++)
                 {
                     for (int c = 0; c < cols; c++)
                     {
-                        float nx = c / noiseScale; float ny = r / noiseScale; float n = perlin.Noise(nx, ny);
+                        float nx = c / noiseScale; 
+                        float ny = r / noiseScale; 
+                        float n = perlin.Noise(nx, ny);
                         TileType t = TileFromNoise(n);
-                        Button tile = new Button { Location = new Point(c * Config.TileSize, r * Config.TileSize), Size = new Size(Config.TileSize - 2, Config.TileSize - 2), BackColor = TileColor(t), ForeColor = Color.White, Text = t.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = new TileInfo { Col = c, Row = r, Type = t, Level = 1 } };
-                        tile.Click += Tile_Click; canvas.Controls.Add(tile); tileButtons.Add(tile);
+                        Button tile = new Button 
+                        { 
+                        Location = new Point(c * Config.TileSize, r * Config.TileSize), 
+                        Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
+                        BackColor = TileColor(t), ForeColor = Color.White, Text = t.ToString(), 
+                        TextAlign = ContentAlignment.BottomCenter, 
+                        Font = new Font("Segoe UI", 9, FontStyle.Bold), 
+                        Tag = new TileInfo { Col = c, Row = r, Type = t, Level = 1 }
+                        };
+                        tile.Click += Tile_Click; 
+                        canvas.Controls.Add(tile); 
+                        tileButtons.Add(tile);
                     }
                 }
             }
 
-            private void Tile_Click(object sender, EventArgs e) { Button b = sender as Button; if (b?.Tag is TileInfo info) { info.Type = NextTileType(info.Type); b.Tag = info; b.BackColor = TileColor(info.Type); b.Text = info.Type.ToString(); } }
+            private void Tile_Click(object sender, EventArgs e) { Button b = sender as Button; if (b?.Tag is TileInfo info) { info.Type = NextTileType(info.Type);
+                b.Tag = info; b.BackColor = TileColor(info.Type); 
+                b.Text = info.Type.ToString(); 
+            } }
 
             private TileType TileFromNoise(float n)
             {
@@ -185,7 +214,9 @@ namespace Game_prototype_1
                 gridPanel.Controls.Add(canvas);
                 foreach (TileInfo info in map.Tiles)
                 {
-                    Button tile = new Button { Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize), Size = new Size(Config.TileSize - 2, Config.TileSize - 2), BackColor = TileColor(info.Type), ForeColor = Color.White, Text = info.Type.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = info };
+                    Button tile = new Button 
+                    { Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize),
+                      Size = new Size(Config.TileSize - 2, Config.TileSize - 2), BackColor = TileColor(info.Type), ForeColor = Color.White, Text = info.Type.ToString(), TextAlign = ContentAlignment.BottomCenter, Font = new Font("Segoe UI", 9, FontStyle.Bold), Tag = info };
                     tile.Click += Tile_Click; 
                     canvas.Controls.Add(tile); 
                     tileButtons.Add(tile);
