@@ -36,6 +36,7 @@ namespace Game_prototype_1
             public const string Arrow = "M:\\Visual Studio 2022\\Graphing\\Graphing\\Arrow.png";
             //------ Values for Perlin noise
             public const int TileSize = 100;
+
     }
 }
 

@@ -43,30 +43,45 @@ namespace Game_prototype_1
     public class TitaniumFactory : GameResourceFactory
     {
         public TitaniumFactory(int level = 1) : base("Titanium Mine", level) { }
-        public override GameResource Tick() { return new TitaniumResource(Scale(Config.TitaniumBaseProduction)); }
+        public override GameResource Tick() 
+        { 
+            return new TitaniumResource(Scale(Config.TitaniumBaseProduction)); 
+        }
     }
 
     public class WaterFactory : GameResourceFactory
     {
         public WaterFactory(int level = 1) : base("Water Pump", level) { }
-        public override GameResource Tick() { return new WaterResource(Scale(Config.WaterBaseProduction)); }
+        public override GameResource Tick() 
+        { 
+            return new WaterResource(Scale(Config.WaterBaseProduction)); 
+        }
     }
 
     public class EnergyBricksFactory : GameResourceFactory
     {
         public EnergyBricksFactory(int level = 1) : base("Energy Brick Generator", level) { }
-        public override GameResource Tick() { return new EnergyBricksResource(Scale(Config.EnergyBricksBaseProduction)); }
+        public override GameResource Tick() 
+        { 
+            return new EnergyBricksResource(Scale(Config.EnergyBricksBaseProduction)); 
+        }
     }
 
     public class FarmFactory : GameResourceFactory
     {
         public FarmFactory(int level = 1) : base("Farm", level) { }
-        public override GameResource Tick() { return new FoodResource(Scale(Config.FoodBaseProduction)); }
+        public override GameResource Tick() 
+        {
+            return new FoodResource(Scale(Config.FoodBaseProduction)); 
+        }
     }
 
     public class ResearchFactory : GameResourceFactory
     {
         public ResearchFactory(int level = 1) : base("Research Lab", level) { }
-        public override GameResource Tick() { return new ResearchResource(Scale(Config.ResearchBaseProduction)); }
+        public override GameResource Tick() 
+        { 
+            return new ResearchResource(Scale(Config.ResearchBaseProduction)); 
+        }
     }
 }

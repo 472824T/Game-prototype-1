@@ -22,9 +22,12 @@ namespace Game_prototype_1
             private TextBox txtSeed;
             private Button btnGenerate;
             private Button btnStartGame;
+            private ListBox FactoryTypeList;
+            private string SelectedFactoryType;
+            private bool buildMode = false;
 
-            
-            private int cols = 5;
+
+        private int cols = 5;
             private int rows = 4;
             private float noiseScale = 10f;
             private int seed = 0;
@@ -42,7 +45,9 @@ namespace Game_prototype_1
 
             private void SetupDefaults()
             {
-                cols = 5; rows = 4; noiseScale = 10f;
+                cols = 5; 
+                rows = 4; 
+                noiseScale = 10f;
                 seed = Environment.TickCount & 0x7fffffff;
             }
 
@@ -107,13 +112,31 @@ namespace Game_prototype_1
                 btnStartGame.Click += BtnStartGame_Click; controls.Controls.Add(btnStartGame); 
                 cy += 44;
 
-                Label legendTitle = new Label { Text = "Legend", Location = new Point(10, cy), Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold) }; controls.Controls.Add(legendTitle); cy += 24;
+            Label lblFactory = new Label 
+            { 
+                Text = "Factory Types:", 
+                Location = new Point(10, cy) 
+            };
+            controls.Controls.Add(lblFactory); 
+            cy += 20;
+
+            FactoryTypeList = new ListBox { Location = new Point(10, cy), Size = new Size(220, 120) };
+            FactoryTypeList.Items.AddRange(new object[] { "Titanium Mine", "Water Pump", "Energy Brick Generator", "Farm", "Research Lab" });
+            FactoryTypeList.SelectedIndexChanged += (s, e) =>
+            {
+                if (FactoryTypeList.SelectedIndex >= 0)
+                    SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
+            };
+            controls.Controls.Add(FactoryTypeList); cy += 130;
+
+            Label legendTitle = new Label { Text = "Legend", Location = new Point(10, cy), Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold) }; controls.Controls.Add(legendTitle); cy += 24;
                 foreach (TileType t in Enum.GetValues(typeof(TileType))) {
                 Label l = new Label { Text = t.ToString(), Location = new Point(10, cy), AutoSize = true }; 
                 Panel p = new Panel { BackColor = TileColor(t), Location = new Point(150, cy + 3), Size = new Size(25, 20) }; 
                 controls.Controls.Add(l); 
                 controls.Controls.Add(p); 
-                cy += 25; 
+                cy += 25;
+       
             }
 
                 gridPanel = new Panel { Location = new Point(280, 10), Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
@@ -169,19 +192,62 @@ namespace Game_prototype_1
                     }
                 }
             }
-
-            private void Tile_Click(object sender, EventArgs e) 
-            { 
-                Button b = sender as Button; 
-                if (b?.Tag is TileInfo info) 
-                { 
-                    info.Type = NextTileType(info.Type);
-                    b.Tag = info; b.BackColor = TileColor(info.Type); 
-                    b.Text = info.Type.ToString(); 
-                } 
+        private Color FactoryColor(string factoryType)
+        {
+            switch (factoryType)
+            {
+                case "Titanium Mine": return Color.DarkGray;
+                case "Water Pump": return Color.LightBlue;
+                case "Energy Brick Generator": return Color.Orange;
+                case "Farm": return Color.Green;
+                case "Research Lab": return Color.MediumPurple;
+                default: return Color.White;
             }
+        }
+        private void Tile_Click(object sender, EventArgs e)
+        {
+            Button b = sender as Button;
+            if (b?.Tag is TileInfo info)
+            {
+                if (buildMode)
+                {
+                    if (SelectedFactoryType == null)
+                    {
+                        MessageBox.Show("Select a factory type first!");
+                        return;
+                    }
+                    // Build a new factory or upgrade existing
+                    if (!info.HasFactory)
+                    {
+                        info.HasFactory = true;
+                        info.FactoryType = SelectedFactoryType;
+                        info.Level = 1;
+                        b.Text = $"{info.FactoryType} L1";
+                        b.BackColor = FactoryColor(info.FactoryType);
+                    }
+                    else if (info.Level < 3)
+                    {
+                        info.Level++;
+                        b.Text = $"{info.FactoryType} L{info.Level}";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Factory already at max level!");
+                    }
+                    b.Tag = info;
+                }
+                else
+                {
+                    // Normal terrain cycling if not in build mode
+                    info.Type = NextTileType(info.Type);
+                    b.Tag = info;
+                    b.BackColor = TileColor(info.Type);
+                    b.Text = info.Type.ToString();
+                }
+            }
+        }
 
-            private TileType TileFromNoise(float n)
+        private TileType TileFromNoise(float n)
             {
                 if (n < -0.35f) 
                 return TileType.Ocean;
@@ -195,7 +261,7 @@ namespace Game_prototype_1
                 return TileType.Mountains;
             }
 
-            private TileType NextTileType(TileType t) { TileType[] vals = (TileType[])Enum.GetValues(typeof(TileType)); int idx = Array.IndexOf(vals, t); return vals[(idx + 1) % vals.Length]; }
+            private TileType NextTileType(TileType t) { TileType[] vals = (TileType[])Enum.GetValues(typeof(TileType)); int index = Array.IndexOf(vals, t); return vals[(index + 1) % vals.Length]; }
 
             private Color TileColor(TileType t) 
         { 
@@ -218,7 +284,14 @@ namespace Game_prototype_1
                     if (sfd.ShowDialog() != DialogResult.OK) return;
                     List<TileInfo> tiles = new List<TileInfo>();
                     foreach (Button b in tileButtons) if (b.Tag is TileInfo t) tiles.Add(t);
-                    MapSaveData map = new MapSaveData { Columns = cols, Rows = rows, Seed = seed, NoiseScale = noiseScale, Tiles = tiles };
+                    MapSaveData map = new MapSaveData
+                    { 
+                        Columns = cols, 
+                        Rows = rows,
+                        Seed = seed, 
+                        NoiseScale = noiseScale, 
+                        Tiles = tiles 
+                    };
                     File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(map, Formatting.Indented));
                     MessageBox.Show("Map saved successfully!");
                 }
@@ -276,9 +349,15 @@ namespace Game_prototype_1
 
             private enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
 
-            private class TileInfo { public int Col { get; set; } public int Row { get; set; } 
+            private class TileInfo 
+            {
+            public int Col { get; set; } 
+            public int Row { get; set; } 
             public TileType Type { get; set; } 
-            public int Level { get; set; } }
+            public int Level { get; set; }
+            public bool HasFactory { get; set; }
+            public string FactoryType { get; set; }
+        }
 
             private class MapSaveData 
         { 
