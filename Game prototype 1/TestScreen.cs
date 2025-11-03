@@ -67,43 +67,60 @@ namespace Game_prototype_1
             left.Controls.Add(
                 new Label { Text = "Actions:", Location = new Point(10, cy) });
             cy += 20;
-            ListOfBuildAction = new CheckedListBox { Location = new Point(10, cy), Size = new Size(220, 80) }; ListOfBuildAction.Items.AddRange(Config.ListedActions.ToArray()); ListOfBuildAction.SelectedIndexChanged += ListOfBuildAction_SelectedIndexChanged; left.Controls.Add(ListOfBuildAction); cy += 90;
+            ListOfBuildAction = new CheckedListBox 
+            { 
+                Location = new Point(10, cy), Size = new Size(220, 80) }; 
+                ListOfBuildAction.Items.AddRange(Config.ListedActions.ToArray()); 
+                ListOfBuildAction.SelectedIndexChanged += ListOfBuildAction_SelectedIndexChanged; 
+                left.Controls.Add(ListOfBuildAction);   
+                cy += 90;
 
             left.Controls.Add(new Label { Text = "Factory Types:", Location = new Point(10, cy) }); 
             cy += 20;
+
             FactoryTypeList = new ListBox { Location = new Point(10, cy), Size = new Size(220, 120) };
             FactoryTypeList.Items.AddRange(new object[] { "Titanium Mine", "Water Pump", "Energy Brick Generator", "Farm", "Research Lab" });
             FactoryTypeList.SelectedIndexChanged += FactoryTypeList_SelectedIndexChanged;
             FactoryTypeList.Visible = true; left.
             Controls.Add(FactoryTypeList); cy += 140;
 
-            left.Controls.Add(new Label { Text = "Resources:", Location = new Point(10, cy), Font = new Font("Segoe UI", 9, FontStyle.Bold) }); cy += 22;
+            left.Controls.Add(new Label { Text = "Resources:", Location = new Point(10, cy), Font = new Font("Segoe UI", 9, FontStyle.Bold) }); 
+            cy += 22;
             LabelTitaniumCount = new Label { Text = "0", Location = new Point(10, cy), AutoSize = true }; 
             left.Controls.Add(new Label { Text = "Titanium:", Location = new Point(10, cy) }); 
             LabelTitaniumCount.Location = new Point(120, cy); 
-            left.Controls.Add(LabelTitaniumCount); cy += 22;
+            left.Controls.Add(LabelTitaniumCount); 
+            cy += 22;
+
             LabelWaterCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; 
             left.Controls.Add(new Label { Text = "Water:", Location = new Point(10, cy) }); 
             LabelWaterCount.Location = new Point(120, cy); 
-            left.Controls.Add(LabelWaterCount); cy += 22;
+            left.Controls.Add(LabelWaterCount); 
+            cy += 22;
+
             LabelEnergyBricksCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; 
             left.Controls.Add(new Label { Text = "Energy:", Location = new Point(10, cy) }); 
             LabelEnergyBricksCount.Location = new Point(120, cy); 
-            left.Controls.Add(LabelEnergyBricksCount); cy += 22;
+            left.Controls.Add(LabelEnergyBricksCount); 
+            cy += 22;
+
             LabelFoodCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; 
             left.Controls.Add(new Label { Text = "Food:", Location = new Point(10, cy) }); 
             LabelFoodCount.Location = new Point(120, cy); 
-            left.Controls.Add(LabelFoodCount); cy += 22;
+            left.Controls.Add(LabelFoodCount); 
+            cy += 22;
+
             LabelResearchCount = new Label { Text = "0", Location = new Point(120, cy), AutoSize = true }; 
             left.Controls.Add(new Label { Text = "Research:", Location = new Point(10, cy) }); 
             LabelResearchCount.Location = new Point(120, cy); 
-            left.Controls.Add(LabelResearchCount); cy += 30;
+            left.Controls.Add(LabelResearchCount); 
+            cy += 30;
 
             playPanel = new Panel { Location = new Point(280, 10), Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
             Controls.Add(playPanel);
 
             
-            CreateTiles(5, 1); 
+            CreateTiles(5, 2); 
             GenOfTilePicBoxs(5);
 
             // production timer
@@ -220,9 +237,17 @@ namespace Game_prototype_1
                 }
                 else if (action == "Upgrade")
                 {
-                    if (FactoryTypes[idx] == null) { MessageBox.Show("No factory here to upgrade!"); return; }
+                    if (FactoryTypes[idx] == null) 
+                    { 
+                        MessageBox.Show("No factory here to upgrade!"); 
+                        return; 
+                    }
                     int currentLevel = FactoryLevels[idx];
-                    if (currentLevel >= 3) { MessageBox.Show("Already max level"); return; }
+                    if (currentLevel >= 3) 
+                    { 
+                        MessageBox.Show("Already max level"); 
+                        return; 
+                    }
 
                     int cost = 0;
                     switch (FactoryTypes[idx])
@@ -245,7 +270,11 @@ namespace Game_prototype_1
                     }
 
                     int have = GameResourceManager.GetResourceAmount("Titanium");
-                    if (have < cost) { MessageBox.Show("Not enough Titanium. Need " + cost); return; }
+                    if (have < cost) 
+                    { 
+                        MessageBox.Show("Not enough Titanium. Need " + cost); 
+                        return; 
+                    }
 
                     GameResourceManager.DeductResource("Titanium", cost);
                     FactoryLevels[idx] = currentLevel + 1;
@@ -273,12 +302,18 @@ namespace Game_prototype_1
         {
             switch (factoryType)
             {
-                case "Titanium Mine": return Color.DarkGray;
-                case "Water Pump": return Color.LightBlue;
-                case "Energy Brick Generator": return Color.Orange;
-                case "Farm": return Color.Green;
-                case "Research Lab": return Color.MediumPurple;
-                default: return Color.White;
+                case "Titanium Mine": 
+                    return Color.DarkGray;
+                case "Water Pump": 
+                    return Color.LightBlue;
+                case "Energy Brick Generator": 
+                    return Color.Orange;
+                case "Farm": 
+                    return Color.Green;
+                case "Research Lab": 
+                    return Color.MediumPurple;
+                default: 
+                    return Color.White;
             }
         }
 
