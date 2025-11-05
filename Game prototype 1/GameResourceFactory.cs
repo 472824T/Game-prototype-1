@@ -42,7 +42,7 @@ namespace Game_prototype_1
 
     public class TitaniumFactory : GameResourceFactory
     {
-        public TitaniumFactory(int level = 1) : base("Titanium Mine", level) { }
+        public TitaniumFactory(int level = 1) : base(Config.TitaniumFact, level) { }
         public override GameResource Tick() 
         { 
             return new TitaniumResource(Scale(Config.TitaniumBaseProduction)); 
@@ -51,7 +51,7 @@ namespace Game_prototype_1
 
     public class WaterFactory : GameResourceFactory
     {
-        public WaterFactory(int level = 1) : base("Water Pump", level) { }
+        public WaterFactory(int level = 1) : base(Config.WaterFact, level) { }
         public override GameResource Tick() 
         { 
             return new WaterResource(Scale(Config.WaterBaseProduction)); 
@@ -60,7 +60,7 @@ namespace Game_prototype_1
 
     public class EnergyBricksFactory : GameResourceFactory
     {
-        public EnergyBricksFactory(int level = 1) : base("Energy Brick Generator", level) { }
+        public EnergyBricksFactory(int level = 1) : base(Config.EnergyBrickFact, level) { }
         public override GameResource Tick() 
         { 
             return new EnergyBricksResource(Scale(Config.EnergyBricksBaseProduction)); 
@@ -69,7 +69,7 @@ namespace Game_prototype_1
 
     public class FarmFactory : GameResourceFactory
     {
-        public FarmFactory(int level = 1) : base("Farm", level) { }
+        public FarmFactory(int level = 1) : base(Config.FoodFact, level) { }
         public override GameResource Tick() 
         {
             return new FoodResource(Scale(Config.FoodBaseProduction)); 
@@ -78,7 +78,7 @@ namespace Game_prototype_1
 
     public class ResearchFactory : GameResourceFactory
     {
-        public ResearchFactory(int level = 1) : base("Research Lab", level) { }
+        public ResearchFactory(int level = 1) : base(Config.PopulationFact, level) { }
         public override GameResource Tick() 
         { 
             return new ResearchResource(Scale(Config.ResearchBaseProduction)); 

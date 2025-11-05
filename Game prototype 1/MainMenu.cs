@@ -16,7 +16,7 @@ namespace Game_prototype_1
         public partial class MainMenu : Form
         {
             private Panel gridPanel;
-            private NumericUpDown nudCols;
+            private NumericUpDown nudCollums;
             private NumericUpDown nudRows;
             private NumericUpDown nudScale;
             private TextBox txtSeed;
@@ -27,7 +27,7 @@ namespace Game_prototype_1
             private bool buildMode = false;
 
 
-        private int cols = 5;
+            private int Collums = 5;
             private int rows = 4;
             private float noiseScale = 10f;
             private int seed = 0;
@@ -45,7 +45,7 @@ namespace Game_prototype_1
 
             private void SetupDefaults()
             {
-                cols = 5; 
+                Collums = 5; 
                 rows = 4; 
                 noiseScale = 10f;
                 seed = Environment.TickCount & 0x7fffffff;
@@ -60,7 +60,13 @@ namespace Game_prototype_1
                 FormBorderStyle = FormBorderStyle.FixedSingle;
                 MaximizeBox = false;
 
-                Panel controls = new Panel { Location = new Point(10, 10), Size = new Size(260, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
+                Panel controls = new Panel 
+                {
+                    Location = new Point(10, 10), 
+                    Size = new Size(260, ClientSize.Height - 20),
+                    BorderStyle = BorderStyle.FixedSingle, 
+                    AutoScroll = true 
+                };
                 Controls.Add(controls);
 
                 int cy = 10;
@@ -68,8 +74,8 @@ namespace Game_prototype_1
                 controls.Controls.Add(new Label { Text = "Columns:", Location = new Point(10, cy) }); 
                 cy += 20;
 
-                nudCols = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = cols }; 
-                controls.Controls.Add(nudCols); 
+                nudCollums = new NumericUpDown { Location = new Point(10, cy), Minimum = 1, Maximum = 50, Value = Collums }; 
+                controls.Controls.Add(nudCollums); 
                 cy += 30;
 
                 controls.Controls.Add(new Label { Text = "Rows:", Location = new Point(10, cy) }); 
@@ -121,25 +127,59 @@ namespace Game_prototype_1
             cy += 20;
 
             FactoryTypeList = new ListBox { Location = new Point(10, cy), Size = new Size(220, 120) };
-            FactoryTypeList.Items.AddRange(new object[] { "Titanium Mine", "Water Pump", "Energy Brick Generator", "Farm", "Research Lab" });
+            FactoryTypeList.Items.AddRange(new object[] 
+            {
+                Config.TitaniumFact, 
+                Config.WaterFact, 
+                Config.EnergyBrickFact, 
+                Config.FoodFact, 
+                Config.PopulationFact 
+            }
+            );
             FactoryTypeList.SelectedIndexChanged += (s, e) =>
             {
                 if (FactoryTypeList.SelectedIndex >= 0)
                     SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
             };
-            controls.Controls.Add(FactoryTypeList); cy += 130;
+            controls.Controls.Add(FactoryTypeList);
+            cy += 130;
 
-            Label legendTitle = new Label { Text = "Legend", Location = new Point(10, cy), Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold) }; controls.Controls.Add(legendTitle); cy += 24;
+            Label legendTitle = new Label 
+            { 
+                Text = "Legend", 
+                Location = new Point(10, cy), 
+                Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold) 
+            }; 
+            controls.Controls.Add(legendTitle);
+            cy += 24;
+
                 foreach (TileType t in Enum.GetValues(typeof(TileType))) {
-                Label l = new Label { Text = t.ToString(), Location = new Point(10, cy), AutoSize = true }; 
-                Panel p = new Panel { BackColor = TileColor(t), Location = new Point(150, cy + 3), Size = new Size(25, 20) }; 
+                Label l = new Label 
+                { 
+                    Text = t.ToString(), 
+                    Location = new Point(10, cy), 
+                    AutoSize = true 
+                }; 
+                Panel p = new Panel 
+                { 
+                    BackColor = TileColor(t), 
+                    Location = new Point(150, cy + 3),
+                    Size = new Size(25, 20) 
+                }; 
                 controls.Controls.Add(l); 
                 controls.Controls.Add(p); 
                 cy += 25;
        
             }
 
-                gridPanel = new Panel { Location = new Point(280, 10), Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), BorderStyle = BorderStyle.FixedSingle, AutoScroll = true };
+                gridPanel = new Panel 
+                { 
+                    Location = new Point(280, 10),
+                    Size = new Size(ClientSize.Width - 300, 
+                    ClientSize.Height - 20), 
+                    BorderStyle = BorderStyle.FixedSingle, 
+                    AutoScroll = true 
+                };
                 Controls.Add(gridPanel);
             }
 
@@ -153,7 +193,8 @@ namespace Game_prototype_1
 
             private void BtnGenerate_Click(object sender, EventArgs e)
             {
-                cols = (int)nudCols.Value; rows = (int)nudRows.Value; 
+                Collums = (int)nudCollums.Value; 
+                rows = (int)nudRows.Value; 
                 noiseScale = (float)nudScale.Value;
                 seed = int.TryParse(txtSeed.Text, out int p) ? p : Environment.TickCount;
                 SetupPerlin(); 
@@ -164,14 +205,14 @@ namespace Game_prototype_1
             {
                 gridPanel.Controls.Clear(); 
                 tileButtons.Clear();
-                int width = cols * Config.TileSize;
+                int width = Collums * Config.TileSize;
                 int height = rows * Config.TileSize;
                 Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(width, height) }; 
                 gridPanel.Controls.Add(canvas);
 
                 for (int r = 0; r < rows; r++)
                 {
-                    for (int c = 0; c < cols; c++)
+                    for (int c = 0; c < Collums; c++)
                     {
                         float nx = c / noiseScale; 
                         float ny = r / noiseScale; 
@@ -179,12 +220,20 @@ namespace Game_prototype_1
                         TileType t = TileFromNoise(n);
                         Button tile = new Button 
                         { 
-                        Location = new Point(c * Config.TileSize, r * Config.TileSize), 
-                        Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
-                        BackColor = TileColor(t), ForeColor = Color.White, Text = t.ToString(), 
-                        TextAlign = ContentAlignment.BottomCenter, 
-                        Font = new Font("Segoe UI", 9, FontStyle.Bold), 
-                        Tag = new TileInfo { Col = c, Row = r, Type = t, Level = 1 }
+                            Location = new Point(c * Config.TileSize, r * Config.TileSize), 
+                            Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
+                            BackColor = TileColor(t), 
+                            ForeColor = Color.White, 
+                            Text = t.ToString(), 
+                            TextAlign = ContentAlignment.BottomCenter, 
+                            Font = new Font("Segoe UI", 9, FontStyle.Bold), 
+                            Tag = new TileInfo 
+                                { 
+                                    Col = c, 
+                                    Row = r, 
+                                    Type = t, 
+                                    Level = 1 
+                                }
                         };
                         tile.Click += Tile_Click; 
                         canvas.Controls.Add(tile); 
@@ -196,12 +245,23 @@ namespace Game_prototype_1
         {
             switch (factoryType)
             {
-                case "Titanium Mine": return Color.DarkGray;
-                case "Water Pump": return Color.LightBlue;
-                case "Energy Brick Generator": return Color.Orange;
-                case "Farm": return Color.Green;
-                case "Research Lab": return Color.MediumPurple;
-                default: return Color.White;
+                case Config.TitaniumFact: 
+                    return Color.DarkGray;
+
+                case Config.WaterFact: 
+                    return Color.LightBlue;
+
+                case Config.EnergyBrickFact: 
+                    return Color.Orange;
+
+                case Config.FoodFact: 
+                    return Color.Green;
+
+                case Config.PopulationFact: 
+                    return Color.MediumPurple;
+
+                default: 
+                    return Color.White;
             }
         }
         private void Tile_Click(object sender, EventArgs e)
@@ -216,7 +276,7 @@ namespace Game_prototype_1
                         MessageBox.Show("Select a factory type first!");
                         return;
                     }
-                    // Build a new factory or upgrade existing
+                    
                     if (!info.HasFactory)
                     {
                         info.HasFactory = true;
@@ -238,7 +298,7 @@ namespace Game_prototype_1
                 }
                 else
                 {
-                    // Normal terrain cycling if not in build mode
+                    
                     info.Type = NextTileType(info.Type);
                     b.Tag = info;
                     b.BackColor = TileColor(info.Type);
@@ -247,46 +307,78 @@ namespace Game_prototype_1
             }
         }
 
-        private TileType TileFromNoise(float n)
+            private TileType TileFromNoise(float n)
             {
-                if (n < -0.35f) 
-                return TileType.Ocean;
-                if (n < -0.05f) 
-                return TileType.GrassLands;
-                if (n < 0.25f) 
-                return TileType.Forest;
-                if (n < 0.55f) 
-                return TileType.Desert;
+                if (n < -0.35f)
+                {
+                    return TileType.Ocean;
+                }
+                if (n < -0.05f)
+                { 
+                    return TileType.GrassLands; 
+                }
+                if (n < 0.25f)
+                {
+                    return TileType.Forest;
+                }
+                if (n < 0.55f)
+                {
+                    return TileType.Desert;
+                }
 
                 return TileType.Mountains;
             }
 
-            private TileType NextTileType(TileType t) { TileType[] vals = (TileType[])Enum.GetValues(typeof(TileType)); int index = Array.IndexOf(vals, t); return vals[(index + 1) % vals.Length]; }
+            private TileType NextTileType(TileType t) 
+            {
+                TileType[] vals = (TileType[])Enum.GetValues(typeof(TileType)); 
+                int index = Array.IndexOf(vals, t); 
+
+                return vals[(index + 1) % vals.Length]; 
+            }
 
             private Color TileColor(TileType t) 
-        { 
-            switch (t) { case TileType.Ocean: 
-                    return Color.FromArgb(68, 138, 255); 
-                case TileType.GrassLands: 
-                    return Color.FromArgb(120, 200, 80); 
-                case TileType.Forest: 
-                    return Color.FromArgb(34, 139, 34); 
-                case TileType.Desert: 
-                    return Color.FromArgb(194, 178, 128); 
-                case TileType.Mountains: 
-                    return Color.FromArgb(120, 120, 120); 
-                default: return Color.White; } }
+            { 
+                switch (t) 
+                { 
+                    case TileType.Ocean: 
+                        return Color.FromArgb(68, 138, 255); 
+
+                    case TileType.GrassLands: 
+                        return Color.FromArgb(120, 200, 80); 
+
+                    case TileType.Forest: 
+                        return Color.FromArgb(34, 139, 34); 
+
+                    case TileType.Desert: 
+                        return Color.FromArgb(194, 178, 128); 
+
+                    case TileType.Mountains: 
+                        return Color.FromArgb(120, 120, 120); 
+
+                    default:
+                        return Color.White; 
+                } 
+            }
 
             private void BtnSave_Click(object sender, EventArgs e)
             {
-                using (SaveFileDialog sfd = new SaveFileDialog { Filter = "JSON Map (*.json)|*.json" })
+            using (SaveFileDialog sfd = new SaveFileDialog { Filter = Config.JSONFilter })
+            {
+                if (sfd.ShowDialog() != DialogResult.OK)
                 {
-                    if (sfd.ShowDialog() != DialogResult.OK) return;
-                    List<TileInfo> tiles = new List<TileInfo>();
-                    foreach (Button b in tileButtons) if (b.Tag is TileInfo t) tiles.Add(t);
+                    return;
+                }
+                List<TileInfo> tiles = new List<TileInfo>();
+                foreach (Button b in tileButtons)
+
+                    if (b.Tag is TileInfo t)
+                    { 
+                        tiles.Add(t);
+                    }
                     MapSaveData map = new MapSaveData
                     { 
-                        Columns = cols, 
+                        Columns = Collums, 
                         Rows = rows,
                         Seed = seed, 
                         NoiseScale = noiseScale, 
@@ -299,7 +391,7 @@ namespace Game_prototype_1
 
             private void BtnLoad_Click(object sender, EventArgs e)
             {
-                using (OpenFileDialog ofd = new OpenFileDialog { Filter = "JSON Map (*.json)|*.json" })
+                using (OpenFileDialog ofd = new OpenFileDialog { Filter = Config.JSONFilter })
                 {
                     if (ofd.ShowDialog() != DialogResult.OK) return;
                         try
@@ -307,11 +399,11 @@ namespace Game_prototype_1
                             MapSaveData map = JsonConvert.DeserializeObject<MapSaveData>(File.ReadAllText(ofd.FileName));
                             if (map != null) 
                             { 
-                                cols = map.Columns; 
+                                Collums = map.Columns; 
                                 rows = map.Rows; 
                                 seed = map.Seed; 
                                 noiseScale = map.NoiseScale; 
-                                nudCols.Value = cols; 
+                                nudCollums.Value = Collums; 
                                 nudRows.Value = rows; 
                                 nudScale.Value = (decimal)noiseScale; 
                                 txtSeed.Text = seed.ToString(); 
@@ -325,8 +417,14 @@ namespace Game_prototype_1
 
             private void GenerateFromSaved(MapSaveData map)
             {
-                gridPanel.Controls.Clear(); tileButtons.Clear();
-                Panel canvas = new Panel { Location = new Point(0, 0), Size = new Size(map.Columns * Config.TileSize, map.Rows * Config.TileSize) };
+                gridPanel.Controls.Clear(); 
+                tileButtons.Clear();
+                Panel canvas = new Panel 
+                { 
+                    Location = new Point(0, 0), 
+                    Size = new Size(map.Columns * Config.TileSize, 
+                    map.Rows * Config.TileSize) 
+                };
                 gridPanel.Controls.Add(canvas);
                 foreach (TileInfo info in map.Tiles)
                 {
@@ -335,7 +433,8 @@ namespace Game_prototype_1
                         Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize),
                         Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
                         BackColor = TileColor(info.Type), 
-                        ForeColor = Color.White, Text = info.Type.ToString(), 
+                        ForeColor = Color.White, 
+                        Text = info.Type.ToString(), 
                         TextAlign = ContentAlignment.BottomCenter, 
                         Font = new Font("Segoe UI", 9, FontStyle.Bold), 
                         Tag = info 

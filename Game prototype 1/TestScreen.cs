@@ -31,7 +31,7 @@ namespace Game_prototype_1
         private ListBox FactoryTypeList;
         private string SelectedFactoryType = null;
         private const int TileSize = 100;
-        private int GridCols = 5;
+        private int GridCollums = 5;
 
 
         private bool buildMode = false;
@@ -84,11 +84,11 @@ namespace Game_prototype_1
             };
             FactoryTypeList.Items.AddRange(new object[] 
             { 
-                "Titanium Mine", 
-                "Water Pump", 
-                "Energy Brick Generator", 
-                "Farm", 
-                "Research Lab" 
+                Config.TitaniumFact, 
+                Config.WaterFact, 
+                Config.EnergyBrickFact, 
+                Config.FoodFact, 
+                Config.PopulationFact 
             }
             );
             left.Controls.Add(FactoryTypeList);
@@ -108,7 +108,7 @@ namespace Game_prototype_1
                     SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
             };
             btnBuildFactory.Click += (s, e) =>
-            {
+            { 
                 buildMode = !buildMode;
                 btnBuildFactory.Text = buildMode ? "Exit Build Mode" : "Build Factory Mode";
             if (FactoryTypeList.SelectedIndex >= 0)
@@ -226,7 +226,7 @@ namespace Game_prototype_1
             ProductionTimer.Start();
         }
 
-        private void CreateTiles(int cols, int rows)
+        private void CreateTiles(int Collums, int rows)
         {
             TileButtons.Clear(); 
             Factory.Clear(); 
@@ -236,14 +236,14 @@ namespace Game_prototype_1
             Panel canvas = new Panel 
             { 
                 Location = new Point(0, 0), 
-                Size = new Size(cols * TileSize, rows * TileSize) 
+                Size = new Size(Collums * TileSize, rows * TileSize) 
             };
             playPanel.Controls.Clear();
             playPanel.Controls.Add(canvas);
 
             for (int r = 0; r < rows; r++)
             {
-                for (int c = 0; c < cols; c++)
+                for (int c = 0; c < Collums; c++)
                 {
                     Button b = new Button 
                     { 
@@ -298,19 +298,19 @@ namespace Game_prototype_1
 
                         switch (SelectedFactoryType)
                         {
-                            case "Titanium Mine":
+                            case Config.TitaniumFact:
                                 GameResourceManager.AddFactory(new TitaniumFactory(1));
                                 break;
-                            case "Water Pump":
+                            case Config.WaterFact:
                                 GameResourceManager.AddFactory(new WaterFactory(1));
                                 break;
-                            case "Energy Brick Generator":
+                            case Config.EnergyBrickFact:
                                 GameResourceManager.AddFactory(new EnergyBricksFactory(1));
                                 break;
-                            case "Farm":
+                            case Config.FoodFact:
                                 GameResourceManager.AddFactory(new FarmFactory(1));
                                 break;
-                            case "Research Lab":
+                            case Config.PopulationFact:
                                 GameResourceManager.AddFactory(new ResearchFactory(1));
                                 break;
                         }
@@ -330,23 +330,23 @@ namespace Game_prototype_1
 
                         switch (FactoryTypes[index])
                         {
-                            case "Titanium Mine":
+                            case Config.TitaniumFact:
                                 GameResourceManager.RemoveFactory(new TitaniumFactory(1));
                                 break;
 
-                            case "Water Pump":
+                            case Config.WaterFact:
                                 GameResourceManager.RemoveFactory(new WaterFactory(1));
                                 break;
 
-                            case "Energy Brick Generator":
+                            case Config.EnergyBrickFact:
                                 GameResourceManager.RemoveFactory(new EnergyBricksFactory(1));
                                 break;
 
-                            case "Farm":
+                            case Config.FoodFact:
                                 GameResourceManager.RemoveFactory(new FarmFactory(1));
                                 break;
 
-                            case "Research Lab":
+                            case Config.PopulationFact:
                                 GameResourceManager.RemoveFactory(new ResearchFactory(1));
                                 break;
                         }
@@ -368,19 +368,19 @@ namespace Game_prototype_1
                         int cost = 0;
                         switch (FactoryTypes[index])
                         {
-                            case "Titanium Mine":
+                            case Config.TitaniumFact:
                                 cost = Config.TitaniumMineUpgradeCosts[currentLevel];
                                 break;
-                            case "Water Pump":
+                            case Config.WaterFact:
                                 cost = Config.WaterPumpUpgradeCosts[currentLevel];
                                 break;
-                            case "Energy Brick Generator":
+                            case Config.EnergyBrickFact:
                                 cost = Config.EnergyBrickGeneratorUpgradeCosts[currentLevel];
                                 break;
-                            case "Farm":
+                            case Config.FoodFact:
                                 cost = Config.FarmUpgradeCosts[currentLevel];
                                 break;
-                            case "Research Lab":
+                            case Config.PopulationFact:
                                 cost = Config.ResearchLabUpgradeCosts[currentLevel];
                                 break;
                         }
@@ -423,19 +423,19 @@ namespace Game_prototype_1
         {
             switch (factoryType)
             {
-                case "Titanium Mine": 
+                case Config.TitaniumFact: 
                     return Color.DarkGray;
 
-                case "Water Pump": 
+                case Config.WaterFact: 
                     return Color.LightBlue;
 
-                case "Energy Brick Generator": 
+                case Config.EnergyBrickFact: 
                     return Color.Orange;
 
-                case "Farm": 
+                case Config.FoodFact: 
                     return Color.Green;
 
-                case "Research Lab": 
+                case Config.PopulationFact: 
                     return Color.MediumPurple;
 
                 default: 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
 using System.ComponentModel.Design;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace Game_prototype_1
 {
@@ -36,7 +37,13 @@ namespace Game_prototype_1
             public const string Arrow = "M:\\Visual Studio 2022\\Graphing\\Graphing\\Arrow.png";
             //------ Values for Perlin noise
             public const int TileSize = 100;
-
+            public const string JSONFilter = "JSON Map (*.json)|*.json";
+            //Names of Resource producers
+            public const string TitaniumFact = "Titanium Mine";
+            public const string WaterFact = "Water Pump";
+            public const string EnergyBrickFact = "Energy Brick Generator";
+            public const string FoodFact = "Farm";
+            public const string PopulationFact = "Housing";
     }
 }
 
