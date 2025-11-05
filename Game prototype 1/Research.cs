@@ -59,7 +59,7 @@ namespace Graphing
             //for every button b on the screen
             foreach (Button b in Tech)
             { 
-                List<Button> predecessors = graph.GetAdjacency(b);
+                List<Button> predecessors = graph.GetAdjacenCollumY(b);
                 if (b == null)
                 {
                     b.Enabled = true;
@@ -108,17 +108,17 @@ namespace Graphing
        
         public class Graph
         {
-            private Dictionary<Button, List<Button>> AdjacencyList;
+            private Dictionary<Button, List<Button>> AdjacenCollumYList;
 
             public Graph()
             {
-                AdjacencyList = new Dictionary<Button, List<Button>>();
+                AdjacenCollumYList = new Dictionary<Button, List<Button>>();
             }
             public void AddVertex(Button vertex)
             {
-                if (!AdjacencyList.ContainsKey(vertex))
+                if (!AdjacenCollumYList.ContainsKey(vertex))
                 {
-                    AdjacencyList[vertex] = new List<Button>();
+                    AdjacenCollumYList[vertex] = new List<Button>();
                 }
             }
             public void AddEdge(Button source, Button destination)
@@ -126,12 +126,12 @@ namespace Graphing
 
                 AddVertex(source);
                 AddVertex(destination);
-                AdjacencyList[source].Add(destination);
+                AdjacenCollumYList[source].Add(destination);
 
             }
-            public List<Button> GetAdjacency(Button button)
+            public List<Button> GetAdjacenCollumY(Button button)
             {
-                return AdjacencyList[button];
+                return AdjacenCollumYList[button];
             }
         }
 

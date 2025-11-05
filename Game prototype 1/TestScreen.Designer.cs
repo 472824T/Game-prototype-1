@@ -36,16 +36,6 @@
             this.Title_label = new System.Windows.Forms.Label();
             this.PrototypeErrorMessage = new System.Windows.Forms.Label();
             this.ProductionTimer = new System.Windows.Forms.Timer(this.components);
-            this.LabelTitaniumCount = new System.Windows.Forms.Label();
-            this.LabelTextTitanium = new System.Windows.Forms.Label();
-            this.LabelTextWater = new System.Windows.Forms.Label();
-            this.LabelWaterCount = new System.Windows.Forms.Label();
-            this.LabelFoodCount = new System.Windows.Forms.Label();
-            this.LabelTextFood = new System.Windows.Forms.Label();
-            this.LabelTextEnergyBricks = new System.Windows.Forms.Label();
-            this.LabelEnergyBricksCount = new System.Windows.Forms.Label();
-            this.LabelResearchCount = new System.Windows.Forms.Label();
-            this.LabelTextResearchPoints = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // New_Game_button
@@ -117,126 +107,11 @@
             this.ProductionTimer.Interval = 4000;
             this.ProductionTimer.Tick += new System.EventHandler(this.ProductionTimer_Tick);
             // 
-            // LabelTitaniumCount
-            // 
-            this.LabelTitaniumCount.AutoSize = true;
-            this.LabelTitaniumCount.Location = new System.Drawing.Point(1022, 14);
-            this.LabelTitaniumCount.Name = "LabelTitaniumCount";
-            this.LabelTitaniumCount.Size = new System.Drawing.Size(18, 20);
-            this.LabelTitaniumCount.TabIndex = 16;
-            this.LabelTitaniumCount.Text = "0";
-            this.LabelTitaniumCount.Visible = false;
-            // 
-            // LabelTextTitanium
-            // 
-            this.LabelTextTitanium.AutoSize = true;
-            this.LabelTextTitanium.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextTitanium.Location = new System.Drawing.Point(902, 5);
-            this.LabelTextTitanium.Name = "LabelTextTitanium";
-            this.LabelTextTitanium.Size = new System.Drawing.Size(114, 29);
-            this.LabelTextTitanium.TabIndex = 17;
-            this.LabelTextTitanium.Text = "Titanium";
-            this.LabelTextTitanium.Visible = false;
-            // 
-            // LabelTextWater
-            // 
-            this.LabelTextWater.AutoSize = true;
-            this.LabelTextWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextWater.Location = new System.Drawing.Point(902, 34);
-            this.LabelTextWater.Name = "LabelTextWater";
-            this.LabelTextWater.Size = new System.Drawing.Size(81, 29);
-            this.LabelTextWater.TabIndex = 20;
-            this.LabelTextWater.Text = "Water";
-            this.LabelTextWater.Visible = false;
-            // 
-            // LabelWaterCount
-            // 
-            this.LabelWaterCount.AutoSize = true;
-            this.LabelWaterCount.Location = new System.Drawing.Point(1022, 43);
-            this.LabelWaterCount.Name = "LabelWaterCount";
-            this.LabelWaterCount.Size = new System.Drawing.Size(18, 20);
-            this.LabelWaterCount.TabIndex = 21;
-            this.LabelWaterCount.Text = "0";
-            this.LabelWaterCount.Visible = false;
-            // 
-            // LabelFoodCount
-            // 
-            this.LabelFoodCount.AutoSize = true;
-            this.LabelFoodCount.Location = new System.Drawing.Point(1022, 71);
-            this.LabelFoodCount.Name = "LabelFoodCount";
-            this.LabelFoodCount.Size = new System.Drawing.Size(18, 20);
-            this.LabelFoodCount.TabIndex = 22;
-            this.LabelFoodCount.Text = "0";
-            this.LabelFoodCount.Visible = false;
-            // 
-            // LabelTextFood
-            // 
-            this.LabelTextFood.AutoSize = true;
-            this.LabelTextFood.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextFood.Location = new System.Drawing.Point(902, 63);
-            this.LabelTextFood.Name = "LabelTextFood";
-            this.LabelTextFood.Size = new System.Drawing.Size(74, 29);
-            this.LabelTextFood.TabIndex = 19;
-            this.LabelTextFood.Text = "Food";
-            this.LabelTextFood.Visible = false;
-            // 
-            // LabelTextEnergyBricks
-            // 
-            this.LabelTextEnergyBricks.AutoSize = true;
-            this.LabelTextEnergyBricks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextEnergyBricks.Location = new System.Drawing.Point(902, 92);
-            this.LabelTextEnergyBricks.Name = "LabelTextEnergyBricks";
-            this.LabelTextEnergyBricks.Size = new System.Drawing.Size(167, 29);
-            this.LabelTextEnergyBricks.TabIndex = 18;
-            this.LabelTextEnergyBricks.Text = "EnergyBricks";
-            this.LabelTextEnergyBricks.Visible = false;
-            // 
-            // LabelEnergyBricksCount
-            // 
-            this.LabelEnergyBricksCount.AutoSize = true;
-            this.LabelEnergyBricksCount.Location = new System.Drawing.Point(1076, 102);
-            this.LabelEnergyBricksCount.Name = "LabelEnergyBricksCount";
-            this.LabelEnergyBricksCount.Size = new System.Drawing.Size(18, 20);
-            this.LabelEnergyBricksCount.TabIndex = 23;
-            this.LabelEnergyBricksCount.Text = "0";
-            this.LabelEnergyBricksCount.Visible = false;
-            // 
-            // LabelResearchCount
-            // 
-            this.LabelResearchCount.AutoSize = true;
-            this.LabelResearchCount.Location = new System.Drawing.Point(1106, 137);
-            this.LabelResearchCount.Name = "LabelResearchCount";
-            this.LabelResearchCount.Size = new System.Drawing.Size(18, 20);
-            this.LabelResearchCount.TabIndex = 25;
-            this.LabelResearchCount.Text = "0";
-            this.LabelResearchCount.Visible = false;
-            // 
-            // LabelTextResearchPoints
-            // 
-            this.LabelTextResearchPoints.AutoSize = true;
-            this.LabelTextResearchPoints.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LabelTextResearchPoints.Location = new System.Drawing.Point(902, 128);
-            this.LabelTextResearchPoints.Name = "LabelTextResearchPoints";
-            this.LabelTextResearchPoints.Size = new System.Drawing.Size(197, 29);
-            this.LabelTextResearchPoints.TabIndex = 24;
-            this.LabelTextResearchPoints.Text = "ResearchPoints";
-            this.LabelTextResearchPoints.Visible = false;
-            // 
             // TestScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2939, 1412);
-            this.Controls.Add(this.LabelResearchCount);
-            this.Controls.Add(this.LabelTextResearchPoints);
-            this.Controls.Add(this.LabelEnergyBricksCount);
-            this.Controls.Add(this.LabelFoodCount);
-            this.Controls.Add(this.LabelWaterCount);
-            this.Controls.Add(this.LabelTextWater);
-            this.Controls.Add(this.LabelTextFood);
-            this.Controls.Add(this.LabelTextEnergyBricks);
-            this.Controls.Add(this.LabelTextTitanium);
-            this.Controls.Add(this.LabelTitaniumCount);
             this.Controls.Add(this.PrototypeErrorMessage);
             this.Controls.Add(this.Title_label);
             this.Controls.Add(this.ContinueButton);
@@ -259,16 +134,6 @@
         private System.Windows.Forms.Label Title_label;
         private System.Windows.Forms.Label PrototypeErrorMessage;
         private System.Windows.Forms.Timer ProductionTimer;
-        private System.Windows.Forms.Label LabelTitaniumCount;
-        private System.Windows.Forms.Label LabelTextTitanium;
-        private System.Windows.Forms.Label LabelTextWater;
-        private System.Windows.Forms.Label LabelWaterCount;
-        private System.Windows.Forms.Label LabelFoodCount;
-        private System.Windows.Forms.Label LabelTextFood;
-        private System.Windows.Forms.Label LabelTextEnergyBricks;
-        private System.Windows.Forms.Label LabelEnergyBricksCount;
-        private System.Windows.Forms.Label LabelResearchCount;
-        private System.Windows.Forms.Label LabelTextResearchPoints;
     }
 }
 

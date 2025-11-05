@@ -13,6 +13,7 @@ namespace Game_prototype_1
     {
          static public class GameResourceManager
         {
+            static public  TestScreen MenuForm;
             static private List<GameResourceFactory> factories;
 
             static private int TitaniumValue;
@@ -20,12 +21,6 @@ namespace Game_prototype_1
             static private int EnergyBricksValue;
             static private int FoodValue;
             static private int ResearchValue;
-
-            static private Label TitaniumLabel;
-            static private Label WaterLabel;
-            static private Label EnergyBricksLabel;
-            static private Label FoodLabel;
-            static private Label ResearchLabel;
 
             static GameResourceManager()
             {
@@ -68,25 +63,10 @@ namespace Game_prototype_1
 
             static private void UpdateLabels()
             {
-                if (TitaniumLabel != null)
+                if (MenuForm != null)
                 {
-                    TitaniumLabel.Text = TitaniumValue.ToString();
-                }
-                if (WaterLabel != null)
-                { 
-                    WaterLabel.Text = WaterValue.ToString(); 
-                }
-                if (EnergyBricksLabel != null)
-                {
-                    EnergyBricksLabel.Text = EnergyBricksValue.ToString(); 
-                }
-                if (FoodLabel != null)
-                { 
-                    FoodLabel.Text = FoodValue.ToString(); 
-                }
-                if (ResearchLabel != null)
-                {
-                    ResearchLabel.Text = ResearchValue.ToString();
+                    //Don't try to update the displays until the menu screen has been fully created
+                    MenuForm.UpdateTitanium(TitaniumValue);
                 }
             }
 

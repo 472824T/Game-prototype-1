@@ -27,6 +27,14 @@ namespace Game_prototype_1
         private List<string> FactoryTypes = new List<string>();
         private List<int> FactoryLevels = new List<int>();
         private ListBox ListOfBuildAction;
+        private Label LabelTitaniumCount = new Label();
+        private Label LabelWaterCount = new Label();
+        private Label LabelEnergyBricksCount = new Label();
+        private Label LabelFoodCount = new Label();
+        private Label LabelPopulationCount = new Label();
+        private Label LabelResearchCount = new Label();
+
+
         // Factory selection and actions
         private ListBox FactoryTypeList;
         private string SelectedFactoryType = null;
@@ -40,9 +48,11 @@ namespace Game_prototype_1
         {
             InitializeComponent();
             BuildUI();
-            
         }
-
+        public void UpdateTitanium (int titanium)
+        {
+            LabelTitaniumCount.Text = titanium.ToString();
+        }
         private void BuildUI()
         {
             Text = "Game - Prototype";
@@ -59,27 +69,27 @@ namespace Game_prototype_1
                  AutoScroll = true 
             };
             Controls.Add(left);
-            int cy = 10;
+            int CollumY= 10;
 
             left.Controls.Add(
-                new Label { Text = "Actions:", Location = new Point(10, cy) });
-            cy += 20;
+                new Label { Text = "Actions:", Location = new Point(10, CollumY) });
+            CollumY+= 20;
             ListOfBuildAction = new CheckedListBox 
             { 
-                Location = new Point(10, cy), 
+                Location = new Point(10, CollumY), 
                 Size = new Size(220, 80) 
             }; 
                 ListOfBuildAction.Items.AddRange(Config.ListedActions.ToArray()); 
                 ListOfBuildAction.SelectedIndexChanged += ListOfBuildAction_SelectedIndexChanged; 
                 left.Controls.Add(ListOfBuildAction);   
-                cy += 90;
+                CollumY+= 90;
 
-            left.Controls.Add(new Label { Text = "Factory Types:", Location = new Point(10, cy) }); 
-            cy += 20;
+            left.Controls.Add(new Label { Text = "Factory Types:", Location = new Point(10, CollumY) }); 
+            CollumY+= 20;
 
             FactoryTypeList = new ListBox 
             { 
-                Location = new Point(10, cy), 
+                Location = new Point(10, CollumY), 
                 Size = new Size(220, 120) 
             };
             FactoryTypeList.Items.AddRange(new object[] 
@@ -92,16 +102,16 @@ namespace Game_prototype_1
             }
             );
             left.Controls.Add(FactoryTypeList);
-            cy += 130;
+            CollumY+= 130;
           
             Button btnBuildFactory = new Button
             {
                 Text = "Build Factory Mode",
-                Location = new Point(10, cy),
+                Location = new Point(10, CollumY),
                 Width = 220
             };
             left.Controls.Add(btnBuildFactory);
-            cy += 40;
+            CollumY+= 40;
             btnBuildFactory.Click += (s, e) =>
             {
                 if (FactoryTypeList.SelectedIndex >= 0)
@@ -118,93 +128,110 @@ namespace Game_prototype_1
 
             FactoryTypeList.SelectedIndexChanged += FactoryTypeList_SelectedIndexChanged;
             FactoryTypeList.Visible = true; 
-            left.Controls.Add(FactoryTypeList); cy += 140;
+            left.Controls.Add(FactoryTypeList); CollumY+= 140;
 
             left.Controls.Add(new Label 
             { 
                 Text = "Resources:", 
-                Location = new Point(10, cy), 
+                Location = new Point(10, CollumY), 
                 Font = new Font("Segoe UI", 9, FontStyle.Bold) 
             }
             ); 
-            cy += 22;
+            CollumY+= 22;
 
             LabelTitaniumCount = new Label 
             { 
                 Text = "0", 
-                Location = new Point(10, cy), 
+                Location = new Point(10, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
             { 
                 Text = "Titanium:", 
-                Location = new Point(10, cy) 
+                Location = new Point(10, CollumY) 
             }
             ); 
-            LabelTitaniumCount.Location = new Point(120, cy); 
+            LabelTitaniumCount.Location = new Point(120, CollumY); 
             left.Controls.Add(LabelTitaniumCount); 
-            cy += 22;
+            CollumY+= 22;
 
             LabelWaterCount = new Label 
             { 
-                Text = "0", Location = new Point(120, cy), 
+                Text = "0", Location = new Point(120, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
             { 
                 Text = "Water:", 
-                Location = new Point(10, cy) 
+                Location = new Point(10, CollumY) 
             }
             ); 
-            LabelWaterCount.Location = new Point(120, cy); 
+            LabelWaterCount.Location = new Point(120, CollumY); 
             left.Controls.Add(LabelWaterCount); 
-            cy += 22;
+            CollumY+= 22;
 
             LabelEnergyBricksCount = new Label 
             { 
-                Text = "0", Location = new Point(120, cy), 
+                Text = "0", Location = new Point(120, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
             { 
                 Text = "Energy:", 
-                Location = new Point(10, cy) 
+                Location = new Point(10, CollumY) 
             }
             ); 
-            LabelEnergyBricksCount.Location = new Point(120, cy); 
+            LabelEnergyBricksCount.Location = new Point(120, CollumY); 
             left.Controls.Add(LabelEnergyBricksCount); 
-            cy += 22;
+            CollumY+= 22;
 
             LabelFoodCount = new Label 
             { 
                 Text = "0", 
-                Location = new Point(120, cy), 
+                Location = new Point(120, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
             { 
                 Text = "Food:", 
-                Location = new Point(10, cy) 
+                Location = new Point(10, CollumY) 
             }
             ); 
-            LabelFoodCount.Location = new Point(120, cy); 
+            LabelFoodCount.Location = new Point(120, CollumY); 
             left.Controls.Add(LabelFoodCount); 
-            cy += 22;
+            CollumY+= 22;
+
+            LabelPopulationCount = new Label
+            {
+                Text = "0",
+                Location = new Point(120, CollumY),
+                AutoSize = true
+            };
+            left.Controls.Add(new Label
+            {
+                Text = "Population:",
+                Location = new Point(10, CollumY)
+            }
+            );
+            LabelPopulationCount.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelPopulationCount);
+            CollumY += 22;
+
 
             LabelResearchCount = new Label 
             { 
                 Text = "0",
-                Location = new Point(120, cy), 
+                Location = new Point(120, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
             { 
                 Text = "Research:", 
-                Location = new Point(10, cy) }
+                Location = new Point(10, CollumY) }
             ); 
-            LabelResearchCount.Location = new Point(120, cy); 
+            LabelResearchCount.Location = new Point(120, CollumY); 
             left.Controls.Add(LabelResearchCount); 
-            cy += 30;
+            CollumY+= 30;
 
             playPanel = new Panel 
             { 
