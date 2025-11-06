@@ -11,10 +11,7 @@ namespace Game_prototype_1
 {
     static public class Config
     {
-        // for upgrades
-        public readonly static ImmutableArray<int> TitaniumUpgrades = ImmutableArray.Create(new[] { 0, 5, 50, 200 });
-        public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Factory", "Demolish", "Upgrade", });
- 
+            public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Factory", "Demolish", "Upgrade", });
             // ---- Upgrade costs (index 1 = cost for L1→L2, index 2 = cost for L2→L3) ----
             public readonly static ImmutableArray<int> TitaniumMineUpgradeCosts = ImmutableArray.Create(new[] { 0, 20, 100, 0 });
             public readonly static ImmutableArray<int> WaterPumpUpgradeCosts = ImmutableArray.Create(new[] { 0, 15, 80, 0 });
@@ -34,17 +31,20 @@ namespace Game_prototype_1
             // ---- Production multipliers ----
             public const int Level2Multiplier = 2;
             public const int Level3Multiplier = 3;
-            // ===== Images for the Research page
+            // ---- Images for the Research page ----
             public const string Arrow = "M:\\Visual Studio 2022\\Graphing\\Graphing\\Arrow.png";
-            //------ Values for Perlin noise
+            // ---- Values for Perlin noise ----
             public const int TileSize = 100;
             public const string JSONFilter = "JSON Map (*.json)|*.json";
-            //Names of Resource producers
+            // ---- Names of Resource producers ----
             public const string TitaniumFact = "Titanium Mine";
             public const string WaterFact = "Water Pump";
             public const string EnergyBrickFact = "Energy Brick Generator";
             public const string FoodFact = "Farm";
             public const string PopulationFact = "Housing";
+            // ---- Names of Resource as strings ----
+            public const string TitaniumName = "Titanium";
+            public const string WaterName = "Titanium";
     }
 }
 

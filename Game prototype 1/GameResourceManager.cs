@@ -13,7 +13,7 @@ namespace Game_prototype_1
     {
          static public class GameResourceManager
         {
-            static public  MainMenu MenuForm;
+            static public  MainMenu MainMenu;
             static private List<GameResourceFactory> factories;
 
             static private int TitaniumValue;
@@ -63,10 +63,10 @@ namespace Game_prototype_1
 
             static private void UpdateLabels()
             {
-                if (MenuForm != null)
+                if (MainMenu != null)
                 {
                     //Don't try to update the displays until the menu screen has been fully created
-                    MenuForm.UpdateTitanium(TitaniumValue);
+                    MainMenu.UpdateTitanium(TitaniumValue);
                 }
             }
 
