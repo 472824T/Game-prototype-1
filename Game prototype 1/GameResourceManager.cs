@@ -13,7 +13,7 @@ namespace Game_prototype_1
     {
          static public class GameResourceManager
         {
-            static public  TestScreen MenuForm;
+            static public  MainMenu MenuForm;
             static private List<GameResourceFactory> factories;
 
             static private int TitaniumValue;

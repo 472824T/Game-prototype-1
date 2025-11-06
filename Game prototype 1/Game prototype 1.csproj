@@ -76,28 +76,28 @@
     <Compile Include="Research.Designer.cs">
       <DependentUpon>Research.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestScreen.Designer.cs">
-      <DependentUpon>TestScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapDesigner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapDesigner.Designer.cs">
+      <DependentUpon>MapDesigner.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainMenu.resx">
-      <DependentUpon>MainMenu.cs</DependentUpon>
+    <EmbeddedResource Include="MapDesigner.resx">
+      <DependentUpon>MapDesigner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Research.resx">
       <DependentUpon>Research.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestScreen.resx">
-      <DependentUpon>TestScreen.cs</DependentUpon>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

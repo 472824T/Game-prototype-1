@@ -84,4 +84,12 @@ namespace Game_prototype_1
             return new ResearchResource(Scale(Config.ResearchBaseProduction)); 
         }
     }
+    public class PopulationFactory : GameResourceFactory
+    {
+        public PopulationFactory(int level = 1) : base(Config.PopulationFact, level) { }
+        public override GameResource Tick()
+        {
+            return new HousingResource(Scale(Config.PopulatiomBaseProduction));
+        }
+    }
 }

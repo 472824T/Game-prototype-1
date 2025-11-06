@@ -30,6 +30,7 @@ namespace Game_prototype_1
             public const int EnergyBricksBaseProduction = 4;
             public const int FoodBaseProduction = 5;
             public const int ResearchBaseProduction = 1;
+            public const int PopulatiomBaseProduction = 1;
             // ---- Production multipliers ----
             public const int Level2Multiplier = 2;
             public const int Level3Multiplier = 3;
