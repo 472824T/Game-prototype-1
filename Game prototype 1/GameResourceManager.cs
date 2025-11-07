@@ -13,14 +13,15 @@ namespace Game_prototype_1
     {
          static public class GameResourceManager
         {
+            public static event EventHandler GameStateChanged;
             static public  MainMenu MainMenu;
             static private List<GameResourceFactory> factories;
-
-            static private int TitaniumValue;
-            static private int WaterValue;
-            static private int EnergyBricksValue;
-            static private int FoodValue;
-            static private int ResearchValue;
+            static public int TitaniumValue;
+            static public int WaterValue;
+            static public int EnergyBricksValue;
+            static public int FoodValue;
+            static public int PopulationValue;
+            static public int ResearchValue;
 
             static GameResourceManager()
             {
@@ -31,9 +32,15 @@ namespace Game_prototype_1
                 FoodValue = 0; 
                 ResearchValue = 0;
                
-                UpdateLabels();
+               
             }
-
+            private static void OnGameStateChanged()
+            {
+                if (GameStateChanged != null)
+                {
+                    GameStateChanged(null, EventArgs.Empty);
+                }
+            }
             static public void Tick()
             {
                 foreach (GameResourceFactory fact in factories)
@@ -53,22 +60,18 @@ namespace Game_prototype_1
                         case "Food": 
                             FoodValue += res.Value; 
                             break;
+                        case "Population":
+                            PopulationValue += res.Value;
+                            break;
                         case "Research": 
                             ResearchValue += res.Value; 
                             break;
                     }
+                    
                 }
-                UpdateLabels();
+                OnGameStateChanged();
             }
 
-            static private void UpdateLabels()
-            {
-                if (MainMenu != null)
-                {
-                    //Don't try to update the displays until the menu screen has been fully created
-                    MainMenu.UpdateTitanium(TitaniumValue);
-                }
-            }
 
             static public void AddFactory(GameResourceFactory Afact) 
             {
@@ -139,7 +142,7 @@ namespace Game_prototype_1
 
                         break;
                 }
-                UpdateLabels();
+                OnGameStateChanged();
             }
 
             static public void ResetAll()
@@ -149,7 +152,7 @@ namespace Game_prototype_1
                 EnergyBricksValue = 0; 
                 FoodValue = 0; 
                 ResearchValue = 0;
-                UpdateLabels();
+                OnGameStateChanged();
             }
         }
     }

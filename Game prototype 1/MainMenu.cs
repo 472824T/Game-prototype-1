@@ -20,7 +20,7 @@ namespace Game_prototype_1
 {
     public partial class MainMenu : Form
     {
-  
+    
         private Panel playPanel;
         private List<Button> TileButtons = new List<Button>();
         private List<bool> Factory = new List<bool>();
@@ -46,13 +46,11 @@ namespace Game_prototype_1
 
         public MainMenu()
         {
+            GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
             InitializeComponent();
             BuildUI();
         }
-        public void UpdateTitanium (int titanium)
-        {
-            LabelTitaniumCount.Text = titanium.ToString();
-        }
+       
         private void BuildUI()
         {
             Text = "Game - Prototype";
@@ -297,7 +295,20 @@ namespace Game_prototype_1
          
             CreateTiles(WantedNum, 1);
         }
+        private void GameManager_GameStateChanged(object sender, EventArgs e)
+        {
+            UpdateDisplay();
+        }
+        private void UpdateDisplay()
+        {
+            LabelTitaniumCount.Text = GameResourceManager.TitaniumValue.ToString();
+            LabelWaterCount.Text = GameResourceManager.WaterValue.ToString();
+            LabelEnergyBricksCount.Text = GameResourceManager.EnergyBricksValue.ToString();
+            LabelFoodCount.Text = GameResourceManager.FoodValue.ToString();
+            LabelPopulationCount.Text = GameResourceManager.PopulationValue.ToString();
+            LabelResearchCount.Text = GameResourceManager.ResearchValue.ToString();
 
+        }
         private void TileButton_Click(object sender, EventArgs e)
         {
             {
@@ -510,6 +521,12 @@ namespace Game_prototype_1
                 research.ShowDialog();
             }
 
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            // Unsubscribe from the event when form closes
+            GameResourceManager.GameStateChanged -= GameManager_GameStateChanged;
+            base.OnFormClosing(e);
         }
     }
 }
