@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // MainMenu
+            // MapDesigner
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "MainMenu";
-            this.Text = "MainMenu";
+            this.Name = "MapDesigner";
+            this.Text = "MapDesigner";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
 

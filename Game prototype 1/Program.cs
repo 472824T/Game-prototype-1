@@ -16,7 +16,7 @@ namespace Game_prototype_1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainMenu());
+            Application.Run(new StartMenu());
         }
     }
 }
