@@ -22,22 +22,14 @@ namespace Game_prototype_1
             private TextBox txtSeed;
             private Button btnGenerate;
             private Button btnStartGame;
-            private ListBox FactoryTypeList;
             private string SelectedFactoryType;
             private bool buildMode = false;
-            private Label LabelTitaniumCount = new Label();
-            private Label LabelWaterCount = new Label();
-            private Label LabelEnergyBricksCount = new Label();
-            private Label LabelFoodCount = new Label();
-            private Label LabelPopulationCount = new Label();
-            private Label LabelResearchCount = new Label();
-
-        private int Collums = 5;
+            private int Collums = 5;
             private int rows = 4;
             private float noiseScale = 10f;
             private int seed = 0;
             private List<Button> tileButtons = new List<Button>();
-            private PerlinNoise perlin;
+            private Class1.PerlinNoise perlin;
 
             public MapDesigner()
             {
@@ -56,7 +48,7 @@ namespace Game_prototype_1
                 seed = Environment.TickCount & 0x7fffffff;
             }
 
-            private void SetupPerlin() { perlin = new PerlinNoise(seed); }
+            private void SetupPerlin() { perlin = new Class1.PerlinNoise(seed); }
 
             private void SetupUI()
             {
@@ -120,160 +112,10 @@ namespace Game_prototype_1
                 CollumY+= 40;
 
                 btnStartGame = new Button { Text = "Start Game", Location = new Point(10, CollumY), Width = 220 }; 
-                btnStartGame.Click += BtnStartGame_Click; controls.Controls.Add(btnStartGame); 
+                btnStartGame.Click += BtnStartGame_Click; 
+                controls.Controls.Add(btnStartGame); 
                 CollumY+= 44;
-                Button btnBuildFactory = new Button
-                {
-                    Text = "Build Factory Mode",
-                    Location = new Point(10, CollumY),
-                    Width = 220
-                };
-                controls.Controls.Add(btnBuildFactory);
-                CollumY += 40;
-                btnBuildFactory.Click += (s, e) =>
-                {
-                    if (FactoryTypeList.SelectedIndex >= 0)
-                        SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
-                };
-                btnBuildFactory.Click += (s, e) =>
-                {
-                    buildMode = !buildMode;
-                    btnBuildFactory.Text = buildMode ? "Exit Build Mode" : "Build Factory Mode";
-                    if (FactoryTypeList.SelectedIndex >= 0)
-                        SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
-                };
-                controls.Controls.Add(new Label
-                {
-                    Text = "Resources:",
-                    Location = new Point(10, CollumY),
-                    Font = new Font("Segoe UI", 9, FontStyle.Bold)
-                }
-    );
-                CollumY += 22;
-
-                LabelTitaniumCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(10, CollumY),
-                    AutoSize = true
-                };
-                controls .Controls.Add(new Label
-                {
-                    Text = "Titanium:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelTitaniumCount.Location = new Point(120, CollumY);
-                controls.Controls.Add(LabelTitaniumCount);
-                CollumY += 22;
-
-                LabelWaterCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(120, CollumY),
-                    AutoSize = true
-                };
-                controls .Controls.Add(new Label
-                {
-                    Text = "Water:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelWaterCount.Location = new Point(120, CollumY);
-                controls.Controls.Add(LabelWaterCount);
-                CollumY += 22;
-
-                LabelEnergyBricksCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(120, CollumY),
-                    AutoSize = true
-                };
-                controls .Controls.Add(new Label
-                {
-                    Text = "Energy:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelEnergyBricksCount.Location = new Point(120, CollumY);
-                controls.Controls.Add(LabelEnergyBricksCount);
-                CollumY += 22;
-
-                LabelFoodCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(120, CollumY),
-                    AutoSize = true
-                };
-                controls.Controls.Add(new Label
-                {
-                    Text = "Food:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelFoodCount.Location = new Point(120, CollumY);
-                controls.Controls.Add(LabelFoodCount);
-                CollumY += 22;
-
-                LabelPopulationCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(120, CollumY),
-                    AutoSize = true
-                };
-                controls.Controls.Add(new Label
-                {
-                    Text = "Population:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelPopulationCount.Location = new Point(120, CollumY);
-                controls.Controls.Add(LabelPopulationCount);
-                CollumY += 22;
-
-                LabelResearchCount = new Label
-                {
-                    Text = "0",
-                    Location = new Point(120, CollumY),
-                    AutoSize = true
-                };
-                controls .Controls.Add(new Label
-                {
-                    Text = "Research:",
-                    Location = new Point(10, CollumY)
-                }
-                );
-                LabelResearchCount.Location = new Point(120, CollumY);
-                controls .Controls.Add(LabelResearchCount);
-                CollumY += 30;
-
-                Label lblFactory = new Label 
-                { 
-                    Text = "Factory Types:", 
-                    Location = new Point(10, CollumY) 
-                };
-                controls.Controls.Add(lblFactory); 
-                CollumY+= 20;
-
-                FactoryTypeList = new ListBox { Location = new Point(10, CollumY), Size = new Size(220, 120) };
-                FactoryTypeList.Items.AddRange(new object[] 
-                {
-                    Config.TitaniumFact, 
-                    Config.WaterFact, 
-                    Config.EnergyBrickFact, 
-                    Config.FoodFact, 
-                    Config.PopulationFact 
-                }
-                );
-                FactoryTypeList.SelectedIndexChanged += (s, e) =>
-                {
-                    if (FactoryTypeList.SelectedIndex >= 0)
-                    { 
-                        SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
-                    }
-                };
-                controls.Controls.Add(FactoryTypeList);
-                CollumY+= 130;
+                
 
                 Label legendTitle = new Label 
                 { 
@@ -362,11 +204,11 @@ namespace Game_prototype_1
                             Text = t.ToString(), 
                             TextAlign = ContentAlignment.BottomCenter, 
                             Font = new Font("Segoe UI", 9, FontStyle.Bold), 
-                            Tag = new TileInfo 
+                            Tag = new Class1.TileInfo 
                                 { 
                                     Col = c, 
                                     Row = r, 
-                                    Type = t, 
+                                    Type = (Class1.TileType)t, 
                                     Level = 1 
                                 }
                         };
@@ -376,33 +218,11 @@ namespace Game_prototype_1
                     }
                 }
             }
-        private Color FactoryColor(string factoryType)
-        {
-            switch (factoryType)
-            {
-                case Config.TitaniumFact: 
-                    return Color.DarkGray;
-
-                case Config.WaterFact: 
-                    return Color.LightBlue;
-
-                case Config.EnergyBrickFact: 
-                    return Color.Orange;
-
-                case Config.FoodFact: 
-                    return Color.Green;
-
-                case Config.PopulationFact: 
-                    return Color.MediumPurple;
-
-                default: 
-                    return Color.White;
-            }
-        }
+        
         private void Tile_Click(object sender, EventArgs e)
         {
             Button b = sender as Button;
-            if (b ? .Tag is TileInfo info)
+            if (b ? .Tag is Class1.TileInfo info)
             {
                 if (buildMode)
                 {
@@ -418,7 +238,7 @@ namespace Game_prototype_1
                         info.FactoryType = SelectedFactoryType;
                         info.Level = 1;
                         b.Text = $"{info.FactoryType} L1";
-                        b.BackColor = FactoryColor(info.FactoryType);
+                        
                     }
                     else if (info.Level < 3)
                     {
@@ -434,9 +254,9 @@ namespace Game_prototype_1
                 else
                 {
                     
-                    info.Type = NextTileType(info.Type);
+                    info.Type = (Class1.TileType)NextTileType((TileType)info.Type);
                     b.Tag = info;
-                    b.BackColor = TileColor(info.Type);
+                    b.BackColor = TileColor((TileType)info.Type);
                     b.Text = info.Type.ToString();
                 }
             }
@@ -504,14 +324,14 @@ namespace Game_prototype_1
                 {
                     return;
                 }
-                List<TileInfo> tiles = new List<TileInfo>();
+                List<Class1.TileInfo> tiles = new List<Class1.TileInfo>();
                 foreach (Button b in tileButtons)
 
-                    if (b.Tag is TileInfo t)
+                    if (b.Tag is Class1.TileInfo t)
                     { 
                         tiles.Add(t);
                     }
-                    MapSaveData map = new MapSaveData
+                    Class1.MapSaveData map = new Class1.MapSaveData
                     { 
                         Columns = Collums, 
                         Rows = rows,
@@ -531,7 +351,7 @@ namespace Game_prototype_1
                     if (ofd.ShowDialog() != DialogResult.OK) return;
                         try
                         {
-                            MapSaveData map = JsonConvert.DeserializeObject<MapSaveData>(File.ReadAllText(ofd.FileName));
+                            Class1.MapSaveData map = JsonConvert.DeserializeObject<Class1.MapSaveData>(File.ReadAllText(ofd.FileName));
                             if (map != null) 
                             { 
                                 Collums = map.Columns; 
@@ -550,7 +370,7 @@ namespace Game_prototype_1
                 }
             }
 
-            private void GenerateFromSaved(MapSaveData map)
+            private void GenerateFromSaved(Class1.MapSaveData map)
             {
                 gridPanel.Controls.Clear(); 
                 tileButtons.Clear();
@@ -561,13 +381,13 @@ namespace Game_prototype_1
                     map.Rows * Config.TileSize) 
                 };
                 gridPanel.Controls.Add(canvas);
-                foreach (TileInfo info in map.Tiles)
+                foreach (Class1.TileInfo info in map.Tiles)
                 {
                     Button tile = new Button 
                     { 
                         Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize),
                         Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
-                        BackColor = TileColor(info.Type), 
+                        BackColor = TileColor((TileType)info.Type), 
                         ForeColor = Color.White, 
                         Text = info.Type.ToString(), 
                         TextAlign = ContentAlignment.BottomCenter, 
@@ -583,53 +403,8 @@ namespace Game_prototype_1
 
             private enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
 
-            private class TileInfo 
-            {
-            public int Col { get; set; } 
-            public int Row { get; set; } 
-            public TileType Type { get; set; } 
-            public int Level { get; set; }
-            public bool HasFactory { get; set; }
-            public string FactoryType { get; set; }
-        }
-
-            private class MapSaveData 
-        { 
-            public int Columns { get; set; } 
-            public int Rows { get; set; } 
-            public int Seed { get; set; } 
-            public float NoiseScale { get; set; } 
-            public List<TileInfo> Tiles { get; set; } }
-
-            private class PerlinNoise
-            {
-                private readonly int[] perm;
-                public PerlinNoise(int seed) { perm = new int[512]; int[] p = new int[256]; Random rnd = new Random(seed); 
-                for (int i = 0; i < 256; i++) 
-                    p[i] = i; 
-                for (int i = 255; i > 0; i--) 
-                { 
-                    int j = rnd.Next(i + 1); 
-                    int tmp = p[i]; 
-                    p[i] = p[j]; p[j] = tmp; } 
-                for (int i = 0; i < 512; i++) perm[i] = p[i & 255]; }
-                public float Noise(float x, float y) { int X = FastFloor(x) & 255; int Y = FastFloor(y) & 255; float xf = x - (float)Math.Floor(x); 
-                float yf = y - (float)Math.Floor(y); 
-                float u = Fade(xf); float v = Fade(yf); 
-                int aa = perm[X + perm[Y]]; int ab = perm[X + perm[Y + 1]]; 
-                int ba = perm[X + 1 + perm[Y]]; 
-                int bb = perm[X + 1 + perm[Y + 1]]; 
-                float x1 = Lerp(Grad(aa, xf, yf), Grad(ba, xf - 1, yf), u); 
-                float x2 = Lerp(Grad(ab, xf, yf - 1), Grad(bb, xf - 1, yf - 1), u); 
-                return Lerp(x1, x2, v); }
-                private static int FastFloor(float x) => x > 0 ? (int)x : (int)x - 1;
-                private static float Fade(float t) => t * t * t * (t * (t * 6 - 15) + 10);
-                private static float Lerp(float a, float b, float t) => a + t * (b - a);
-                private static float Grad(int hash, float x, float y) { int h = hash & 7; 
-                float u = h < 4 ? x : y; 
-                float v = h < 4 ? y : x; 
-                return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v); }
-            }
+            
+                
         private void MainMenu_Load(object sender, EventArgs e)
         {
 

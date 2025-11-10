@@ -23,12 +23,7 @@ namespace Game_prototype_1
         {
 
         }
- 
-        private void ContinueButton_Click(object sender, EventArgs e)
-        {
-            
-        }
-        
+
        private void LoadGameButton_Click(object sender, EventArgs e)
         {
             using (Research research = new Research())
@@ -47,6 +42,22 @@ namespace Game_prototype_1
             using (MainMenu mainMenu = new MainMenu())
             {
                 mainMenu.ShowDialog();
+            }
+
+
+            this.Show();
+        }
+
+        private void ContinueButton_Click(object sender, EventArgs e)
+        {
+            PrototypeErrorMessage.Hide();
+
+            this.Hide();
+
+
+            using (MapDesigner mapDesigner = new MapDesigner())
+            {
+                mapDesigner.ShowDialog();
             }
 
 

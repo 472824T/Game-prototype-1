@@ -44,6 +44,7 @@
             this.ContinueButton.TabIndex = 8;
             this.ContinueButton.Text = "Continue";
             this.ContinueButton.UseVisualStyleBackColor = true;
+            this.ContinueButton.Click += new System.EventHandler(this.ContinueButton_Click);
             // 
             // New_Game_button
             // 

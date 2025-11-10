@@ -1,5 +1,6 @@
 ﻿using Game_prototype_1.Game_prototype_1;
 using Graphing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -13,9 +14,12 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 
-
+using System.IO;
+using Newtonsoft.Json;
+using ContentAlignment = System.Drawing.ContentAlignment;
 namespace Game_prototype_1
 {
     public partial class MainMenu : Form
@@ -40,10 +44,13 @@ namespace Game_prototype_1
         private string SelectedFactoryType = null;
         private const int TileSize = 100;
         private int GridCollums = 5;
-
+        private int Collums = 5;
+        private int rows = 4;
+        private float noiseScale = 10f;
+        private int seed = 0;
 
         private bool buildMode = false;
-
+        private enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
         public MainMenu()
         {
             GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
@@ -231,6 +238,40 @@ namespace Game_prototype_1
             left.Controls.Add(LabelResearchCount); 
             CollumY+= 30;
 
+            Button btnLoad = new Button { Text = "Load Map", Location = new Point(10, CollumY), Width = 220 };
+            btnLoad.Click += ButtonLoadClick;
+            left.Controls.Add(btnLoad);
+            CollumY += 40;
+            Label legendTitle = new Label
+            {
+                Text = "Legend",
+                Location = new Point(10, CollumY),
+                Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold)
+            };
+            left.Controls.Add(legendTitle);
+            CollumY += 24;
+
+
+            foreach (TileType t in Enum.GetValues(typeof(TileType)))
+            {
+                Label l = new Label
+                {
+                    Text = t.ToString(),
+                    Location = new Point(10, CollumY),
+                    AutoSize = true
+                };
+                Panel p = new Panel
+                {
+                    BackColor = TileColor(t),
+                    Location = new Point(150, CollumY + 3),
+                    Size = new Size(25, 20)
+                };
+                left.Controls.Add(l);
+                left.Controls.Add(p);
+                CollumY += 25;
+
+            }
+
             playPanel = new Panel 
             { 
                 Location = new Point(280, 10), 
@@ -289,7 +330,86 @@ namespace Game_prototype_1
                 }
             }
         }
+        private Color TileColor(TileType t)
+        {
+            switch (t)
+            {
+                case TileType.Ocean:
+                    return Color.FromArgb(68, 138, 255);
 
+                case TileType.GrassLands:
+                    return Color.FromArgb(120, 200, 80);
+
+                case TileType.Forest:
+                    return Color.FromArgb(34, 139, 34);
+
+                case TileType.Desert:
+                    return Color.FromArgb(194, 178, 128);
+
+                case TileType.Mountains:
+                    return Color.FromArgb(120, 120, 120);
+
+                default:
+                    return Color.White;
+            }
+        }
+
+        private void ButtonLoadClick(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog { Filter = Config.JSONFilter })
+            {
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+                try
+                {
+                   Class1.MapSaveData map = JsonConvert.DeserializeObject<Class1.MapSaveData>(File.ReadAllText(ofd.FileName));
+                    if (map != null)
+                    {
+                        Collums = map.Columns;
+                        rows = map.Rows;
+                        seed = map.Seed;
+                        noiseScale = map.NoiseScale;
+                      
+                        
+                        
+                        GenerateFromSaved(map);
+                        MessageBox.Show("Map loaded successfully!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to load map: " + ex.Message);
+                }
+            }
+        }
+        private void GenerateFromSaved(Class1.MapSaveData map)
+        {
+           
+            Panel canvas = new Panel
+            {
+                Location = new Point(0, 0),
+                Size = new Size(map.Columns * Config.TileSize,
+                map.Rows * Config.TileSize)
+            };
+            
+            foreach (Class1.TileInfo info in map.Tiles)
+            {
+                Button tile = new Button
+                {
+                    Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize),
+                    Size = new Size(Config.TileSize - 2, Config.TileSize - 2),
+                    BackColor = TileColor((TileType)info.Type),
+                    ForeColor = Color.White,
+                    Text = info.Type.ToString(),
+                    TextAlign = ContentAlignment.BottomCenter,
+                    Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                    Tag = info
+                };
+
+                
+                canvas.Controls.Add(tile);
+                TileButtons.Add(tile);
+            }
+        }
         private void GenOfTilePicBoxs(int WantedNum = 0)
         {
          
@@ -486,44 +606,19 @@ namespace Game_prototype_1
         {
             GameResourceManager.Tick();
         }
-        private void ContinueButton_Click(object sender, EventArgs e)
-        {
-            PrototypeErrorMessage.Show();
-        }
-     
-            
-
-
-            private void New_Game_button_Click(object sender, EventArgs e)
-        {   PrototypeErrorMessage.Hide();
-      
-            this.Hide();
-
-      
-            using (MapDesigner mainMenu = new MapDesigner())
-            {
-                mainMenu.ShowDialog();
-            }
-
- 
-            this.Show();
-        }
-
- 
-        private void LoadGameButton_Click(object sender, EventArgs e)
-        {
-            using (Research research = new Research())
-            {
-                research.ShowDialog();
-            }
-
-        }
-        protected override void OnFormClosing(FormClosingEventArgs e)
+       
+             protected override void OnFormClosing(FormClosingEventArgs e)
         {
             // Unsubscribe from the event when form closes
             GameResourceManager.GameStateChanged -= GameManager_GameStateChanged;
             base.OnFormClosing(e);
         }
+
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
 
