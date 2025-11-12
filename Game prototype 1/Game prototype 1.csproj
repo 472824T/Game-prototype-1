@@ -65,7 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="PerlinGen.cs" />
     <Compile Include="StartMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +82,11 @@
     <Compile Include="Research.Designer.cs">
       <DependentUpon>Research.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu.cs">
+    <Compile Include="PlanetScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainMenu.Designer.cs">
-      <DependentUpon>MainMenu.cs</DependentUpon>
+    <Compile Include="PlanetScreen.Designer.cs">
+      <DependentUpon>PlanetScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="MapDesigner.cs">
       <SubType>Form</SubType>
@@ -102,8 +102,8 @@
     <EmbeddedResource Include="Research.resx">
       <DependentUpon>Research.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu.resx">
-      <DependentUpon>MainMenu.cs</DependentUpon>
+    <EmbeddedResource Include="PlanetScreen.resx">
+      <DependentUpon>PlanetScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Game_prototype_1.PerlinGen;
 
 namespace Game_prototype_1
 {
-    internal class Class1
+    public class TileInfo
+    {
+        public int Col { get; set; }
+        public int Row { get; set; }
+        public TileType Type { get; set; }
+        public int Level { get; set; }
+        public bool HasFactory { get; set; }
+        public string FactoryType { get; set; }
+    }
+    public class MapSaveData
+    {
+        public int Columns { get; set; }
+        public int Rows { get; set; }
+        public int Seed { get; set; }
+        public float NoiseScale { get; set; }
+        public List<TileInfo> Tiles { get; set; }
+    }
+    internal class PerlinGen
     {
         public enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
 
-        public class TileInfo
-        {
-            public int Col { get; set; }
-            public int Row { get; set; }
-            public TileType Type { get; set; }
-            public int Level { get; set; }
-            public bool HasFactory { get; set; }
-            public string FactoryType { get; set; }
-        }
-        public class MapSaveData
-        {
-            public int Columns { get; set; }
-            public int Rows { get; set; }
-            public int Seed { get; set; }
-            public float NoiseScale { get; set; }
-            public List<TileInfo> Tiles { get; set; }
-        }
+
 
         public class PerlinNoise
         {

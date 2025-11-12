@@ -39,9 +39,9 @@ namespace Game_prototype_1
             this.Hide();
 
 
-            using (MainMenu mainMenu = new MainMenu())
+            using (PlanetScreen planetscreen = new PlanetScreen())
             {
-                mainMenu.ShowDialog();
+                planetscreen.ShowDialog();
             }
 
 

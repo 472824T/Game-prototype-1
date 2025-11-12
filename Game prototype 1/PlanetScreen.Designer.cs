@@ -1,7 +1,7 @@
 ﻿
 namespace Game_prototype_1
 {
-    partial class MainMenu
+    partial class PlanetScreen
     {
         /// <summary>
         /// Required designer variable.

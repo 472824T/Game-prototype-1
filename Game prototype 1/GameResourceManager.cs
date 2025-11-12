@@ -14,7 +14,7 @@ namespace Game_prototype_1
          static public class GameResourceManager
         {
             public static event EventHandler GameStateChanged;
-            static public  MainMenu MainMenu;
+            static public  PlanetScreen MainMenu;
             static private List<GameResourceFactory> factories;
             static public int TitaniumValue;
             static public int WaterValue;
