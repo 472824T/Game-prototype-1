@@ -32,8 +32,8 @@
             this.New_Game_button = new System.Windows.Forms.Button();
             this.LoadGameButton = new System.Windows.Forms.Button();
             this.OptionsButton = new System.Windows.Forms.Button();
-            this.PrototypeErrorMessage = new System.Windows.Forms.Label();
             this.Title_label = new System.Windows.Forms.Label();
+            this.PrototypeErrorMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ContinueButton
@@ -77,17 +77,6 @@
             this.OptionsButton.Text = "Options";
             this.OptionsButton.UseVisualStyleBackColor = true;
             // 
-            // PrototypeErrorMessage
-            // 
-            this.PrototypeErrorMessage.AutoSize = true;
-            this.PrototypeErrorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.PrototypeErrorMessage.Location = new System.Drawing.Point(465, 263);
-            this.PrototypeErrorMessage.Name = "PrototypeErrorMessage";
-            this.PrototypeErrorMessage.Size = new System.Drawing.Size(554, 29);
-            this.PrototypeErrorMessage.TabIndex = 15;
-            this.PrototypeErrorMessage.Text = "Please click the new game button to start the game";
-            this.PrototypeErrorMessage.Visible = false;
-            // 
             // Title_label
             // 
             this.Title_label.AutoSize = true;
@@ -98,6 +87,17 @@
             this.Title_label.TabIndex = 16;
             this.Title_label.Text = "Welcome to the game user ";
             this.Title_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PrototypeErrorMessage
+            // 
+            this.PrototypeErrorMessage.AutoSize = true;
+            this.PrototypeErrorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.PrototypeErrorMessage.Location = new System.Drawing.Point(465, 263);
+            this.PrototypeErrorMessage.Name = "PrototypeErrorMessage";
+            this.PrototypeErrorMessage.Size = new System.Drawing.Size(554, 29);
+            this.PrototypeErrorMessage.TabIndex = 15;
+            this.PrototypeErrorMessage.Text = "Please click the new game button to start the game";
+            this.PrototypeErrorMessage.Visible = false;
             // 
             // StartMenu
             // 
@@ -124,7 +124,7 @@
         private System.Windows.Forms.Button New_Game_button;
         private System.Windows.Forms.Button LoadGameButton;
         private System.Windows.Forms.Button OptionsButton;
-        private System.Windows.Forms.Label PrototypeErrorMessage;
         private System.Windows.Forms.Label Title_label;
+        private System.Windows.Forms.Label PrototypeErrorMessage;
     }
 }

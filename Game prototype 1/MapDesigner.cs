@@ -43,7 +43,7 @@ namespace Game_prototype_1
             private void SetupDefaults()
             {
                 Collums = 5; 
-                rows = 4; 
+                rows = 5; 
                 noiseScale = 10f;
                 seed = Environment.TickCount & 0x7fffffff;
             }
@@ -68,50 +68,113 @@ namespace Game_prototype_1
 
                 int CollumY= 10;
 
-                controls.Controls.Add(new Label { Text = "Columns:", Location = new Point(10, CollumY) }); 
+                controls.Controls.Add(new Label 
+                {
+                    Text = "Columns:", 
+                    Location = new Point(10, CollumY) 
+                }
+                ); 
                 CollumY+= 20;
 
-                nudCollums = new NumericUpDown { Location = new Point(10, CollumY), Minimum = 1, Maximum = 50, Value = Collums }; 
+                nudCollums = new NumericUpDown 
+                { 
+                    Location = new Point(10, CollumY), 
+                    Minimum = 1, 
+                    Maximum = 50, 
+                    Value = Collums 
+                }; 
                 controls.Controls.Add(nudCollums); 
                 CollumY+= 30;
 
-                controls.Controls.Add(new Label { Text = "Rows:", Location = new Point(10, CollumY) }); 
+                controls.Controls.Add(new Label 
+                { 
+                    Text = "Rows:", 
+                    Location = new Point(10, CollumY) 
+                }
+                ); 
                 CollumY+= 20;
 
-                nudRows = new NumericUpDown { Location = new Point(10, CollumY), Minimum = 1, Maximum = 50, Value = rows }; 
+                nudRows = new NumericUpDown 
+                { 
+                    Location = new Point(10, CollumY), 
+                    Minimum = 1, 
+                    Maximum = 50, 
+                    Value = rows 
+                }; 
                 controls.Controls.Add(nudRows); 
                 CollumY+= 30;
 
-                controls.Controls.Add(new Label { Text = "Noise Scale (1–100):", Location = new Point(10, CollumY) });
+                controls.Controls.Add(new Label 
+                { 
+                    Text = "Noise Scale (1–100):", 
+                    Location = new Point(10, CollumY) 
+                }
+                );
                 CollumY+= 20;
 
-                nudScale = new NumericUpDown { Location = new Point(10, CollumY), Minimum = 1, Maximum = 100, Value = (decimal)noiseScale }; 
+                nudScale = new NumericUpDown 
+                { 
+                    Location = new Point(10, CollumY), 
+                    Minimum = 1, 
+                    Maximum = 100, 
+                    Value = (decimal)noiseScale 
+                }; 
                 controls.Controls.Add(nudScale); 
                 CollumY+= 30;
 
-                controls.Controls.Add(new Label { Text = "Seed:", Location = new Point(10, CollumY) }); 
+                controls.Controls.Add(new Label 
+                { 
+                    Text = "Seed:", 
+                    Location = new Point(10, CollumY) 
+                }
+                ); 
                 CollumY+= 20;
 
-                txtSeed = new TextBox { Location = new Point(10, CollumY), Width = 200, Text = seed.ToString() }; 
+                txtSeed = new TextBox 
+                { 
+                    Location = new Point(10, CollumY), 
+                    Width = 200, 
+                    Text = seed.ToString() 
+                }; 
                 controls.Controls.Add(txtSeed); 
                 CollumY+= 35;
 
-                btnGenerate = new Button { Text = "Generate", Location = new Point(10, CollumY), Width = 220 }; 
+                btnGenerate = new Button 
+                { 
+                    Text = "Generate", 
+                    Location = new Point(10, CollumY), 
+                    Width = 220 
+                }; 
                 btnGenerate.Click += BtnGenerate_Click; 
                 controls.Controls.Add(btnGenerate); 
                 CollumY+= 40;
 
-                Button btnSave = new Button { Text = "Save Map", Location = new Point(10, CollumY), Width = 220 }; 
+                Button btnSave = new Button 
+                { 
+                    Text = "Save Map", 
+                    Location = new Point(10, CollumY), 
+                    Width = 220 
+                }; 
                 btnSave.Click += ButtonSaveClick; 
                 controls.Controls.Add(btnSave); 
                 CollumY+= 40;
 
-                Button btnLoad = new Button { Text = "Load Map", Location = new Point(10, CollumY), Width = 220 }; 
+                Button btnLoad = new Button 
+                { 
+                    Text = "Load Map", 
+                    Location = new Point(10, CollumY), 
+                    Width = 220 
+                }; 
                 btnLoad.Click += ButtonLoadClick; 
                 controls.Controls.Add(btnLoad); 
                 CollumY+= 40;
 
-                btnStartGame = new Button { Text = "Start Game", Location = new Point(10, CollumY), Width = 220 }; 
+                btnStartGame = new Button 
+                { 
+                    Text = "Start Game", 
+                    Location = new Point(10, CollumY),
+                    Width = 220 
+                }; 
                 btnStartGame.Click += BtnStartGame_Click; 
                 controls.Controls.Add(btnStartGame); 
                 CollumY+= 44;
@@ -208,7 +271,7 @@ namespace Game_prototype_1
                                 { 
                                     Col = c, 
                                     Row = r, 
-                                    Type = (PerlinGen.TileType)t, 
+                                    Type = t, 
                                     Level = 1 
                                 }
                         };
@@ -222,44 +285,15 @@ namespace Game_prototype_1
         private void Tile_Click(object sender, EventArgs e)
         {
             Button b = sender as Button;
-            if (b ? .Tag is PerlinGen.TileInfo info)
-            {
-                if (buildMode)
-                {
-                    if (SelectedFactoryType == null)
-                    {
-                        MessageBox.Show("Select a factory type first!");
-                        return;
-                    }
-                    
-                    if (!info.HasFactory)
-                    {
-                        info.HasFactory = true;
-                        info.FactoryType = SelectedFactoryType;
-                        info.Level = 1;
-                        b.Text = $"{info.FactoryType} L1";
-                        
-                    }
-                    else if (info.Level < 3)
-                    {
-                        info.Level++;
-                        b.Text = $"{info.FactoryType} L{info.Level}";
-                    }
-                    else
-                    {
-                        MessageBox.Show("Factory already at max level!");
-                    }
-                    b.Tag = info;
-                }
-                else
-                {
-                    
-                    info.Type = (PerlinGen.TileType)NextTileType((PerlinGen.TileType)info.Type);
-                    b.Tag = info;
-                    b.BackColor = TileColor((PerlinGen.TileType)info.Type);
-                    b.Text = info.Type.ToString();
-                }
+            if (b?.Tag is PerlinGen.TileInfo info)
+            { 
+
+                info.Type = (PerlinGen.TileType)NextTileType((PerlinGen.TileType)info.Type);
+                b.Tag = info;
+                b.BackColor = TileColor((PerlinGen.TileType)info.Type);
+                b.Text = info.Type.ToString();
             }
+            
         }
 
             private PerlinGen.TileType TileFromNoise(float n)

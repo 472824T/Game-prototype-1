@@ -110,35 +110,9 @@ namespace Game_prototype_1
             }
             );
             left.Controls.Add(FactoryTypeList);
-            CollumY+= 130;
-          
-            Button btnBuildFactory = new Button
-            {
-                Text = "Build Factory Mode",
-                Location = new Point(10, CollumY),
-                Width = 220
-            };
-            left.Controls.Add(btnBuildFactory);
-            CollumY+= 40;
-            btnBuildFactory.Click += (s, e) =>
-            {
-                if (FactoryTypeList.SelectedIndex >= 0)
-                {
-                    SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
-                }
-            };
-            btnBuildFactory.Click += (s, e) =>
-            { 
-                buildMode = !buildMode;
-                btnBuildFactory.Text = buildMode ? "Exit Build Mode" : "Build Factory Mode";
-                if (FactoryTypeList.SelectedIndex >= 0)
-                {
-                    SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
-                }
-            };
+            CollumY+= 30;
             
-
-            FactoryTypeList.SelectedIndexChanged += FactoryTypeList_SelectedIndexChanged;
+        FactoryTypeList.SelectedIndexChanged += FactoryTypeList_SelectedIndexChanged;
             FactoryTypeList.Visible = true; 
             left.Controls.Add(FactoryTypeList); CollumY+= 140;
 
@@ -150,7 +124,7 @@ namespace Game_prototype_1
             }
             ); 
             CollumY+= 22;
-
+            
             LabelTitaniumCount = new Label 
             { 
                 Text = "0", 
@@ -169,7 +143,8 @@ namespace Game_prototype_1
 
             LabelWaterCount = new Label 
             { 
-                Text = "0", Location = new Point(120, CollumY), 
+                Text = "0",
+                Location = new Point(120, CollumY), 
                 AutoSize = true 
             }; 
             left.Controls.Add(new Label 
@@ -244,6 +219,16 @@ namespace Game_prototype_1
             left.Controls.Add(LabelResearchCount); 
             CollumY+= 30;
 
+            Button btnSave = new Button
+            {
+                Text = "Save Map",
+                Location = new Point(10, CollumY),
+                Width = 220
+            };
+            btnSave.Click += ButtonSaveClick;
+            left.Controls.Add(btnSave);
+            CollumY += 40;
+
             Button btnLoad = new Button 
             { 
                 Text = "Load Map", 
@@ -296,7 +281,16 @@ namespace Game_prototype_1
             ProductionTimer.Start();
         }
 
-       
+        private void MakeLabelSmall(Panel parent, string text, int y)
+        {
+            Label label = new Label
+            {
+                Text = text,
+                Location = new Point(10, y),
+                AutoSize = true
+            };
+            parent.Controls.Add(label);
+        }
         private Color TileColor(PerlinGen.TileType t)
         {
             switch (t)
@@ -320,7 +314,33 @@ namespace Game_prototype_1
                     return Color.White;
             }
         }
+        private void ButtonSaveClick(object sender, EventArgs e)
+        {
+            using (SaveFileDialog savefiledialog = new SaveFileDialog { Filter = Config.JSONFilter })
+            {
+                if (savefiledialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                List<PerlinGen.TileInfo> tiles = new List<PerlinGen.TileInfo>();
+                foreach (Button b in TileButtons)
 
+                    if (b.Tag is PerlinGen.TileInfo t)
+                    {
+                        tiles.Add(t);
+                    }
+                PerlinGen.MapSaveData map = new PerlinGen.MapSaveData
+                {
+                    Columns = Collums,
+                    Rows = rows,
+                    Seed = seed,
+                    NoiseScale = noiseScale,
+                    Tiles = tiles
+                };
+                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented));
+                MessageBox.Show("Map saved successfully!");
+            }
+        }
         private void ButtonLoadClick(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog { Filter = Config.JSONFilter })
