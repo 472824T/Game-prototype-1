@@ -89,6 +89,7 @@ namespace Game_prototype_1
                 if (index >= 0 && index < factories.Count)
                 {
                     factories[index].Upgrade();
+                    
                 }
             }
 

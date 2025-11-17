@@ -288,7 +288,7 @@ namespace Game_prototype_1
             if (b?.Tag is PerlinGen.TileInfo info)
             { 
 
-                info.Type = (PerlinGen.TileType)NextTileType((PerlinGen.TileType)info.Type);
+                info.Type = NextTileType(info.Type);
                 b.Tag = info;
                 b.BackColor = TileColor((PerlinGen.TileType)info.Type);
                 b.Text = info.Type.ToString();

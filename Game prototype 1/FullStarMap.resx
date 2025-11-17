@@ -117,47 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="22dee043-1ab5-4625-98de-ccc5d77ddd88" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\22dee043-1ab5-4625-98de-ccc5d77ddd88.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MIT-No-Atmosphere-01_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MIT-No-Atmosphere-01_0.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="istockphoto-96816797-612x612" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\istockphoto-96816797-612x612.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Jungleplanet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Jungleplanet.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\images.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="The_real_Sun_(6982597973)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\The_real_Sun_(6982597973).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="venus-mariner-10-pia23791-fig2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\venus-mariner-10-pia23791-fig2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="neptune" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\neptune.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="full-disc-view-of-pluto-by-new-horizons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\full-disc-view-of-pluto-by-new-horizons.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="frozen-planet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\frozen-planet.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="photo-1616712134411-6b6ae89bc3ba" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\photo-1616712134411-6b6ae89bc3ba.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Ocean_Planet_(19937982002)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Ocean_Planet_(19937982002).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="5f037ce3-e38e-4ea8-9bd4-74d4aefe610f" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\5f037ce3-e38e-4ea8-9bd4-74d4aefe610f.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="purple-planets-could-answer-extraterrestrial-questions-aW1hZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\purple-planets-could-answer-extraterrestrial-questions-aW1hZ.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

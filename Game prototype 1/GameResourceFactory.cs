@@ -19,7 +19,10 @@ namespace Game_prototype_1
 
         public virtual void Upgrade()
         {
-            if (Level < 3) Level++;
+            if (Level < 3)
+            {
+                Level++;
+            }
         }
 
         protected int Scale(int baseValue)
