@@ -18,27 +18,27 @@ namespace Game_prototype_1
     }
     public class TitaniumResource : GameResource
     {
-        public TitaniumResource(int value) : base("Titanium", value) { }
+        public TitaniumResource(int value) : base(Config.TitaniumName, value) { }
     }
     public class WaterResource : GameResource
     {
-        public WaterResource(int value) : base("Water", value) { }
+        public WaterResource(int value) : base(Config.WaterName, value) { }
     }
     public class EnergyBricksResource : GameResource
     {
-        public EnergyBricksResource(int value) : base("EnergyBricks", value) { }
+        public EnergyBricksResource(int value) : base(Config.EnergyBricksName, value) { }
     }
     public class FoodResource : GameResource
     {
-        public FoodResource(int value) : base("Food", value) { }
+        public FoodResource(int value) : base(Config.FoodName, value) { }
     }
     public class ResearchResource : GameResource
     {
-        public ResearchResource(int value) : base("Research", value) { }
+        public ResearchResource(int value) : base(Config.ResearchName, value) { }
     }
-    public class HousingResource : GameResource
+    public class PopulationResource : GameResource
     {
-        public HousingResource(int value) : base("Population", value) { }
+        public PopulationResource(int value) : base(Config.PopulationName, value) { }
     }
 
 }

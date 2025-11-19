@@ -1,4 +1,4 @@
-﻿using Game_prototype_1.Game_prototype_1;
+﻿
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -284,6 +284,7 @@ namespace Game_prototype_1
                 {
                     return;
                 }
+
                 List<PerlinGen.TileInfo> tiles = new List<PerlinGen.TileInfo>();
                 foreach (Button b in TileButtons)
 
@@ -291,7 +292,7 @@ namespace Game_prototype_1
                     {
                         tiles.Add(t);
                     }
-                PerlinGen.MapSaveData map = new PerlinGen.MapSaveData
+                SaveData.MapSaveData map = new SaveData.MapSaveData
                 {
                     Columns = Collums,
                     Rows = rows,
@@ -299,18 +300,31 @@ namespace Game_prototype_1
                     NoiseScale = noiseScale,
                     Tiles = tiles
                 };
-                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented));
+                SaveData.ResourceSaveData Resources = new SaveData.ResourceSaveData
+                {
+                    TitaniumValue = GameResourceManager.GetResourceAmount(Config.TitaniumName),
+                    WaterValue = GameResourceManager.GetResourceAmount(Config.WaterName),
+                    EnergyBricksValue = GameResourceManager.GetResourceAmount(Config.EnergyBricksName),
+                    FoodValue = GameResourceManager.GetResourceAmount(Config.FoodName),
+                    PopulationValue = GameResourceManager.GetResourceAmount(Config.PopulationName),
+                    ResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName),
+
+
+                };
+
+                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented) ,JsonConvert.SerializeObject(Resources, Formatting.Indented));
                 MessageBox.Show("Map saved successfully!");
             }
         }
         private void ButtonLoadClick(object sender, EventArgs e)
         {
-            using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
+            GameResourceManager.ResetAll();
+                using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
             {
                 if (openfiledialog.ShowDialog() != DialogResult.OK) return;
                 try
                 {
-                   PerlinGen.MapSaveData map = JsonConvert.DeserializeObject<PerlinGen.MapSaveData>(File.ReadAllText(openfiledialog.FileName));
+                   SaveData.MapSaveData map = JsonConvert.DeserializeObject<SaveData.MapSaveData>(File.ReadAllText(openfiledialog.FileName));
                     if (map != null)
                     {
                         Collums = map.Columns;
@@ -330,7 +344,7 @@ namespace Game_prototype_1
                 }
             }
         }
-        private void GenerateFromSaved(PerlinGen.MapSaveData map)
+        private void GenerateFromSaved(SaveData.MapSaveData map)
         {
            
 
@@ -356,12 +370,37 @@ namespace Game_prototype_1
                     Font = new Font("Segoe UI", 9, FontStyle.Bold),
                     Tag = info
 
+
                 };
 
                 
                 canvas.Controls.Add(tile);
                 TileButtons.Add(tile);
                 tile.Click += TileButtonClick;
+                if (info.HasFactory)
+                {
+                    tile.BackColor = GetFactoryColor(info.FactoryType);
+                    tile.Text = $"{info.FactoryType} L{info.Level}";
+                    switch (info.FactoryType)
+                    {
+                        case Config.TitaniumFact:
+                            GameResourceManager.AddFactory(new TitaniumFactory(1));
+                            break;
+                        case Config.WaterFact:
+                            GameResourceManager.AddFactory(new WaterFactory(1));
+                            break;
+                        case Config.EnergyBrickFact:
+                            GameResourceManager.AddFactory(new EnergyBricksFactory(1));
+                            break;
+                        case Config.FoodFact:
+                            GameResourceManager.AddFactory(new FarmFactory(1));
+                            break;
+                        case Config.PopulationFact:
+                            GameResourceManager.AddFactory(new PopulationFactory(1));
+                            break;
+
+                    }
+                }
             }
             
             
@@ -397,7 +436,7 @@ namespace Game_prototype_1
                     if (ListOfBuildAction.SelectedIndex > -1)
                     {
                         string action = Config.ListedActions[ListOfBuildAction.SelectedIndex];
-                        if (action == "Factory")
+                        if (action == Config.ListedActions[0])
                         {
                             if (SelectedFactoryType == null)
                             {
@@ -436,7 +475,7 @@ namespace Game_prototype_1
                             SelectedFactoryType = null;
 
                         }
-                        else if (action == "Demolish")
+                        else if (action == Config.ListedActions[1])
                         {
                             info.HasFactory = false;
                             info.FactoryType = null;
@@ -447,19 +486,19 @@ namespace Game_prototype_1
                             switch (info.FactoryType)
                             {
                                 case Config.TitaniumFact:
-                                    GameResourceManager.RemoveFactory(new TitaniumFactory(1));
+                                    GameResourceManager.RemoveFactory(new TitaniumFactory(-1));
                                     break;
 
                                 case Config.WaterFact:
-                                    GameResourceManager.RemoveFactory(new WaterFactory(1));
+                                    GameResourceManager.RemoveFactory(new WaterFactory(-1));
                                     break;
 
                                 case Config.EnergyBrickFact:
-                                    GameResourceManager.RemoveFactory(new EnergyBricksFactory(1));
+                                    GameResourceManager.RemoveFactory(new EnergyBricksFactory(-1));
                                     break;
 
                                 case Config.FoodFact:
-                                    GameResourceManager.RemoveFactory(new FarmFactory(1));
+                                    GameResourceManager.RemoveFactory(new FarmFactory(-1));
                                     break;
 
                                 case Config.PopulationFact:
@@ -467,7 +506,7 @@ namespace Game_prototype_1
                                     break;
                             }
                         }
-                        else if (action == "Upgrade")
+                        else if (action == Config.ListedActions[2])
                         {
                             if (info.HasFactory == false)
                             {
@@ -501,14 +540,14 @@ namespace Game_prototype_1
                                     break;
                             }
 
-                            int have = GameResourceManager.GetResourceAmount("Titanium");
+                            int have = GameResourceManager.GetResourceAmount(Config.TitaniumName);
                             if (have < cost)
                             {
                                 MessageBox.Show("Not enough Titanium. Need " + cost);
                                 return;
                             }
 
-                            GameResourceManager.DeductResource("Titanium", cost);
+                            GameResourceManager.DeductResource(Config.TitaniumName, cost);
 
                             
                             GameResourceManager.UpgradeFactory(index);

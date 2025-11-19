@@ -4,10 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace Game_prototype_1
-{
-    using System.Collections.Generic;
-    using System.Windows.Forms;
 
     namespace Game_prototype_1
     {
@@ -30,6 +26,7 @@ namespace Game_prototype_1
                 WaterValue = 0; 
                 EnergyBricksValue = 0; 
                 FoodValue = 0; 
+                PopulationValue = 0;
                 ResearchValue = 0;
                
                
@@ -109,6 +106,9 @@ namespace Game_prototype_1
                     case "Food": 
                         return FoodValue;
 
+                    case "Popluation":
+                        return PopulationValue;
+
                     case "Research": 
                         return ResearchValue;
 
@@ -140,6 +140,10 @@ namespace Game_prototype_1
                         FoodValue -= amount; 
 
                         break;
+                    case "Popluation":
+                        PopulationValue -= amount;
+                        
+                        break;
 
                     case "Research": 
                         ResearchValue -= amount; 
@@ -148,16 +152,55 @@ namespace Game_prototype_1
                 }
                 OnGameStateChanged();
             }
+            static public void AddResource(string name, int amount)
+            {
+                switch (name)
+                {
+                    case "Titanium":
+                        TitaniumValue += amount;
+
+                        break;
+
+                    case "Water":
+                        WaterValue += amount;
+
+                        break;
+
+                    case "EnergyBricks":
+                        EnergyBricksValue += amount;
+
+                        break;
+
+                    case "Food":
+                        FoodValue += amount;
+
+                        break;
+
+                    case "Popluation":
+                        PopulationValue += amount;
+
+                        break;
+
+                    case "Research":
+                        ResearchValue += amount;
+
+                        break;
+                }
+                OnGameStateChanged();
+            }
 
             static public void ResetAll()
-            {
+            {   
+                factories.Clear();
                 TitaniumValue = 0; 
                 WaterValue = 0; 
                 EnergyBricksValue = 0; 
                 FoodValue = 0; 
+                PopulationValue = 0;
                 ResearchValue = 0;
                 OnGameStateChanged();
+                
             }
         }
     }
-}
+

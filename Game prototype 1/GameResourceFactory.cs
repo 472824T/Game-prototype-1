@@ -92,7 +92,7 @@ namespace Game_prototype_1
         public PopulationFactory(int level = 1) : base(Config.PopulationFact, level) { }
         public override GameResource Tick()
         {
-            return new HousingResource(Scale(Config.PopulatiomBaseProduction));
+            return new PopulationResource(Scale(Config.PopulatiomBaseProduction));
         }
     }
 }

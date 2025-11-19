@@ -1,5 +1,4 @@
-﻿using Game_prototype_1.Game_prototype_1;
-using Graphing;
+﻿using Graphing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

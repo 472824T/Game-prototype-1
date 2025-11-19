@@ -11,7 +11,9 @@ namespace Game_prototype_1
 {
     static public class Config
     {
-            public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Factory", "Demolish", "Upgrade", });
+            
+        // ---- Actions listed in the Planet screen ----
+        public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Factory", "Demolish", "Upgrade", });
             // ---- Upgrade costs (index 1 = cost for L1→L2, index 2 = cost for L2→L3) ----
             public readonly static ImmutableArray<int> TitaniumMineUpgradeCosts = ImmutableArray.Create(new[] { 0, 20, 100, 0 });
             public readonly static ImmutableArray<int> WaterPumpUpgradeCosts = ImmutableArray.Create(new[] { 0, 15, 80, 0 });
@@ -42,9 +44,15 @@ namespace Game_prototype_1
             public const string EnergyBrickFact = "Energy Brick Generator";
             public const string FoodFact = "Farm";
             public const string PopulationFact = "Housing";
-            // ---- Names of Resource as strings ----
+            // ---- Names of Resource as strings and a list of them ----
             public const string TitaniumName = "Titanium";
-            public const string WaterName = "Titanium";
+            public const string WaterName = "Water";
+            public const string EnergyBricksName = "EnergyBricks";
+            public const string FoodName = "Food";
+            public const string PopulationName = "Population";
+            public const string ResearchName = "Research";
+            public readonly static  ImmutableList<string> ResourceNames = ImmutableList.Create(new[] { TitaniumName, WaterName, EnergyBricksName, FoodName, PopulationName, ResearchName });
+
     }
 }
 

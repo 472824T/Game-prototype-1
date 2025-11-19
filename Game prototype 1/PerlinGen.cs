@@ -21,15 +21,7 @@ namespace Game_prototype_1
             public bool HasFactory { get; set; }
             public string FactoryType { get; set; }
         }
-        public class MapSaveData
-        {
-            public int Columns { get; set; }
-            public int Rows { get; set; }
-            public int Seed { get; set; }
-            public float NoiseScale { get; set; }
-            public List<TileInfo> Tiles { get; set; }
-        }
-
+     
         public class PerlinNoise
         {
             public readonly int[] perm;

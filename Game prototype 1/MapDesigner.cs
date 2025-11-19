@@ -365,7 +365,7 @@ namespace Game_prototype_1
                     { 
                         tiles.Add(t);
                     }
-                    PerlinGen.MapSaveData map = new PerlinGen.MapSaveData
+                    SaveData.MapSaveData map = new SaveData.MapSaveData
                     { 
                         Columns = Collums, 
                         Rows = rows,
@@ -373,6 +373,7 @@ namespace Game_prototype_1
                         NoiseScale = noiseScale, 
                         Tiles = tiles 
                     };
+                    
                     File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(map, Formatting.Indented));
                     MessageBox.Show("Map saved successfully!");
                 }
@@ -385,7 +386,7 @@ namespace Game_prototype_1
                     if (ofd.ShowDialog() != DialogResult.OK) return;
                         try
                         {
-                            PerlinGen.MapSaveData map = JsonConvert.DeserializeObject<PerlinGen.MapSaveData>(File.ReadAllText(ofd.FileName));
+                            SaveData.MapSaveData map = JsonConvert.DeserializeObject<SaveData.MapSaveData>(File.ReadAllText(ofd.FileName));
                             if (map != null) 
                             { 
                                 Collums = map.Columns; 
@@ -404,7 +405,7 @@ namespace Game_prototype_1
                 }
             }
 
-            private void GenerateFromSaved(PerlinGen.MapSaveData map)
+            private void GenerateFromSaved(SaveData.MapSaveData map)
             {
                 gridPanel.Controls.Clear(); 
                 tileButtons.Clear();
