@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using ContentAlignment = System.Drawing.ContentAlignment;
+using System.Net.Security;
 namespace Game_prototype_1
 {
     public partial class PlanetScreen : Form
@@ -300,7 +301,7 @@ namespace Game_prototype_1
                     NoiseScale = noiseScale,
                     Tiles = tiles
                 };
-                SaveData.ResourceSaveData Resources = new SaveData.ResourceSaveData
+                SaveData.ResourceSaveData resources = new SaveData.ResourceSaveData
                 {
                     TitaniumValue = GameResourceManager.GetResourceAmount(Config.TitaniumName),
                     WaterValue = GameResourceManager.GetResourceAmount(Config.WaterName),
@@ -308,17 +309,16 @@ namespace Game_prototype_1
                     FoodValue = GameResourceManager.GetResourceAmount(Config.FoodName),
                     PopulationValue = GameResourceManager.GetResourceAmount(Config.PopulationName),
                     ResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName),
-
-
                 };
-
-                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented) ,JsonConvert.SerializeObject(Resources, Formatting.Indented));
+               
+                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented) );
+                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(resources, Formatting.Indented));
                 MessageBox.Show("Map saved successfully!");
             }
         }
         private void ButtonLoadClick(object sender, EventArgs e)
         {
-            GameResourceManager.ResetAll();
+            
                 using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
             {
                 if (openfiledialog.ShowDialog() != DialogResult.OK) return;
@@ -336,6 +336,20 @@ namespace Game_prototype_1
                         
                         GenerateFromSaved(map);
                         MessageBox.Show("Map loaded successfully!");
+                        GameResourceManager.ResetAll();
+                    }
+                    SaveData.ResourceSaveData resource = JsonConvert.DeserializeObject<SaveData.ResourceSaveData>(File.ReadAllText(openfiledialog.FileName));
+                    if (resource != null)
+                    {
+                        GameResourceManager.AddResource(Config.TitaniumName, resource.TitaniumValue);
+                        GameResourceManager.AddResource(Config.WaterName, resource.WaterValue);
+                        GameResourceManager.AddResource(Config.EnergyBricksName, resource.EnergyBricksValue);
+                        GameResourceManager.AddResource(Config.FoodName, resource.FoodValue);
+                        GameResourceManager.AddResource(Config.PopulationName, resource.PopulationValue);
+                        GameResourceManager.AddResource(Config.ResearchName, resource.TitaniumValue);
+
+                     
+                        MessageBox.Show("Resources loaded successfully!");
                     }
                 }
                 catch (Exception ex)
@@ -369,7 +383,6 @@ namespace Game_prototype_1
                     TextAlign = ContentAlignment.BottomCenter,
                     Font = new Font("Segoe UI", 9, FontStyle.Bold),
                     Tag = info
-
 
                 };
 
@@ -477,34 +490,38 @@ namespace Game_prototype_1
                         }
                         else if (action == Config.ListedActions[1])
                         {
-                            info.HasFactory = false;
-                            info.FactoryType = null;
-                            info.Level = 0;
-                            button.Text = "Empty";
+                         
 
 
                             switch (info.FactoryType)
                             {
                                 case Config.TitaniumFact:
-                                    GameResourceManager.RemoveFactory(new TitaniumFactory(-1));
+                                    GameResourceManager.RemoveFactory(index);
                                     break;
 
                                 case Config.WaterFact:
-                                    GameResourceManager.RemoveFactory(new WaterFactory(-1));
+                                    GameResourceManager.RemoveFactory( index);
                                     break;
 
                                 case Config.EnergyBrickFact:
-                                    GameResourceManager.RemoveFactory(new EnergyBricksFactory(-1));
+                                    GameResourceManager.RemoveFactory(index);
                                     break;
 
                                 case Config.FoodFact:
-                                    GameResourceManager.RemoveFactory(new FarmFactory(-1));
+                                    GameResourceManager.RemoveFactory(index);
                                     break;
 
                                 case Config.PopulationFact:
-                                    GameResourceManager.RemoveFactory(new PopulationFactory(1));
-                                    break;
+                                    GameResourceManager.RemoveFactory(index);
+                                    break;   
                             }
+                            info.HasFactory = false;
+                            info.FactoryType = null;
+                            info.Level = 0;
+                            button.Text = "GrassLands";
+                            info.Type = PerlinGen.TileType.GrassLands;
+                            button.BackColor = TileColor(info.Type);
+                           
                         }
                         else if (action == Config.ListedActions[2])
                         {

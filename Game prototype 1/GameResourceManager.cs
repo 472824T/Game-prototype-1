@@ -48,22 +48,22 @@ using System.Windows.Forms;
                     GameResource res = fact.Tick();
                     switch (res.Name)
                     {
-                        case "Titanium": 
+                        case Config.TitaniumName: 
                             TitaniumValue += res.Value; 
                             break;
-                        case "Water": 
+                        case Config.WaterName: 
                             WaterValue += res.Value; 
                             break;
-                        case "EnergyBricks": 
+                        case Config.EnergyBricksName: 
                             EnergyBricksValue += res.Value; 
                             break;
-                        case "Food": 
+                        case Config.FoodName: 
                             FoodValue += res.Value; 
                             break;
-                        case "Population":
+                        case Config.PopulationName:
                             PopulationValue += res.Value;
                             break;
-                        case "Research": 
+                        case Config.ResearchName: 
                             ResearchValue += res.Value; 
                             break;
                     }
@@ -77,9 +77,9 @@ using System.Windows.Forms;
             {
                 factories.Add(Afact);
             }
-            static public void RemoveFactory(GameResourceFactory Dfact)
+            static public void RemoveFactory(int Dfact)
             {
-                factories.Remove(Dfact);
+            factories[Dfact] = null;
             }
             static public void UpgradeFactory(int index) 
             {
@@ -94,22 +94,22 @@ using System.Windows.Forms;
             {
                 switch (name)
                 {
-                    case "Titanium": 
+                    case Config.TitaniumName: 
                         return TitaniumValue;
                        
-                    case "Water": 
+                    case Config.WaterName: 
                         return WaterValue;
 
-                    case "EnergyBricks":
+                    case Config.EnergyBricksName:
                         return EnergyBricksValue;
 
-                    case "Food": 
+                    case Config.FoodName: 
                         return FoodValue;
 
-                    case "Popluation":
+                    case Config.PopulationName:
                         return PopulationValue;
 
-                    case "Research": 
+                    case Config.ResearchName: 
                         return ResearchValue;
 
                     default: 
@@ -121,31 +121,31 @@ using System.Windows.Forms;
             {
                 switch (name)
                 {
-                    case "Titanium": 
+                    case Config.TitaniumName: 
                         TitaniumValue -= amount; 
 
                         break;
 
-                    case "Water":
+                    case Config.WaterName:
                         WaterValue -= amount; 
 
                         break;
 
-                    case "EnergyBricks": 
+                    case Config.EnergyBricksName: 
                         EnergyBricksValue -= amount; 
 
                         break;
 
-                    case "Food": 
+                    case Config.FoodName: 
                         FoodValue -= amount; 
 
                         break;
-                    case "Popluation":
+                    case Config.PopulationName:
                         PopulationValue -= amount;
                         
                         break;
 
-                    case "Research": 
+                    case Config.ResearchName: 
                         ResearchValue -= amount; 
 
                         break;
@@ -156,32 +156,32 @@ using System.Windows.Forms;
             {
                 switch (name)
                 {
-                    case "Titanium":
+                    case Config.TitaniumName:
                         TitaniumValue += amount;
 
                         break;
 
-                    case "Water":
+                    case Config.WaterName:
                         WaterValue += amount;
 
                         break;
 
-                    case "EnergyBricks":
+                    case Config.EnergyBricksName:
                         EnergyBricksValue += amount;
 
                         break;
 
-                    case "Food":
+                    case Config.FoodName:
                         FoodValue += amount;
 
                         break;
 
-                    case "Popluation":
+                    case Config.PopulationName:
                         PopulationValue += amount;
 
                         break;
 
-                    case "Research":
+                    case Config.ResearchName:
                         ResearchValue += amount;
 
                         break;
