@@ -25,10 +25,7 @@ namespace Game_prototype_1
 
        private void LoadGameButton_Click(object sender, EventArgs e)
         {
-            using (Research research = new Research())
-            {
-                research.ShowDialog();
-            }
+           
         }
 
         private void New_Game_button_Click_1(object sender, EventArgs e)

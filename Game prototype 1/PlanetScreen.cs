@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using ContentAlignment = System.Drawing.ContentAlignment;
 using System.Net.Security;
+using Graphing;
 namespace Game_prototype_1
 {
     public partial class PlanetScreen : Form
@@ -54,21 +55,31 @@ namespace Game_prototype_1
             };
             Controls.Add(left);
             int CollumY = 10;
+          
+            Button ResearchTreeButton = new Button
+            {
+                Text = "Research",
+                Location = new Point(10, CollumY),
+            
+            };
+            ResearchTreeButton.Click += ButtonResearchClick;
+            left.Controls.Add(ResearchTreeButton);
 
+            CollumY += 30;
             left.Controls.Add(new Label
             {
                 Text = "Actions:",
                 Location = new Point(10, CollumY)
             }
             );
-            CollumY += 20;
+            CollumY += 30;
             ListOfBuildAction = new CheckedListBox
             {
                 Location = new Point(10, CollumY),
                 Size = new Size(220, 80)
             };
             ListOfBuildAction.Items.AddRange(Config.ListedActions.ToArray());
-            ListOfBuildAction.SelectedIndexChanged += ListOfBuildAction_SelectedIndexChanged;
+            
             left.Controls.Add(ListOfBuildAction);
             CollumY += 90;
 
@@ -78,7 +89,7 @@ namespace Game_prototype_1
                 Location = new Point(10, CollumY)
             }
             );
-            CollumY += 20;
+            CollumY += 30;
 
             FactoryTypeList = new ListBox
             {
@@ -249,7 +260,6 @@ namespace Game_prototype_1
             {
                 Text = text,
                 Location = new Point(10, y),
-                
             }
             );
             
@@ -275,6 +285,13 @@ namespace Game_prototype_1
 
                 default:
                     return Color.White;
+            }
+        }
+        private void ButtonResearchClick(object sender, EventArgs e)
+        {
+            using (Research research = new Research())
+            {
+                research.ShowDialog();
             }
         }
         private void ButtonSaveClick(object sender, EventArgs e)
@@ -312,7 +329,8 @@ namespace Game_prototype_1
                 };
                
                 File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented) );
-                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(resources, Formatting.Indented));
+                
+                savefiledialog.FileName JsonConvert.SerializeObject(resources, Formatting.Indented));
                 MessageBox.Show("Map saved successfully!");
             }
         }
@@ -431,7 +449,6 @@ namespace Game_prototype_1
             LabelFoodCount.Text = GameResourceManager.FoodValue.ToString();
             LabelPopulationCount.Text = GameResourceManager.PopulationValue.ToString();
             LabelResearchCount.Text = GameResourceManager.ResearchValue.ToString();
-
         }
 
         private void TileButtonClick(object sender, EventArgs e)
@@ -449,7 +466,7 @@ namespace Game_prototype_1
                     if (ListOfBuildAction.SelectedIndex > -1)
                     {
                         string action = Config.ListedActions[ListOfBuildAction.SelectedIndex];
-                        if (action == Config.ListedActions[0])
+                        if (action == Config.ListedActions[0] && !info.HasFactory)
                         {
                             if (SelectedFactoryType == null)
                             {
@@ -485,10 +502,10 @@ namespace Game_prototype_1
                             }
 
 
-                            SelectedFactoryType = null;
+                            
 
                         }
-                        else if (action == Config.ListedActions[1])
+                        else if (action == Config.ListedActions[1] && info.HasFactory)// demolish
                         {
                          
 
@@ -518,12 +535,12 @@ namespace Game_prototype_1
                             info.HasFactory = false;
                             info.FactoryType = null;
                             info.Level = 0;
-                            button.Text = "GrassLands";
+                            button.Text = PerlinGen.TileType.GrassLands.ToString();
                             info.Type = PerlinGen.TileType.GrassLands;
                             button.BackColor = TileColor(info.Type);
                            
                         }
-                        else if (action == Config.ListedActions[2])
+                        else if (action == Config.ListedActions[2] && info.HasFactory) // upgrade
                         {
                             if (info.HasFactory == false)
                             {
@@ -580,10 +597,7 @@ namespace Game_prototype_1
         }
         
 
-        private void ListOfBuildAction_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
+    
 
         private void FactoryTypeList_SelectedIndexChanged(object sender, EventArgs e)
         {
