@@ -20,6 +20,7 @@ namespace Game_prototype_1
             public int Level { get; set; }
             public bool HasFactory { get; set; }
             public string FactoryType { get; set; }
+            public GameResourceFactory Factory { get; set; }
         }
      
         public class PerlinNoise

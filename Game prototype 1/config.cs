@@ -52,6 +52,12 @@ namespace Game_prototype_1
             public const string PopulationName = "Population";
             public const string ResearchName = "Research";
             public readonly static  ImmutableList<string> ResourceNames = ImmutableList.Create(new[] { TitaniumName, WaterName, EnergyBricksName, FoodName, PopulationName, ResearchName });
+            public const int TitaniumStartingValue = 100;
+            public const int WaterStartingValue = 100;
+            public const int EnergyBricksStartingValue = 100; 
+            public const int FoodStartingValue = 100;
+            public const int PopulationStartingValue = 50;
+            public const int ResearchStartingValue = 0;
 
     }
 }

@@ -9,16 +9,14 @@ namespace Game_prototype_1
 {
     internal class SaveData
     {
-        public class MapSaveData
+        public class FullGameSaveData
         {
+      
             public int Columns { get; set; }
             public int Rows { get; set; }
             public int Seed { get; set; }
             public float NoiseScale { get; set; }
             public List<TileInfo> Tiles { get; set; }
-        }
-        public class ResourceSaveData
-        {
            
             public int TitaniumValue { get; set; }
             public int WaterValue { get; set; }

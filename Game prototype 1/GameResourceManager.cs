@@ -22,12 +22,12 @@ using System.Windows.Forms;
             static GameResourceManager()
             {
                 factories = new List<GameResourceFactory>();
-                TitaniumValue = 0; 
-                WaterValue = 0; 
-                EnergyBricksValue = 0; 
-                FoodValue = 0; 
-                PopulationValue = 0;
-                ResearchValue = 0;
+                TitaniumValue = Config.TitaniumStartingValue; 
+                WaterValue = Config.WaterStartingValue; 
+                EnergyBricksValue = Config.EnergyBricksStartingValue; 
+                FoodValue = Config.FoodStartingValue; 
+                PopulationValue = Config.PopulationStartingValue;
+                ResearchValue = Config.ResearchStartingValue;
                
                
             }
@@ -40,6 +40,7 @@ using System.Windows.Forms;
                 {
                     GameStateChanged(null, EventArgs.Empty);
                 }
+            GameStateChanged?.Invoke(null, EventArgs.Empty);
             }
             static public void Tick()
             {
@@ -76,12 +77,13 @@ using System.Windows.Forms;
             static public void AddFactory(GameResourceFactory Afact) 
             {
                 factories.Add(Afact);
-            }
-            static public void RemoveFactory(int Dfact)
+        }/*
+            static public void RemoveFactory(PerlinGen.TileType Dfact)
             {
-            factories[Dfact] = null;
+          // i need to connect this to the factory list pls and thx as they need to be removed when buildings are remove
             }
-            static public void UpgradeFactory(int index) 
+        */
+        static public void UpgradeFactory(int index) 
             {
                 if (index >= 0 && index < factories.Count)
                 {

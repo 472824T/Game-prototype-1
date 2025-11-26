@@ -273,7 +273,9 @@ namespace Game_prototype_1
                                     Row = r, 
                                     Type = t, 
                                     Level = 1 
+                                    
                                 }
+
                         };
                         tile.Click += Tile_Click; 
                         canvas.Controls.Add(tile); 
@@ -365,7 +367,7 @@ namespace Game_prototype_1
                     { 
                         tiles.Add(t);
                     }
-                    SaveData.MapSaveData map = new SaveData.MapSaveData
+                    SaveData.FullGameSaveData map = new SaveData.FullGameSaveData
                     { 
                         Columns = Collums, 
                         Rows = rows,
@@ -386,7 +388,7 @@ namespace Game_prototype_1
                     if (ofd.ShowDialog() != DialogResult.OK) return;
                         try
                         {
-                            SaveData.MapSaveData map = JsonConvert.DeserializeObject<SaveData.MapSaveData>(File.ReadAllText(ofd.FileName));
+                            SaveData.FullGameSaveData map = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(ofd.FileName));
                             if (map != null) 
                             { 
                                 Collums = map.Columns; 
@@ -405,7 +407,7 @@ namespace Game_prototype_1
                 }
             }
 
-            private void GenerateFromSaved(SaveData.MapSaveData map)
+            private void GenerateFromSaved(SaveData.FullGameSaveData map)
             {
                 gridPanel.Controls.Clear(); 
                 tileButtons.Clear();

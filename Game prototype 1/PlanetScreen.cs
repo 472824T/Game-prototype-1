@@ -310,27 +310,29 @@ namespace Game_prototype_1
                     {
                         tiles.Add(t);
                     }
-                SaveData.MapSaveData map = new SaveData.MapSaveData
-                {
-                    Columns = Collums,
-                    Rows = rows,
-                    Seed = seed,
-                    NoiseScale = noiseScale,
-                    Tiles = tiles
-                };
-                SaveData.ResourceSaveData resources = new SaveData.ResourceSaveData
+      
+                SaveData.FullGameSaveData gameSaveData = new SaveData.FullGameSaveData()
                 {
                     TitaniumValue = GameResourceManager.GetResourceAmount(Config.TitaniumName),
                     WaterValue = GameResourceManager.GetResourceAmount(Config.WaterName),
                     EnergyBricksValue = GameResourceManager.GetResourceAmount(Config.EnergyBricksName),
                     FoodValue = GameResourceManager.GetResourceAmount(Config.FoodName),
                     PopulationValue = GameResourceManager.GetResourceAmount(Config.PopulationName),
-                    ResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName),
+                    ResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName), 
+                    Columns = Collums,
+                    Rows = rows,
+                    Seed = seed,
+                    NoiseScale = noiseScale,
+                    Tiles = tiles
+                    
                 };
-               
-                File.WriteAllText(savefiledialog.FileName, JsonConvert.SerializeObject(map, Formatting.Indented) );
+
                 
-                savefiledialog.FileName JsonConvert.SerializeObject(resources, Formatting.Indented));
+                JsonTextWriter writer = new JsonTextWriter(new StreamWriter(savefiledialog.FileName));
+                writer.WriteRaw(JsonConvert.SerializeObject(gameSaveData, Formatting.Indented));
+          
+                writer.Close();
+
                 MessageBox.Show("Map saved successfully!");
             }
         }
@@ -338,45 +340,42 @@ namespace Game_prototype_1
         {
             
                 using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
-            {
-                if (openfiledialog.ShowDialog() != DialogResult.OK) return;
-                try
                 {
-                   SaveData.MapSaveData map = JsonConvert.DeserializeObject<SaveData.MapSaveData>(File.ReadAllText(openfiledialog.FileName));
-                    if (map != null)
+                    if (openfiledialog.ShowDialog() != DialogResult.OK) 
+                    return;
                     {
-                        Collums = map.Columns;
-                        rows = map.Rows;
-                        seed = map.Seed;
-                        noiseScale = map.NoiseScale;
-                      
-                        
-                        
-                        GenerateFromSaved(map);
-                        MessageBox.Show("Map loaded successfully!");
-                        GameResourceManager.ResetAll();
-                    }
-                    SaveData.ResourceSaveData resource = JsonConvert.DeserializeObject<SaveData.ResourceSaveData>(File.ReadAllText(openfiledialog.FileName));
-                    if (resource != null)
-                    {
-                        GameResourceManager.AddResource(Config.TitaniumName, resource.TitaniumValue);
-                        GameResourceManager.AddResource(Config.WaterName, resource.WaterValue);
-                        GameResourceManager.AddResource(Config.EnergyBricksName, resource.EnergyBricksValue);
-                        GameResourceManager.AddResource(Config.FoodName, resource.FoodValue);
-                        GameResourceManager.AddResource(Config.PopulationName, resource.PopulationValue);
-                        GameResourceManager.AddResource(Config.ResearchName, resource.TitaniumValue);
+                        try
+                        {
+                            SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName));
+                            if (GameData != null)
+                            {
+                                Collums = GameData.Columns;
+                                rows = GameData.Rows;
+                                seed = GameData.Seed;
+                                noiseScale = GameData.NoiseScale;
+                                GameResourceManager.ResetAll();
+                                GenerateFromSaved(GameData);
+                                MessageBox.Show("Map loaded successfully!");
 
-                     
-                        MessageBox.Show("Resources loaded successfully!");
+                            GameResourceManager.AddResource(Config.TitaniumName, GameData.TitaniumValue);
+                            GameResourceManager.AddResource(Config.WaterName, GameData.WaterValue);
+                            GameResourceManager.AddResource(Config.EnergyBricksName, GameData.EnergyBricksValue);
+                            GameResourceManager.AddResource(Config.FoodName, GameData.FoodValue);
+                            GameResourceManager.AddResource(Config.PopulationName, GameData.PopulationValue);
+                            GameResourceManager.AddResource(Config.ResearchName, GameData.ResearchValue);
+                  
+                            MessageBox.Show("Resources loaded successfully!");
+                            GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
+                        }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Failed to load map: " + ex.Message);
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Failed to load map: " + ex.Message);
-                }
-            }
         }
-        private void GenerateFromSaved(SaveData.MapSaveData map)
+        private void GenerateFromSaved(SaveData.FullGameSaveData map)
         {
            
 
@@ -508,28 +507,28 @@ namespace Game_prototype_1
                         else if (action == Config.ListedActions[1] && info.HasFactory)// demolish
                         {
                          
-
+                            /*
 
                             switch (info.FactoryType)
                             {
                                 case Config.TitaniumFact:
-                                    GameResourceManager.RemoveFactory(index);
+                                    GameResourceManager.RemoveFactory(info.FactoryType);
                                     break;
 
                                 case Config.WaterFact:
-                                    GameResourceManager.RemoveFactory( index);
+                                    GameResourceManager.RemoveFactory(info.FactoryType);
                                     break;
 
                                 case Config.EnergyBrickFact:
-                                    GameResourceManager.RemoveFactory(index);
+                                    GameResourceManager.RemoveFactory(info.FactoryType);
                                     break;
 
                                 case Config.FoodFact:
-                                    GameResourceManager.RemoveFactory(index);
+                                    GameResourceManager.RemoveFactory(info.FactoryType);
                                     break;
 
                                 case Config.PopulationFact:
-                                    GameResourceManager.RemoveFactory(index);
+                                    GameResourceManager.RemoveFactory(info.FactoryType);
                                     break;   
                             }
                             info.HasFactory = false;
@@ -538,7 +537,7 @@ namespace Game_prototype_1
                             button.Text = PerlinGen.TileType.GrassLands.ToString();
                             info.Type = PerlinGen.TileType.GrassLands;
                             button.BackColor = TileColor(info.Type);
-                           
+                           */
                         }
                         else if (action == Config.ListedActions[2] && info.HasFactory) // upgrade
                         {
