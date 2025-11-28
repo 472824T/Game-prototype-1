@@ -189,25 +189,24 @@ namespace Game_prototype_1
                 controls.Controls.Add(legendTitle);
                 CollumY+= 24;
 
-                foreach (PerlinGen.TileType t in Enum.GetValues(typeof(PerlinGen.TileType))) {
-                Label l = new Label 
-                { 
-                    Text = t.ToString(), 
-                    Location = new Point(10, CollumY), 
-                    AutoSize = true 
-                }; 
-                Panel p = new Panel 
-                { 
-                    BackColor = TileColor(t), 
-                    Location = new Point(150, CollumY+ 3),
-                    Size = new Size(25, 20) 
-                }; 
-                controls.Controls.Add(l); 
-                controls.Controls.Add(p); 
-                CollumY+= 25;
-       
-            }
-
+                foreach (Config.TileType t in Enum.GetValues(typeof(Config.TileType))) 
+                {
+                    Label l = new Label 
+                    { 
+                        Text = t.ToString(), 
+                        Location = new Point(10, CollumY), 
+                        AutoSize = true 
+                    }; 
+                    Panel p = new Panel 
+                    { 
+                        BackColor = TileColor(t), 
+                        Location = new Point(150, CollumY+ 3),
+                        Size = new Size(25, 20) 
+                    }; 
+                    controls.Controls.Add(l); 
+                    controls.Controls.Add(p); 
+                    CollumY+= 25;
+                }
                 gridPanel = new Panel 
                 { 
                     Location = new Point(280, 10),
@@ -218,7 +217,6 @@ namespace Game_prototype_1
                 };
                 Controls.Add(gridPanel);
             }
-
             private void BtnStartGame_Click(object sender, EventArgs e)
             {
                 using (PlanetScreen ts = new PlanetScreen())
@@ -226,7 +224,6 @@ namespace Game_prototype_1
                     ts.ShowDialog();
                 }
             }
-
             private void BtnGenerate_Click(object sender, EventArgs e)
             {
                 Collums = (int)nudCollums.Value; 
@@ -236,7 +233,6 @@ namespace Game_prototype_1
                 SetupPerlin(); 
                 GenerateGrid();
             }
-
             private void GenerateGrid()
             {
                 gridPanel.Controls.Clear(); 
@@ -257,7 +253,7 @@ namespace Game_prototype_1
                         float nx = c / noiseScale; 
                         float ny = r / noiseScale; 
                         float n = perlin.Noise(nx, ny);
-                        PerlinGen.TileType t = TileFromNoise(n);
+                        Config.TileType t = TileFromNoise(n);
                         Button tile = new Button 
                         { 
                             Location = new Point(c * Config.TileSize, r * Config.TileSize), 
@@ -273,7 +269,6 @@ namespace Game_prototype_1
                                     Row = r, 
                                     Type = t, 
                                     Level = 1 
-                                    
                                 }
 
                         };
@@ -292,59 +287,59 @@ namespace Game_prototype_1
 
                 info.Type = NextTileType(info.Type);
                 b.Tag = info;
-                b.BackColor = TileColor((PerlinGen.TileType)info.Type);
+                b.BackColor = TileColor((Config.TileType)info.Type);
                 b.Text = info.Type.ToString();
             }
             
         }
 
-            private PerlinGen.TileType TileFromNoise(float n)
+            private Config.TileType TileFromNoise(float n)
             {
                 if (n < -0.35f)
                 {
-                    return PerlinGen.TileType.Ocean;
+                    return Config.TileType.Ocean;
                 }
                 if (n < -0.05f)
                 { 
-                    return PerlinGen.TileType.GrassLands; 
+                    return Config.TileType.GrassLands; 
                 }
                 if (n < 0.25f)
                 {
-                    return PerlinGen.TileType.Forest;
+                    return Config.TileType.Forest;
                 }
                 if (n < 0.55f)
                 {
-                    return PerlinGen.TileType.Desert;
+                    return Config.TileType.Desert;
                 }
 
-                return PerlinGen.TileType.Mountains;
+                return Config.TileType.Mountains;
             }
 
-            private PerlinGen.TileType NextTileType(PerlinGen.TileType t) 
+            private Config.TileType NextTileType(Config.TileType t) 
             {
-                PerlinGen.TileType[] vals = (PerlinGen.TileType[])Enum.GetValues(typeof(PerlinGen.TileType)); 
+                Config.TileType[] vals = (Config.TileType[])Enum.GetValues(typeof(Config.TileType)); 
                 int index = Array.IndexOf(vals, t); 
 
                 return vals[(index + 1) % vals.Length]; 
             }
 
-            private Color TileColor(PerlinGen.TileType t) 
+            private Color TileColor(Config.TileType t) 
             { 
                 switch (t) 
                 { 
-                    case PerlinGen.TileType.Ocean: 
+                    case Config.TileType.Ocean: 
                         return Color.FromArgb(68, 138, 255); 
 
-                    case PerlinGen.TileType.GrassLands: 
+                    case Config.TileType.GrassLands: 
                         return Color.FromArgb(120, 200, 80); 
 
-                    case PerlinGen.TileType.Forest: 
+                    case Config.TileType.Forest: 
                         return Color.FromArgb(34, 139, 34); 
 
-                    case PerlinGen.TileType.Desert: 
+                    case Config.TileType.Desert: 
                         return Color.FromArgb(194, 178, 128); 
 
-                    case PerlinGen.TileType.Mountains: 
+                    case Config.TileType.Mountains: 
                         return Color.FromArgb(120, 120, 120); 
 
                     default:
@@ -424,7 +419,7 @@ namespace Game_prototype_1
                     { 
                         Location = new Point(info.Col * Config.TileSize, info.Row * Config.TileSize),
                         Size = new Size(Config.TileSize - 2, Config.TileSize - 2), 
-                        BackColor = TileColor((PerlinGen.TileType)info.Type), 
+                        BackColor = TileColor(info.Type), 
                         ForeColor = Color.White, 
                         Text = info.Type.ToString(), 
                         TextAlign = ContentAlignment.BottomCenter, 

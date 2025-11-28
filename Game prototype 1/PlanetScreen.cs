@@ -31,21 +31,19 @@ namespace Game_prototype_1
         private int rows = 4;
         private float noiseScale = 10f;
         private int seed = 0;
+        private GameResourceFactory factory;
         public PlanetScreen()
         {
             GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
             InitializeComponent();
             BuildUI();
         }
-
         private void BuildUI()
         {
             Text = "Game - Prototype";
             ClientSize = new Size(1200, 800);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-
-
             Panel left = new Panel
             {
                 Location = new Point(10, 10),
@@ -55,7 +53,6 @@ namespace Game_prototype_1
             };
             Controls.Add(left);
             int CollumY = 10;
-          
             Button ResearchTreeButton = new Button
             {
                 Text = "Research",
@@ -221,7 +218,7 @@ namespace Game_prototype_1
             CollumY += 24;
 
 
-            foreach (PerlinGen.TileType t in Enum.GetValues(typeof(PerlinGen.TileType)))
+            foreach (Config.TileType t in Enum.GetValues(typeof(Config.TileType)))
             {
                 Label l = new Label
                 {
@@ -253,7 +250,6 @@ namespace Game_prototype_1
             ProductionTimer.Tick += ProductionTimer_Tick;
             ProductionTimer.Start();
         }
-        //
         private void MakeLabelSmall(Panel parent, string text, int y)
         {
            parent.Controls.Add(new Label 
@@ -264,23 +260,23 @@ namespace Game_prototype_1
             );
             
         }
-        private Color TileColor(PerlinGen.TileType t)
+        private Color TileColor(Config.TileType t)
         {
             switch (t)
             {
-                case PerlinGen.TileType.Ocean:
+                case Config.TileType.Ocean:
                     return Color.FromArgb(68, 138, 255);
 
-                case PerlinGen.TileType.GrassLands:
+                case Config.TileType.GrassLands:
                     return Color.FromArgb(120, 200, 80);
 
-                case PerlinGen.TileType.Forest:
+                case Config.TileType.Forest:
                     return Color.FromArgb(34, 139, 34);
 
-                case PerlinGen.TileType.Desert:
+                case Config.TileType.Desert:
                     return Color.FromArgb(194, 178, 128);
 
-                case PerlinGen.TileType.Mountains:
+                case Config.TileType.Mountains:
                     return Color.FromArgb(120, 120, 120);
 
                 default:
@@ -323,62 +319,52 @@ namespace Game_prototype_1
                     Rows = rows,
                     Seed = seed,
                     NoiseScale = noiseScale,
-                    Tiles = tiles
-                    
+                    Tiles = tiles,
                 };
-
-                
                 JsonTextWriter writer = new JsonTextWriter(new StreamWriter(savefiledialog.FileName));
                 writer.WriteRaw(JsonConvert.SerializeObject(gameSaveData, Formatting.Indented));
-          
                 writer.Close();
-
                 MessageBox.Show("Map saved successfully!");
             }
         }
         private void ButtonLoadClick(object sender, EventArgs e)
         {
-            
-                using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
+            using (OpenFileDialog openfiledialog = new OpenFileDialog { Filter = Config.JSONFilter })
+            {
+                if (openfiledialog.ShowDialog() != DialogResult.OK) 
+                return;
                 {
-                    if (openfiledialog.ShowDialog() != DialogResult.OK) 
-                    return;
+                    try
                     {
-                        try
+                        SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName));
+                        if (GameData != null)
                         {
-                            SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName));
-                            if (GameData != null)
-                            {
-                                Collums = GameData.Columns;
-                                rows = GameData.Rows;
-                                seed = GameData.Seed;
-                                noiseScale = GameData.NoiseScale;
-                                GameResourceManager.ResetAll();
-                                GenerateFromSaved(GameData);
-                                MessageBox.Show("Map loaded successfully!");
-
+                            Collums = GameData.Columns;
+                            rows = GameData.Rows;
+                            seed = GameData.Seed;
+                            noiseScale = GameData.NoiseScale;
+                            GameResourceManager.ResetAll();
+                            GenerateFromSaved(GameData);
+                            MessageBox.Show("Map loaded successfully!");
                             GameResourceManager.AddResource(Config.TitaniumName, GameData.TitaniumValue);
                             GameResourceManager.AddResource(Config.WaterName, GameData.WaterValue);
                             GameResourceManager.AddResource(Config.EnergyBricksName, GameData.EnergyBricksValue);
                             GameResourceManager.AddResource(Config.FoodName, GameData.FoodValue);
                             GameResourceManager.AddResource(Config.PopulationName, GameData.PopulationValue);
                             GameResourceManager.AddResource(Config.ResearchName, GameData.ResearchValue);
-                  
                             MessageBox.Show("Resources loaded successfully!");
                             GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
                         }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Failed to load map: " + ex.Message);
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Failed to load map: " + ex.Message);
                     }
                 }
+            }
         }
         private void GenerateFromSaved(SaveData.FullGameSaveData map)
         {
-           
-
             playPanel.Controls.Clear();
             TileButtons.Clear();
             Panel canvas = new Panel
@@ -399,11 +385,8 @@ namespace Game_prototype_1
                     Text = info.Type.ToString(),
                     TextAlign = ContentAlignment.BottomCenter,
                     Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                    Tag = info
-
+                    Tag = info,
                 };
-
-                
                 canvas.Controls.Add(tile);
                 TileButtons.Add(tile);
                 tile.Click += TileButtonClick;
@@ -413,29 +396,25 @@ namespace Game_prototype_1
                     tile.Text = $"{info.FactoryType} L{info.Level}";
                     switch (info.FactoryType)
                     {
-                        case Config.TitaniumFact:
-                            GameResourceManager.AddFactory(new TitaniumFactory(1));
+                        case Config.TitaniumFact:                        
+                            GameResourceManager.AddFactory(info.Factory);
                             break;
                         case Config.WaterFact:
-                            GameResourceManager.AddFactory(new WaterFactory(1));
+                            GameResourceManager.AddFactory(info.Factory);
                             break;
                         case Config.EnergyBrickFact:
-                            GameResourceManager.AddFactory(new EnergyBricksFactory(1));
+                            GameResourceManager.AddFactory(info.Factory);
                             break;
                         case Config.FoodFact:
-                            GameResourceManager.AddFactory(new FarmFactory(1));
+                            GameResourceManager.AddFactory(info.Factory);
                             break;
                         case Config.PopulationFact:
-                            GameResourceManager.AddFactory(new PopulationFactory(1));
+                            GameResourceManager.AddFactory(info.Factory);
                             break;
-
                     }
                 }
             }
-            
-            
         }
- 
         private void GameManager_GameStateChanged(object sender, EventArgs e)
         {
             UpdateDisplay();
@@ -449,11 +428,9 @@ namespace Game_prototype_1
             LabelPopulationCount.Text = GameResourceManager.PopulationValue.ToString();
             LabelResearchCount.Text = GameResourceManager.ResearchValue.ToString();
         }
-
         private void TileButtonClick(object sender, EventArgs e)
         {
-            {
-               
+            {               
                 Button button = sender as Button;
                 if (button == null)
                     return;
@@ -477,67 +454,61 @@ namespace Game_prototype_1
                             info.Level = 1;
                             button.BackColor = GetFactoryColor(SelectedFactoryType);
                             button.Text = $"{info.FactoryType} L1";
-
-
-
                             switch (SelectedFactoryType)
                             {
                                 case Config.TitaniumFact:
-                                    GameResourceManager.AddFactory(new TitaniumFactory(1));
+                                    info.Factory = new TitaniumFactory(1);
+                                    GameResourceManager.AddFactory(info.Factory);                             
                                     break;
                                 case Config.WaterFact:
-                                    GameResourceManager.AddFactory(new WaterFactory(1));
+                                    info.Factory = new WaterFactory(1);
+                                    GameResourceManager.AddFactory(info.Factory);
                                     break;
                                 case Config.EnergyBrickFact:
-                                    GameResourceManager.AddFactory(new EnergyBricksFactory(1));
+                                    info.Factory = new EnergyBricksFactory(1);
+                                    GameResourceManager.AddFactory(info.Factory);
                                     break;
                                 case Config.FoodFact:
-                                    GameResourceManager.AddFactory(new FarmFactory(1));
+                                    info.Factory = new FarmFactory(1);
+                                    GameResourceManager.AddFactory(info.Factory);
                                     break;
                                 case Config.PopulationFact:
-                                    GameResourceManager.AddFactory(new PopulationFactory(1));
+                                    info.Factory = new PopulationFactory(1);
+                                    GameResourceManager.AddFactory(info.Factory);
                                     break;
-
                             }
-
-
-                            
-
                         }
                         else if (action == Config.ListedActions[1] && info.HasFactory)// demolish
                         {
-                         
-                            /*
-
                             switch (info.FactoryType)
                             {
                                 case Config.TitaniumFact:
-                                    GameResourceManager.RemoveFactory(info.FactoryType);
+                                    GameResourceManager.RemoveFactory(info.Factory);
                                     break;
 
                                 case Config.WaterFact:
-                                    GameResourceManager.RemoveFactory(info.FactoryType);
+                                    GameResourceManager.RemoveFactory(info.Factory);
                                     break;
 
                                 case Config.EnergyBrickFact:
-                                    GameResourceManager.RemoveFactory(info.FactoryType);
+                                    GameResourceManager.RemoveFactory(info.Factory);
                                     break;
 
                                 case Config.FoodFact:
-                                    GameResourceManager.RemoveFactory(info.FactoryType);
+                                    GameResourceManager.RemoveFactory(info.Factory);
                                     break;
 
                                 case Config.PopulationFact:
-                                    GameResourceManager.RemoveFactory(info.FactoryType);
+                                    GameResourceManager.RemoveFactory(info.Factory);
                                     break;   
                             }
                             info.HasFactory = false;
                             info.FactoryType = null;
+                            info.Factory = null;
                             info.Level = 0;
-                            button.Text = PerlinGen.TileType.GrassLands.ToString();
-                            info.Type = PerlinGen.TileType.GrassLands;
+                            button.Text = Config.TileType.GrassLands.ToString();
+                            info.Type = Config.TileType.GrassLands;
                             button.BackColor = TileColor(info.Type);
-                           */
                         }
                         else if (action == Config.ListedActions[2] && info.HasFactory) // upgrade
                         {
@@ -546,13 +517,11 @@ namespace Game_prototype_1
                                 MessageBox.Show("No factory here to upgrade!");
                                 return;
                             }
-
                             if (info.Level >= 3)
                             {
                                 MessageBox.Show("Already max level");
                                 return;
                             }
-
                             int cost = 0;
                             switch (info.FactoryType)
                             {
@@ -572,17 +541,13 @@ namespace Game_prototype_1
                                     cost = Config.ResearchLabUpgradeCosts[info.Level];
                                     break;
                             }
-
                             int have = GameResourceManager.GetResourceAmount(Config.TitaniumName);
                             if (have < cost)
                             {
                                 MessageBox.Show("Not enough Titanium. Need " + cost);
                                 return;
                             }
-
                             GameResourceManager.DeductResource(Config.TitaniumName, cost);
-
-                            
                             GameResourceManager.UpgradeFactory(index);
                             button.Text = $"{info.FactoryType} L{info.Level}";
                         }
@@ -593,11 +558,7 @@ namespace Game_prototype_1
                     }
                 }
             }
-        }
-        
-
-    
-
+        }        
         private void FactoryTypeList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (FactoryTypeList.SelectedIndex >= 0)
@@ -605,7 +566,6 @@ namespace Game_prototype_1
                 SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
             }
         }
-
         private Color GetFactoryColor(string factoryType)
         {
             switch (factoryType)
@@ -629,19 +589,16 @@ namespace Game_prototype_1
                     return Color.White;
             }
         }
-
         private void ProductionTimer_Tick(object sender, EventArgs e)
         {
             GameResourceManager.Tick();
         }
-       
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             // Unsubscribe from the event when form closes
             GameResourceManager.GameStateChanged -= GameManager_GameStateChanged;
             base.OnFormClosing(e);
         }
-
         private void MainMenu_Load(object sender, EventArgs e)
         {
 

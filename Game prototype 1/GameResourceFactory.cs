@@ -10,13 +10,11 @@ namespace Game_prototype_1
     {
         public string FactoryType { get; protected set; }
         public int Level { get; private set; }
-
         protected GameResourceFactory(string type, int level = 1)
         {
             FactoryType = type;
             Level = level;
         }
-
         public virtual void Upgrade()
         {
             if (Level < 3)
@@ -24,7 +22,6 @@ namespace Game_prototype_1
                 Level++;
             }
         }
-
         protected int Scale(int baseValue)
         {
             switch (Level)
@@ -39,10 +36,8 @@ namespace Game_prototype_1
                     return baseValue;
             }
         }
-
         public abstract GameResource Tick();
     }
-
     public class TitaniumFactory : GameResourceFactory
     {
         public TitaniumFactory(int level = 1) : base(Config.TitaniumFact, level) { }
@@ -51,7 +46,6 @@ namespace Game_prototype_1
             return new TitaniumResource(Scale(Config.TitaniumBaseProduction)); 
         }
     }
-
     public class WaterFactory : GameResourceFactory
     {
         public WaterFactory(int level = 1) : base(Config.WaterFact, level) { }
@@ -60,7 +54,6 @@ namespace Game_prototype_1
             return new WaterResource(Scale(Config.WaterBaseProduction)); 
         }
     }
-
     public class EnergyBricksFactory : GameResourceFactory
     {
         public EnergyBricksFactory(int level = 1) : base(Config.EnergyBrickFact, level) { }
@@ -69,7 +62,6 @@ namespace Game_prototype_1
             return new EnergyBricksResource(Scale(Config.EnergyBricksBaseProduction)); 
         }
     }
-
     public class FarmFactory : GameResourceFactory
     {
         public FarmFactory(int level = 1) : base(Config.FoodFact, level) { }
@@ -78,7 +70,6 @@ namespace Game_prototype_1
             return new FoodResource(Scale(Config.FoodBaseProduction)); 
         }
     }
-
     public class ResearchFactory : GameResourceFactory
     {
         public ResearchFactory(int level = 1) : base(Config.PopulationFact, level) { }

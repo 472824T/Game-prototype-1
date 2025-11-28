@@ -23,40 +23,25 @@ namespace Game_prototype_1
 
         }
 
-       private void LoadGameButton_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void New_Game_button_Click_1(object sender, EventArgs e)
+        private void New_Game_button_Click(object sender, EventArgs e)
         {
             PrototypeErrorMessage.Hide();
-
             this.Hide();
-
-
             using (PlanetScreen planetscreen = new PlanetScreen())
             {
                 planetscreen.ShowDialog();
             }
-
-
             this.Show();
         }
 
         private void ContinueButton_Click(object sender, EventArgs e)
         {
             PrototypeErrorMessage.Hide();
-
             this.Hide();
-
-
             using (MapDesigner mapDesigner = new MapDesigner())
             {
                 mapDesigner.ShowDialog();
             }
-
-
             this.Show();
         }
     }

@@ -13,13 +13,14 @@ namespace Game_prototype_1
     {
             
         // ---- Actions listed in the Planet screen ----
-        public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Factory", "Demolish", "Upgrade", });
+            public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Build", "Demolish", "Upgrade", });
             // ---- Upgrade costs (index 1 = cost for L1→L2, index 2 = cost for L2→L3) ----
             public readonly static ImmutableArray<int> TitaniumMineUpgradeCosts = ImmutableArray.Create(new[] { 0, 20, 100, 0 });
             public readonly static ImmutableArray<int> WaterPumpUpgradeCosts = ImmutableArray.Create(new[] { 0, 15, 80, 0 });
             public readonly static ImmutableArray<int> EnergyBrickGeneratorUpgradeCosts =ImmutableArray.Create(new[] { 0, 25, 120, 0 });
             public readonly static ImmutableArray<int> FarmUpgradeCosts = ImmutableArray.Create(new[] { 0, 30, 150, 0 });
             public readonly static ImmutableArray<int> ResearchLabUpgradeCosts = ImmutableArray.Create(new[] { 0, 40, 200, 0 });
+
             // ---- Tile layout ----
             public const int TileX = 400;
             public const int TileY = 500;
@@ -44,7 +45,9 @@ namespace Game_prototype_1
             public const string EnergyBrickFact = "Energy Brick Generator";
             public const string FoodFact = "Farm";
             public const string PopulationFact = "Housing";
-            // ---- Names of Resource as strings and a list of them ----
+        // ---- Names of Resource as strings and a list of them ----
+            public enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
+            public enum ResourceType { Titanium, Water, EnergyBricks, Food, Population, Research }
             public const string TitaniumName = "Titanium";
             public const string WaterName = "Water";
             public const string EnergyBricksName = "EnergyBricks";

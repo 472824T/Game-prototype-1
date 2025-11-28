@@ -11,13 +11,11 @@ namespace Game_prototype_1
     {
         public class FullGameSaveData
         {
-      
             public int Columns { get; set; }
             public int Rows { get; set; }
             public int Seed { get; set; }
             public float NoiseScale { get; set; }
             public List<TileInfo> Tiles { get; set; }
-           
             public int TitaniumValue { get; set; }
             public int WaterValue { get; set; }
             public int EnergyBricksValue { get; set; }
@@ -25,6 +23,5 @@ namespace Game_prototype_1
             public int PopulationValue { get; set; }
             public int ResearchValue { get; set; }
         }
-
     }
 }

@@ -18,7 +18,6 @@ using System.Windows.Forms;
             static public int FoodValue;
             static public int PopulationValue;
             static public int ResearchValue;
-
             static GameResourceManager()
             {
                 factories = new List<GameResourceFactory>();
@@ -28,12 +27,7 @@ using System.Windows.Forms;
                 FoodValue = Config.FoodStartingValue; 
                 PopulationValue = Config.PopulationStartingValue;
                 ResearchValue = Config.ResearchStartingValue;
-               
-               
             }
-
-
-
             private static void OnGameStateChanged()
             {
                 if (GameStateChanged != null)
@@ -68,21 +62,17 @@ using System.Windows.Forms;
                             ResearchValue += res.Value; 
                             break;
                     }
-                    
                 }
                 OnGameStateChanged();
             }
-
-
             static public void AddFactory(GameResourceFactory Afact) 
             {
                 factories.Add(Afact);
-        }/*
-            static public void RemoveFactory(PerlinGen.TileType Dfact)
-            {
-          // i need to connect this to the factory list pls and thx as they need to be removed when buildings are remove
             }
-        */
+            static public void RemoveFactory(GameResourceFactory Dfact)
+            {
+                factories.Remove(Dfact);
+            }
         static public void UpgradeFactory(int index) 
             {
                 if (index >= 0 && index < factories.Count)
@@ -91,7 +81,6 @@ using System.Windows.Forms;
                     
                 }
             }
-
             static public int GetResourceAmount(string name)
             {
                 switch (name)
@@ -118,38 +107,31 @@ using System.Windows.Forms;
                         return 0;
                 }
             }
-
             static public void DeductResource(string name, int amount)
             {
                 switch (name)
                 {
                     case Config.TitaniumName: 
                         TitaniumValue -= amount; 
-
                         break;
 
                     case Config.WaterName:
                         WaterValue -= amount; 
-
                         break;
 
                     case Config.EnergyBricksName: 
                         EnergyBricksValue -= amount; 
-
                         break;
 
                     case Config.FoodName: 
                         FoodValue -= amount; 
-
                         break;
                     case Config.PopulationName:
-                        PopulationValue -= amount;
-                        
+                        PopulationValue -= amount;                        
                         break;
 
                     case Config.ResearchName: 
                         ResearchValue -= amount; 
-
                         break;
                 }
                 OnGameStateChanged();
@@ -160,37 +142,30 @@ using System.Windows.Forms;
                 {
                     case Config.TitaniumName:
                         TitaniumValue += amount;
-
                         break;
 
                     case Config.WaterName:
                         WaterValue += amount;
-
                         break;
 
                     case Config.EnergyBricksName:
                         EnergyBricksValue += amount;
-
                         break;
 
                     case Config.FoodName:
                         FoodValue += amount;
-
                         break;
 
                     case Config.PopulationName:
                         PopulationValue += amount;
-
                         break;
 
                     case Config.ResearchName:
                         ResearchValue += amount;
-
                         break;
                 }
                 OnGameStateChanged();
             }
-
             static public void ResetAll()
             {   
                 factories.Clear();
@@ -201,7 +176,6 @@ using System.Windows.Forms;
                 PopulationValue = 0;
                 ResearchValue = 0;
                 OnGameStateChanged();
-                
             }
         }
     }

@@ -10,13 +10,11 @@ namespace Game_prototype_1
  
     internal class PerlinGen
     {
-        public enum TileType { Ocean, GrassLands, Forest, Desert, Mountains }
-
        public class TileInfo
         {
             public int Col { get; set; }
             public int Row { get; set; }
-            public TileType Type { get; set; }
+            public Config.TileType Type { get; set; }
             public int Level { get; set; }
             public bool HasFactory { get; set; }
             public string FactoryType { get; set; }
