@@ -6,23 +6,33 @@ using System.Threading.Tasks;
 using System.Collections.Immutable;
 using System.ComponentModel.Design;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Drawing;
 
 namespace Game_prototype_1
 {
     static public class Config
     {
             
-        // ---- Actions listed in the Planet screen ----
+            // ---- Actions listed in the Planet screen ----
             public readonly static ImmutableList<string> ListedActions = ImmutableList.Create(new[] { "Build", "Demolish", "Upgrade", });
             // ---- Upgrade costs (index 1 = cost for L1→L2, index 2 = cost for L2→L3) ----
-            public readonly static ImmutableArray<int> TitaniumMineUpgradeCosts = ImmutableArray.Create(new[] { 0, 20, 100, 0 });
+            public readonly static ImmutableArray<int> TitaniumMineUpgradeCosts = ImmutableArray.Create(new[] { 0, 20, 100, 0, 0 });
             public readonly static ImmutableArray<int> WaterPumpUpgradeCosts = ImmutableArray.Create(new[] { 0, 15, 80, 0 });
             public readonly static ImmutableArray<int> EnergyBrickGeneratorUpgradeCosts =ImmutableArray.Create(new[] { 0, 25, 120, 0 });
             public readonly static ImmutableArray<int> FarmUpgradeCosts = ImmutableArray.Create(new[] { 0, 30, 150, 0 });
             public readonly static ImmutableArray<int> ResearchLabUpgradeCosts = ImmutableArray.Create(new[] { 0, 40, 200, 0 });
+            public readonly static ImmutableArray<int> HousingUpgradeCosts = ImmutableArray.Create(new[] { 0, 10, 50, 0 });
 
-            // ---- Tile layout ----
-            public const int TileX = 400;
+            // ---- Building costs ----
+            public readonly static ImmutableArray<int> TitaniumMineBuildingCosts = ImmutableArray.Create(new[] { 100, 100, 5, 0, 0 });
+            public readonly static ImmutableArray<int> WaterPumpBuildingCosts = ImmutableArray.Create(new[] { 300, 200, 10, 0, 0 });
+            public readonly static ImmutableArray<int> EnergyBrickGeneratorBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 12 });
+            public readonly static ImmutableArray<int> FarmBuildingCosts = ImmutableArray.Create(new[] { 200, 500, 10, 100, 4 });
+            public readonly static ImmutableArray<int> ResearchLabBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 });
+            public readonly static ImmutableArray<int> HousingBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 });
+
+        // ---- Tile layout ----
+        public const int TileX = 400;
             public const int TileY = 500;
             // ---- Base production per tick ----
             public const int TitaniumBaseProduction = 2;
@@ -61,6 +71,12 @@ namespace Game_prototype_1
             public const int FoodStartingValue = 100;
             public const int PopulationStartingValue = 50;
             public const int ResearchStartingValue = 0;
+            public static readonly Color Blue = Color.FromArgb(68, 138, 255);
+            public static readonly Color LightGreen = Color.FromArgb(120, 200, 80);
+            public static readonly Color DarkGreen = Color.FromArgb(34, 139, 34);
+            public static readonly Color Yellow = Color.FromArgb(194, 178, 128);
+            public static readonly Color Brown = Color.FromArgb(120, 120, 120);
+
 
     }
 }

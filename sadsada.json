@@ -1,0 +1,230 @@
+{
+  "Columns": 5,
+  "Rows": 4,
+  "Seed": 32245578,
+  "NoiseScale": 10.0,
+  "Tiles": [
+    {
+      "Col": 0,
+      "Row": 0,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 1,
+      "Row": 0,
+      "Type": 1,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 2,
+      "Row": 0,
+      "Type": 1,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 3,
+      "Row": 0,
+      "Type": 1,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 4,
+      "Row": 0,
+      "Type": 1,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 0,
+      "Row": 1,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 1,
+      "Row": 1,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 2,
+      "Row": 1,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 3,
+      "Row": 1,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 4,
+      "Row": 1,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 0,
+      "Row": 2,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 1,
+      "Row": 2,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 2,
+      "Row": 2,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 3,
+      "Row": 2,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": true,
+      "FactoryType": "Water Pump",
+      "Factory": {
+        "FactoryType": "Water Pump",
+        "Level": 1,
+        "TitaniumCost": 0,
+        "FoodCost": 0,
+        "PeopleCost": 0,
+        "EnergyCost": 0,
+        "WaterCost": 0,
+        "ResearchCost": 0
+      }
+    },
+    {
+      "Col": 4,
+      "Row": 2,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": true,
+      "FactoryType": "Water Pump",
+      "Factory": {
+        "FactoryType": "Water Pump",
+        "Level": 1,
+        "TitaniumCost": 0,
+        "FoodCost": 0,
+        "PeopleCost": 0,
+        "EnergyCost": 0,
+        "WaterCost": 0,
+        "ResearchCost": 0
+      }
+    },
+    {
+      "Col": 0,
+      "Row": 3,
+      "Type": 2,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 1,
+      "Row": 3,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 2,
+      "Row": 3,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": false,
+      "FactoryType": null,
+      "Factory": null
+    },
+    {
+      "Col": 3,
+      "Row": 3,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": true,
+      "FactoryType": "Water Pump",
+      "Factory": {
+        "FactoryType": "Water Pump",
+        "Level": 1,
+        "TitaniumCost": 0,
+        "FoodCost": 0,
+        "PeopleCost": 0,
+        "EnergyCost": 0,
+        "WaterCost": 0,
+        "ResearchCost": 0
+      }
+    },
+    {
+      "Col": 4,
+      "Row": 3,
+      "Type": 3,
+      "Level": 1,
+      "HasFactory": true,
+      "FactoryType": "Water Pump",
+      "Factory": {
+        "FactoryType": "Water Pump",
+        "Level": 1,
+        "TitaniumCost": 0,
+        "FoodCost": 0,
+        "PeopleCost": 0,
+        "EnergyCost": 0,
+        "WaterCost": 0,
+        "ResearchCost": 0
+      }
+    }
+  ],
+  "TitaniumValue": 0,
+  "WaterValue": 72,
+  "EnergyBricksValue": 0,
+  "FoodValue": 0,
+  "PopulationValue": 0,
+  "ResearchValue": 0
+}

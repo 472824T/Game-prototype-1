@@ -21,5 +21,10 @@ namespace Game_prototype_1
         {
             // Create simple images to make it able to click through the map so the user can be able to see the planets eg just add random images from google time u find better way to do it 
         }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -144,7 +144,8 @@ namespace Game_prototype_1
 
             LabelEnergyBricksCount = new Label 
             { 
-                Text = "0", Location = new Point(120, CollumY), 
+                Text = "0", 
+                Location = new Point(120, CollumY), 
                 AutoSize = true 
             };
             MakeLabelSmall(left, "Energy:", CollumY);
@@ -265,19 +266,19 @@ namespace Game_prototype_1
             switch (t)
             {
                 case Config.TileType.Ocean:
-                    return Color.FromArgb(68, 138, 255);
+                    return Config.Blue;
 
                 case Config.TileType.GrassLands:
-                    return Color.FromArgb(120, 200, 80);
+                    return Config.LightGreen;
 
                 case Config.TileType.Forest:
-                    return Color.FromArgb(34, 139, 34);
+                    return Config.DarkGreen;
 
                 case Config.TileType.Desert:
-                    return Color.FromArgb(194, 178, 128);
+                    return Config.Yellow;
 
                 case Config.TileType.Mountains:
-                    return Color.FromArgb(120, 120, 120);
+                    return Config.Brown;
 
                 default:
                     return Color.White;
@@ -292,6 +293,12 @@ namespace Game_prototype_1
         }
         private void ButtonSaveClick(object sender, EventArgs e)
         {
+           JsonSerializer serializer = new JsonSerializer();
+            serializer.Converters.Add(new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter());
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+            serializer.TypeNameHandling = TypeNameHandling.Auto;
+            serializer.Formatting = Formatting.Indented;
+
             using (SaveFileDialog savefiledialog = new SaveFileDialog { Filter = Config.JSONFilter })
             {
                 if (savefiledialog.ShowDialog() != DialogResult.OK)
@@ -454,6 +461,7 @@ namespace Game_prototype_1
                             info.Level = 1;
                             button.BackColor = GetFactoryColor(SelectedFactoryType);
                             button.Text = $"{info.FactoryType} L1";
+
                             switch (SelectedFactoryType)
                             {
                                 case Config.TitaniumFact:

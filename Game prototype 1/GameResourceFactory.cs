@@ -10,10 +10,21 @@ namespace Game_prototype_1
     {
         public string FactoryType { get; protected set; }
         public int Level { get; private set; }
-        protected GameResourceFactory(string type, int level = 1)
+        public int TitaniumCost { get; private set; }
+        public int FoodCost { get; private set; }
+        public int PeopleCost { get; private set; }
+        public int EnergyCost { get; private set; }
+        public int WaterCost { get; private set; }  
+        public int ResearchCost { get; private set; }
+
+
+        protected GameResourceFactory(string type,int level = 1)
         {
             FactoryType = type;
             Level = level;
+          
+
+
         }
         public virtual void Upgrade()
         {
@@ -37,6 +48,7 @@ namespace Game_prototype_1
             }
         }
         public abstract GameResource Tick();
+
     }
     public class TitaniumFactory : GameResourceFactory
     {

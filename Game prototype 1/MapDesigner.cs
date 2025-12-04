@@ -22,8 +22,6 @@ namespace Game_prototype_1
             private TextBox txtSeed;
             private Button btnGenerate;
             private Button btnStartGame;
-            private string SelectedFactoryType;
-            private bool buildMode = false;
             private int Collums = 5;
             private int rows = 4;
             private float noiseScale = 10f;
@@ -287,7 +285,7 @@ namespace Game_prototype_1
 
                 info.Type = NextTileType(info.Type);
                 b.Tag = info;
-                b.BackColor = TileColor((Config.TileType)info.Type);
+                b.BackColor = TileColor(info.Type);
                 b.Text = info.Type.ToString();
             }
             
