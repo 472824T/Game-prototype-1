@@ -298,6 +298,7 @@ namespace Game_prototype_1
             serializer.NullValueHandling = NullValueHandling.Ignore;
             serializer.TypeNameHandling = TypeNameHandling.Auto;
             serializer.Formatting = Formatting.Indented;
+          
 
             using (SaveFileDialog savefiledialog = new SaveFileDialog { Filter = Config.JSONFilter })
             {
@@ -329,7 +330,9 @@ namespace Game_prototype_1
                     Tiles = tiles,
                 };
                 JsonTextWriter writer = new JsonTextWriter(new StreamWriter(savefiledialog.FileName));
-                writer.WriteRaw(JsonConvert.SerializeObject(gameSaveData, Formatting.Indented));
+                {
+                    serializer.Serialize(writer,gameSaveData , typeof(SaveData.FullGameSaveData));
+                }
                 writer.Close();
                 MessageBox.Show("Map saved successfully!");
             }
@@ -343,7 +346,14 @@ namespace Game_prototype_1
                 {
                     try
                     {
-                        SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName));
+                        
+                        
+                        SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName),
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.Auto,
+                            NullValueHandling = NullValueHandling.Ignore,
+                        });
                         if (GameData != null)
                         {
                             Collums = GameData.Columns;
@@ -556,7 +566,8 @@ namespace Game_prototype_1
                                 return;
                             }
                             GameResourceManager.DeductResource(Config.TitaniumName, cost);
-                            GameResourceManager.UpgradeFactory(index);
+                            GameResourceManager.UpgradeFactory(info.Factory);
+                            info.Level++;
                             button.Text = $"{info.FactoryType} L{info.Level}";
                         }
                     }

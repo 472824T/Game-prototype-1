@@ -73,13 +73,12 @@ using System.Windows.Forms;
             {
                 factories.Remove(Dfact);
             }
-        static public void UpgradeFactory(int index) 
+            static public void UpgradeFactory(GameResourceFactory Ufact) 
             {
-                if (index >= 0 && index < factories.Count)
-                {
-                    factories[index].Upgrade();
-                    
-                }
+               
+                  Ufact.Upgrade();
+              
+                
             }
             static public int GetResourceAmount(string name)
             {
