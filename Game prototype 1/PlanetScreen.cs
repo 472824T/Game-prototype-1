@@ -1,14 +1,15 @@
 ﻿
+using Graphing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 using System.IO;
-using ContentAlignment = System.Drawing.ContentAlignment;
+using System.Linq;
 using System.Net.Security;
-using Graphing;
+using System.Windows.Forms;
+using ContentAlignment = System.Drawing.ContentAlignment;
 namespace Game_prototype_1
 {
     public partial class PlanetScreen : Form
@@ -23,6 +24,13 @@ namespace Game_prototype_1
         private Label LabelFoodCount = new Label();
         private Label LabelPopulationCount = new Label();
         private Label LabelResearchCount = new Label();
+
+        private Label LabelTitaniumCost = new Label();
+        private Label LabelWaterCost = new Label();
+        private Label LabelEnergyBricksCost = new Label();
+        private Label LabelFoodCost = new Label();
+        private Label LabelPopulationCost = new Label();
+       
         // Factory selection and actions
         private ListBox FactoryTypeList;
         private string SelectedFactoryType = null;
@@ -95,7 +103,7 @@ namespace Game_prototype_1
             };
             FactoryTypeList.Items.AddRange(new object[]
             {
-                Config.TitaniumFact,
+                Config.TitaniumFact ,
                 Config.WaterFact,
                 Config.EnergyBrickFact,
                 Config.FoodFact,
@@ -109,6 +117,76 @@ namespace Game_prototype_1
             FactoryTypeList.Visible = true;
             left.Controls.Add(FactoryTypeList); CollumY += 140;
 
+            left.Controls.Add(new Label
+            {
+                Text = "Costs:",
+                Location = new Point(10, CollumY),
+                Font = new Font("Segoe UI", 9, FontStyle.Bold)
+            }
+           );
+            CollumY += 22;
+
+            LabelTitaniumCost = new Label
+            {
+                Text = "0",
+                Location = new Point(10, CollumY),
+                AutoSize = true
+            };
+            MakeLabelSmall(left, "Titanium:", CollumY);
+
+            LabelTitaniumCost.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelTitaniumCost);
+            CollumY += 22;
+
+            LabelWaterCost = new Label
+            {
+                Text = "0",
+                Location = new Point(120, CollumY),
+                AutoSize = true
+            };
+            MakeLabelSmall(left, "Water:", CollumY);
+
+            LabelWaterCost.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelWaterCost);
+            CollumY += 22;
+
+            LabelEnergyBricksCost = new Label
+            {
+                Text = "0",
+                Location = new Point(120, CollumY),
+                AutoSize = true
+            };
+            MakeLabelSmall(left, "Energy:", CollumY);
+
+            LabelEnergyBricksCost.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelEnergyBricksCost);
+            CollumY += 22;
+
+            LabelFoodCost = new Label
+            {
+                Text = "0",
+                Location = new Point(120, CollumY),
+                AutoSize = true
+            };
+            MakeLabelSmall(left, "Food:", CollumY);
+
+            LabelFoodCost.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelFoodCost);
+            CollumY += 22;
+
+            LabelPopulationCost = new Label
+            {
+                Text = "0",
+                Location = new Point(120, CollumY),
+                AutoSize = true
+            };
+            MakeLabelSmall(left, "Population:", CollumY);
+
+            LabelPopulationCost.Location = new Point(120, CollumY);
+            left.Controls.Add(LabelPopulationCost);
+            CollumY += 22;
+
+        
             left.Controls.Add(new Label
             {
                 Text = "Resources:",
@@ -190,14 +268,14 @@ namespace Game_prototype_1
             left.Controls.Add(LabelResearchCount); 
             CollumY+= 30;
 
-            Button btnSave = new Button
+            Button buttonSave = new Button
             {
                 Text = "Save Map",
                 Location = new Point(10, CollumY),
                 Width = 220
             };
-            btnSave.Click += ButtonSaveClick;
-            left.Controls.Add(btnSave);
+            buttonSave.Click += ButtonSaveClick;
+            left.Controls.Add(buttonSave);
             CollumY += 40;
 
             Button btnLoad = new Button 
@@ -218,7 +296,7 @@ namespace Game_prototype_1
             left.Controls.Add(legendTitle);
             CollumY += 24;
 
-
+            
             foreach (Config.TileType t in Enum.GetValues(typeof(Config.TileType)))
             {
                 Label l = new Label
@@ -240,8 +318,7 @@ namespace Game_prototype_1
             playPanel = new Panel 
             { 
                 Location = new Point(280, 10), 
-                Size = new Size(ClientSize.Width - 300, 
-                ClientSize.Height - 20), 
+                Size = new Size(ClientSize.Width - 300, ClientSize.Height - 20), 
                 BorderStyle = BorderStyle.FixedSingle, 
                 AutoScroll = true 
             };
@@ -260,6 +337,14 @@ namespace Game_prototype_1
             }
             );
             
+        }
+         private void ArrayToString(ImmutableArray<int> array)
+        { string s = "";
+            foreach (int i in array)
+            {
+                s = s + i.ToString();
+
+            }
         }
         private Color TileColor(Config.TileType t)
         {
@@ -346,8 +431,6 @@ namespace Game_prototype_1
                 {
                     try
                     {
-                        
-                        
                         SaveData.FullGameSaveData GameData = JsonConvert.DeserializeObject<SaveData.FullGameSaveData>(File.ReadAllText(openfiledialog.FileName),
                         new JsonSerializerSettings
                         {
@@ -360,7 +443,7 @@ namespace Game_prototype_1
                             rows = GameData.Rows;
                             seed = GameData.Seed;
                             noiseScale = GameData.NoiseScale;
-                            GameResourceManager.ResetAll();
+                            //GameResourceManager.ResetAll();
                             GenerateFromSaved(GameData);
                             MessageBox.Show("Map loaded successfully!");
                             GameResourceManager.AddResource(Config.TitaniumName, GameData.TitaniumValue);
@@ -445,6 +528,7 @@ namespace Game_prototype_1
             LabelPopulationCount.Text = GameResourceManager.PopulationValue.ToString();
             LabelResearchCount.Text = GameResourceManager.ResearchValue.ToString();
         }
+      
         private void TileButtonClick(object sender, EventArgs e)
         {
             {               
@@ -459,13 +543,85 @@ namespace Game_prototype_1
                     if (ListOfBuildAction.SelectedIndex > -1)
                     {
                         string action = Config.ListedActions[ListOfBuildAction.SelectedIndex];
-                        if (action == Config.ListedActions[0] && !info.HasFactory)
+                        if (action == Config.ListedActions[0] && !info.HasFactory) // build
                         {
+                            int[] myNum = {}; 
+                            int i = 0;  
                             if (SelectedFactoryType == null)
                             {
                                 MessageBox.Show("Select a factory type first from the list.");
                                 return;
                             }
+                            switch (SelectedFactoryType)
+                            {
+                                case Config.TitaniumFact:
+                                    foreach (int cost in Config.TitaniumMineBuildingCosts)
+                                    { 
+                                        int have = GameResourceManager.GetResourceAmount(Config.ResourceNames[i]);
+                                        if (have < cost)
+                                        {
+                                            MessageBox.Show($"Not enough {Config.ResourceNames[i]} Need " + cost);
+                                            return;
+                                        }
+                                        GameResourceManager.DeductResource(Config.ResourceNames[i], cost);
+                                         i ++;
+                                    }
+                                    break;
+                                case Config.WaterFact:
+                                    foreach (int cost in Config.WaterPumpBuildingCosts)
+                                    {
+                                        int have = GameResourceManager.GetResourceAmount(Config.ResourceNames[i]);
+                                        if (have < cost)
+                                        {
+                                            MessageBox.Show($"Not enough {Config.ResourceNames[i]} Need " + cost);
+                                            return;
+                                        }
+                                        GameResourceManager.DeductResource(Config.ResourceNames[i], cost);
+                                        i++;
+                                    }
+                                    break;
+                                case Config.EnergyBrickFact:
+                                    foreach (int cost in Config.EnergyBrickGeneratorBuildingCosts)
+                                    {
+                                        int have = GameResourceManager.GetResourceAmount(Config.ResourceNames[i]);
+                                        if (have < cost)
+                                        {
+                                            MessageBox.Show($"Not enough {Config.ResourceNames[i]} Need " + cost);
+                                            return;
+                                        }
+                                        GameResourceManager.DeductResource(Config.ResourceNames[i], cost);
+                                        i++;
+                                    }
+                                    break;
+                                case Config.FoodFact:
+                                    foreach (int cost in Config.FarmBuildingCosts)
+                                    {
+                                        int have = GameResourceManager.GetResourceAmount(Config.ResourceNames[i]);
+                                        if (have < cost)
+                                        {
+                                            MessageBox.Show($"Not enough {Config.ResourceNames[i]} Need " + cost);
+                                            return;
+                                        }
+                                        GameResourceManager.DeductResource(Config.ResourceNames[i], cost);
+                                        i++;
+                                    }
+                                    break;
+                                case Config.PopulationFact:
+                                    foreach (int cost in Config.HousingBuildingCosts)
+                                    {
+                                        int have = GameResourceManager.GetResourceAmount(Config.ResourceNames[i]);
+                                        if (have < cost)
+                                        {
+                                            MessageBox.Show($"Not enough {Config.ResourceNames[i]} Need " + cost);
+                                            return;
+                                        }
+                                        GameResourceManager.DeductResource(Config.ResourceNames[i], cost);
+                                        i++;
+                                    }
+                                    break;
+                            }
+                            
+                          
                             info.HasFactory = true;
                             info.FactoryType = SelectedFactoryType;
                             info.Level = 1;
@@ -556,7 +712,7 @@ namespace Game_prototype_1
                                     cost = Config.FarmUpgradeCosts[info.Level];
                                     break;
                                 case Config.PopulationFact:
-                                    cost = Config.ResearchLabUpgradeCosts[info.Level];
+                                    cost = Config.HousingUpgradeCosts[info.Level];
                                     break;
                             }
                             int have = GameResourceManager.GetResourceAmount(Config.TitaniumName);
@@ -577,12 +733,15 @@ namespace Game_prototype_1
                     }
                 }
             }
-        }        
+        }
+
         private void FactoryTypeList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (FactoryTypeList.SelectedIndex >= 0)
             {
                 SelectedFactoryType = FactoryTypeList.SelectedItem.ToString();
+                
             }
         }
         private Color GetFactoryColor(string factoryType)

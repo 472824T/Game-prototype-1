@@ -22,12 +22,12 @@ namespace Game_prototype_1
             public readonly static ImmutableArray<int> ResearchLabUpgradeCosts = ImmutableArray.Create(new[] { 0, 40, 200, 0 });
             public readonly static ImmutableArray<int> HousingUpgradeCosts = ImmutableArray.Create(new[] { 0, 10, 50, 0 });
             // ---- Building costs ----
-            public readonly static ImmutableArray<int> TitaniumMineBuildingCosts = ImmutableArray.Create(new[] { 100, 100, 5, 0, 0 });
-            public readonly static ImmutableArray<int> WaterPumpBuildingCosts = ImmutableArray.Create(new[] { 300, 200, 10, 0, 0 });
-            public readonly static ImmutableArray<int> EnergyBrickGeneratorBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 12 });
-            public readonly static ImmutableArray<int> FarmBuildingCosts = ImmutableArray.Create(new[] { 200, 500, 10, 100, 4 });
-            public readonly static ImmutableArray<int> ResearchLabBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 });
-            public readonly static ImmutableArray<int> HousingBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 });
+            public readonly static ImmutableArray<int> TitaniumMineBuildingCosts = ImmutableArray.Create(new[] { 100, 100, 5, 0, 0, 0 });
+            public readonly static ImmutableArray<int> WaterPumpBuildingCosts = ImmutableArray.Create(new[] { 300, 200, 10, 0, 0, 0 });
+            public readonly static ImmutableArray<int> EnergyBrickGeneratorBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 12, 0 });
+            public readonly static ImmutableArray<int> FarmBuildingCosts = ImmutableArray.Create(new[] { 200, 500, 10, 100, 4, 0 });
+            public readonly static ImmutableArray<int> ResearchLabBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 , 0 });
+            public readonly static ImmutableArray<int> HousingBuildingCosts = ImmutableArray.Create(new[] { 200, 400, 20, 300, 4 , 0 });
             // ---- Tile layout ----
             public const int TileX = 400;
             public const int TileY = 500;
