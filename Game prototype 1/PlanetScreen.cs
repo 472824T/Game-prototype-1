@@ -287,6 +287,17 @@ namespace Game_prototype_1
             btnLoad.Click += ButtonLoadClick;
             left.Controls.Add(btnLoad);
             CollumY += 40;
+
+            Button NewAIButton = new Button
+            {
+                Text = "New Player",
+                Location = new Point(10, CollumY),
+                Width = 220
+            };
+            NewAIButton.Click += NewAIButtonClick;
+            left.Controls.Add(NewAIButton);
+            CollumY += 40;
+
             Label legendTitle = new Label
             {
                 Text = "Legend",
@@ -402,12 +413,12 @@ namespace Game_prototype_1
       
                 SaveData.FullGameSaveData gameSaveData = new SaveData.FullGameSaveData()
                 {
-                    TitaniumValue = GameResourceManager.GetResourceAmount(Config.TitaniumName),
-                    WaterValue = GameResourceManager.GetResourceAmount(Config.WaterName),
-                    EnergyBricksValue = GameResourceManager.GetResourceAmount(Config.EnergyBricksName),
-                    FoodValue = GameResourceManager.GetResourceAmount(Config.FoodName),
-                    PopulationValue = GameResourceManager.GetResourceAmount(Config.PopulationName),
-                    ResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName), 
+                    PlayerTitaniumValue = GameResourceManager.GetResourceAmount(Config.TitaniumName),
+                    PlayerWaterValue = GameResourceManager.GetResourceAmount(Config.WaterName),
+                    PlayerEnergyBricksValue = GameResourceManager.GetResourceAmount(Config.EnergyBricksName),
+                    PlayerFoodValue = GameResourceManager.GetResourceAmount(Config.FoodName),
+                    PlayerPopulationValue = GameResourceManager.GetResourceAmount(Config.PopulationName),
+                    PlayerResearchValue = GameResourceManager.GetResourceAmount(Config.ResearchName), 
                     Columns = Collums,
                     Rows = rows,
                     Seed = seed,
@@ -421,6 +432,10 @@ namespace Game_prototype_1
                 writer.Close();
                 MessageBox.Show("Map saved successfully!");
             }
+        }
+        private void NewAIButtonClick(object sender, EventArgs e)
+        {
+            GameResourceManager.AiPlayers();
         }
         private void ButtonLoadClick(object sender, EventArgs e)
         {
@@ -446,12 +461,12 @@ namespace Game_prototype_1
                             //GameResourceManager.ResetAll();
                             GenerateFromSaved(GameData);
                             MessageBox.Show("Map loaded successfully!");
-                            GameResourceManager.AddResource(Config.TitaniumName, GameData.TitaniumValue);
-                            GameResourceManager.AddResource(Config.WaterName, GameData.WaterValue);
-                            GameResourceManager.AddResource(Config.EnergyBricksName, GameData.EnergyBricksValue);
-                            GameResourceManager.AddResource(Config.FoodName, GameData.FoodValue);
-                            GameResourceManager.AddResource(Config.PopulationName, GameData.PopulationValue);
-                            GameResourceManager.AddResource(Config.ResearchName, GameData.ResearchValue);
+                            GameResourceManager.AddResource(Config.TitaniumName, GameData.PlayerTitaniumValue);
+                            GameResourceManager.AddResource(Config.WaterName, GameData.PlayerWaterValue);
+                            GameResourceManager.AddResource(Config.EnergyBricksName, GameData.PlayerEnergyBricksValue);
+                            GameResourceManager.AddResource(Config.FoodName, GameData.PlayerFoodValue);
+                            GameResourceManager.AddResource(Config.PopulationName, GameData.PlayerPopulationValue);
+                            GameResourceManager.AddResource(Config.ResearchName, GameData.PlayerResearchValue);
                             MessageBox.Show("Resources loaded successfully!");
                             GameResourceManager.GameStateChanged += GameManager_GameStateChanged;
                         }
@@ -521,12 +536,12 @@ namespace Game_prototype_1
         }
         private void UpdateDisplay()
         {
-            LabelTitaniumCount.Text = GameResourceManager.TitaniumValue.ToString();
-            LabelWaterCount.Text = GameResourceManager.WaterValue.ToString();
-            LabelEnergyBricksCount.Text = GameResourceManager.EnergyBricksValue.ToString();
-            LabelFoodCount.Text = GameResourceManager.FoodValue.ToString();
-            LabelPopulationCount.Text = GameResourceManager.PopulationValue.ToString();
-            LabelResearchCount.Text = GameResourceManager.ResearchValue.ToString();
+            LabelTitaniumCount.Text = GameResourceManager.PlayerTitaniumValue.ToString();
+            LabelWaterCount.Text = GameResourceManager.PlayerWaterValue.ToString();
+            LabelEnergyBricksCount.Text = GameResourceManager.PlayerEnergyBricksValue.ToString();
+            LabelFoodCount.Text = GameResourceManager.PlayerFoodValue.ToString();
+            LabelPopulationCount.Text = GameResourceManager.PlayerPopulationValue.ToString();
+            LabelResearchCount.Text = GameResourceManager.PlayerResearchValue.ToString();
         }
       
         private void TileButtonClick(object sender, EventArgs e)

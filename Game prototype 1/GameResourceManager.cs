@@ -12,22 +12,26 @@ using System.Windows.Forms;
             public static event EventHandler GameStateChanged;
             static public  PlanetScreen MainMenu;
             static private List<GameResourceFactory> factories;
-            static public int TitaniumValue;
-            static public int WaterValue;
-            static public int EnergyBricksValue;
-            static public int FoodValue;
-            static public int PopulationValue;
-            static public int ResearchValue;
+            static public int PlayerTitaniumValue;
+            static public int PlayerWaterValue;
+            static public int PlayerEnergyBricksValue;
+            static public int PlayerFoodValue;
+            static public int PlayerPopulationValue;
+            static public int PlayerResearchValue;
+            static public int AIPlayerCount = 0;    
+            static public Dictionary<int, AIPlayer> AIplayerDict;
             static GameResourceManager()
             {
                 factories = new List<GameResourceFactory>();
-                TitaniumValue = Config.TitaniumStartingValue; 
-                WaterValue = Config.WaterStartingValue; 
-                EnergyBricksValue = Config.EnergyBricksStartingValue; 
-                FoodValue = Config.FoodStartingValue; 
-                PopulationValue = Config.PopulationStartingValue;
-                ResearchValue = Config.ResearchStartingValue;
-            }
+                PlayerTitaniumValue = Config.TitaniumStartingValue; 
+                PlayerWaterValue = Config.WaterStartingValue; 
+                PlayerEnergyBricksValue = Config.EnergyBricksStartingValue; 
+                PlayerFoodValue = Config.FoodStartingValue; 
+                PlayerPopulationValue = Config.PopulationStartingValue;
+                PlayerResearchValue = Config.ResearchStartingValue;
+                AIplayerDict = new Dictionary<int, AIPlayer>(); 
+          }
+
             private static void OnGameStateChanged()
             {
                 if (GameStateChanged != null)
@@ -44,26 +48,37 @@ using System.Windows.Forms;
                     switch (res.Name)
                     {
                         case Config.TitaniumName: 
-                            TitaniumValue += res.Value; 
+                            PlayerTitaniumValue += res.Value; 
                             break;
                         case Config.WaterName: 
-                            WaterValue += res.Value; 
+                            PlayerWaterValue += res.Value; 
                             break;
                         case Config.EnergyBricksName: 
-                            EnergyBricksValue += res.Value; 
+                            PlayerEnergyBricksValue += res.Value; 
                             break;
                         case Config.FoodName: 
-                            FoodValue += res.Value; 
+                            PlayerFoodValue += res.Value; 
                             break;
                         case Config.PopulationName:
-                            PopulationValue += res.Value;
+                            PlayerPopulationValue += res.Value;
                             break;
                         case Config.ResearchName: 
-                            ResearchValue += res.Value; 
+                            PlayerResearchValue += res.Value; 
                             break;
                     }
                 }
                 OnGameStateChanged();
+            }
+            static public void AiPlayers()
+            {
+                AIPlayer ai1 = new AIPlayer("Ai"+AIPlayerCount.ToString());
+                AIPlayerCount++ ;
+                AIplayerDict.Add(AIPlayerCount, ai1);
+                foreach(AIPlayer Ai in AIplayerDict.Values)
+                { 
+                    Ai.DisplayInfo();
+            }
+
             }
             static public void AddFactory(GameResourceFactory Afact) 
             {
@@ -85,22 +100,22 @@ using System.Windows.Forms;
                 switch (name)
                 {
                     case Config.TitaniumName: 
-                        return TitaniumValue;
+                        return PlayerTitaniumValue;
                        
                     case Config.WaterName: 
-                        return WaterValue;
+                        return PlayerWaterValue;
 
                     case Config.EnergyBricksName:
-                        return EnergyBricksValue;
+                        return PlayerEnergyBricksValue;
 
                     case Config.FoodName: 
-                        return FoodValue;
+                        return PlayerFoodValue;
 
                     case Config.PopulationName:
-                        return PopulationValue;
+                        return PlayerPopulationValue;
 
                     case Config.ResearchName: 
-                        return ResearchValue;
+                        return PlayerResearchValue;
 
                     default: 
                         return 0;
@@ -111,26 +126,26 @@ using System.Windows.Forms;
                 switch (name)
                 {
                     case Config.TitaniumName: 
-                        TitaniumValue -= amount; 
+                        PlayerTitaniumValue -= amount; 
                         break;
 
                     case Config.WaterName:
-                        WaterValue -= amount; 
+                        PlayerWaterValue -= amount; 
                         break;
 
                     case Config.EnergyBricksName: 
-                        EnergyBricksValue -= amount; 
+                        PlayerEnergyBricksValue -= amount; 
                         break;
 
                     case Config.FoodName: 
-                        FoodValue -= amount; 
+                        PlayerFoodValue -= amount; 
                         break;
                     case Config.PopulationName:
-                        PopulationValue -= amount;                        
+                        PlayerPopulationValue -= amount;                        
                         break;
 
                     case Config.ResearchName: 
-                        ResearchValue -= amount; 
+                        PlayerResearchValue -= amount; 
                         break;
                 }
                 OnGameStateChanged();
@@ -140,27 +155,27 @@ using System.Windows.Forms;
                 switch (name)
                 {
                     case Config.TitaniumName:
-                        TitaniumValue += amount;
+                        PlayerTitaniumValue += amount;
                         break;
 
                     case Config.WaterName:
-                        WaterValue += amount;
+                        PlayerWaterValue += amount;
                         break;
 
                     case Config.EnergyBricksName:
-                        EnergyBricksValue += amount;
+                        PlayerEnergyBricksValue += amount;
                         break;
 
                     case Config.FoodName:
-                        FoodValue += amount;
+                        PlayerFoodValue += amount;
                         break;
 
                     case Config.PopulationName:
-                        PopulationValue += amount;
+                        PlayerPopulationValue += amount;
                         break;
 
                     case Config.ResearchName:
-                        ResearchValue += amount;
+                        PlayerResearchValue += amount;
                         break;
                 }
                 OnGameStateChanged();
@@ -168,12 +183,12 @@ using System.Windows.Forms;
             static public void ResetAll()
             {   
                 factories.Clear();
-                TitaniumValue = 0; 
-                WaterValue = 0; 
-                EnergyBricksValue = 0; 
-                FoodValue = 0; 
-                PopulationValue = 0;
-                ResearchValue = 0;
+                PlayerTitaniumValue = 0; 
+                PlayerWaterValue = 0; 
+                PlayerEnergyBricksValue = 0; 
+                PlayerFoodValue = 0; 
+                PlayerPopulationValue = 0;
+                PlayerResearchValue = 0;
                 OnGameStateChanged();
             }
         }

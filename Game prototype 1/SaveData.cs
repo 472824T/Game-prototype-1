@@ -16,12 +16,12 @@ namespace Game_prototype_1
             public int Seed { get; set; }
             public float NoiseScale { get; set; }
             public List<TileInfo> Tiles { get; set; }
-            public int TitaniumValue { get; set; }
-            public int WaterValue { get; set; }
-            public int EnergyBricksValue { get; set; }
-            public int FoodValue { get; set; }
-            public int PopulationValue { get; set; }
-            public int ResearchValue { get; set; }
+            public int PlayerTitaniumValue { get; set; }
+            public int PlayerWaterValue { get; set; }
+            public int PlayerEnergyBricksValue { get; set; }
+            public int PlayerFoodValue { get; set; }
+            public int PlayerPopulationValue { get; set; }
+            public int PlayerResearchValue { get; set; }
         }
     }
 }

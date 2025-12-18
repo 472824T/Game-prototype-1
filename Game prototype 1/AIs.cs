@@ -3,10 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Game_prototype_1
 {
-    internal class AIs
-    {// here is where the AIs will live there wonderful selfs which will be better 
+    public class AIPlayer
+    {
+        public string Name { get; set; }
+
+        public AIPlayer(string name)
+        {
+            Name = name;
+
+        
+        }
+        public void DisplayInfo()
+        {
+            MessageBox.Show($"AI Name:{Name} ");
+        }
+
     }
+
 }
