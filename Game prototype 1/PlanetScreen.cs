@@ -349,14 +349,7 @@ namespace Game_prototype_1
             );
             
         }
-         private void ArrayToString(ImmutableArray<int> array)
-        { string s = "";
-            foreach (int i in array)
-            {
-                s = s + i.ToString();
-
-            }
-        }
+        
         private Color TileColor(Config.TileType t)
         {
             switch (t)

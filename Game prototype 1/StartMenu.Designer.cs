@@ -103,6 +103,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Game_prototype_1.Properties.Resources.The_real_Sun__6982597973_;
             this.ClientSize = new System.Drawing.Size(1479, 835);
             this.Controls.Add(this.Title_label);
             this.Controls.Add(this.PrototypeErrorMessage);
@@ -111,7 +112,8 @@
             this.Controls.Add(this.New_Game_button);
             this.Controls.Add(this.ContinueButton);
             this.Name = "StartMenu";
-            this.Text = "Form1";
+            this.RightToLeftLayout = true;
+            this.Text = "StartMenu";
             this.Load += new System.EventHandler(this.StartMenu_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
